@@ -1,0 +1,17 @@
+'Sort [none#0L ASC NULLS FIRST], true
++- 'Aggregate [count(distinct none#0) AS #0L, sum(none#1) AS #1, sum(none#2) AS #2]
+   +- 'Project [none#1, none#2, none#3]
+      +- 'Join Inner, (none#0 = none#4)
+         :- 'Project [none#1, none#2, none#3, none#4]
+         :  +- 'Join Inner, (none#0 = none#5)
+         :     :- 'Project [none#1, none#2, none#3, none#4, none#5]
+         :     :  +- 'Join Inner, (none#0 = none#6)
+         :     :     :- 'Join LeftAnti, (none#3 = none#6)
+         :     :     :  :- 'Project [none#0, none#1, none#2, none#4, none#5, none#6]
+         :     :     :  :  +- 'Join LeftSemi, ((none#4 = none#8) AND NOT (none#3 = none#7))
+         :     :     :  :     :- RelationV2[none#0, none#1, none#2, none#3, none#4, none#5, none#6] TPCDS.CATALOG_SALES
+         :     :     :  :     +- RelationV2[none#0, none#1] TPCDS.CATALOG_SALES
+         :     :     :  +- RelationV2[none#0] TPCDS.CATALOG_RETURNS
+         :     :     +- RelationV2[none#0] TPCDS.DATE_DIM
+         :     +- RelationV2[none#0] TPCDS.CUSTOMER_ADDRESS
+         +- RelationV2[none#0] TPCDS.CALL_CENTER

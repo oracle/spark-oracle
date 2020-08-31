@@ -1,0 +1,62 @@
+ARG java_image_tag=11-jre-slim
+
+FROM openjdk:${java_image_tag}
+
+MAINTAINER Harish Butani <harish.butani@oracle.com>
+
+RUN useradd -ms /bin/bash sparkora
+USER sparkora
+WORKDIR /home/sparkora
+
+RUN set -ex && \
+    sed -i 's/http:\/\/deb.\(.*\)/https:\/\/deb.\1/g' /etc/apt/sources.list && \
+    apt-get update && \
+    ln -s /lib /lib64 && \
+    apt install -y bash tini libc6 libpam-modules krb5-user libnss3 procps curl wget unzip && \
+    rm /bin/sh && \
+    ln -sv /bin/bash /bin/sh && \
+    rm -rf /var/cache/apt/*
+
+# SPARK
+ENV SPARK_VERSION $$spark_version$$
+ENV SPARK_HOME $$spark_home$$
+ENV PATH $PATH:${SPARK_HOME}/bin
+
+# ZEPPELIN
+ENV ZEPPELIN_VERSION $$zeppelin_version$$
+ENV ZEPPELIN_HOME $$zeppelin_home$$
+
+COPY spark.oracle.properties log4j-driver.properties \
+     $$spark_ora_zip$$ \
+     interpreter.json zeppelin-env.sh /usr/
+
+COPY $$oracle.wallet.folder$$ /usr/$$oracle.wallet.folder$$
+
+RUN mkdir $SPARK_HOME && \
+  curl -sL --retry 3 \
+  "$$spark_download_url$$" \
+  | gunzip \
+  | tar x --strip-components=1 -C $SPARK_HOME && \
+  mkdir $ZEPPELIN_HOME && \
+  curl -sL --retry 3 \
+  "$$zeppelin_download_url$$" \
+  | gunzip \
+  | tar x --strip-components=1 -C $ZEPPELIN_HOME && \
+  unzip /usr/$$spark_ora_zip$$ -d  $SPARK_HOME && \
+  mkdir -p $$spark_ora_conf_dir$$ && \
+  mkdir -p $$spark_ora_log_dir$$ && \
+  mkdir -p $$metadata_cache_loc$$ && \
+  mv /usr/spark.oracle.properties $$spark_ora_conf_dir$$ && \
+  mv /usr/log4j-driver.properties $SPARK_HOME/conf && \
+  mv /usr/interpreter.json $ZEPPELIN_HOME/conf && \
+  mv /usr/zeppelin-env.sh $ZEPPELIN_HOME/conf && \
+  chown -R root:root $SPARK_HOME && \
+  chown -R root:root $ZEPPELIN_HOME && \
+  chown -R root:root /usr/$$oracle.wallet.folder$$
+
+EXPOSE 8080
+EXPOSE 4040
+
+WORKDIR $SPARK_HOME
+
+CMD ["bin/spark-shell", "--properties-file", "$$spark_ora_conf_dir$$/spark.oracle.properties", "local[*]"]

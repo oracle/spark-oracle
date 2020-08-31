@@ -1,0 +1,46 @@
+
+################
+# Spark cluster
+################
+spark.app.name="$$spark.app.name$$"
+spark.driver.memory=$$spark.driver.memory$$
+spark.driver.cores=$$spark.driver.cores$$
+spark.driver.extraJavaOptions=-Xms1g -XX:MaxDirectMemorySize=1g -Dlog4j.configuration=log4j-driver.properties
+
+# serialization
+spark.serializer=org.apache.spark.serializer.KryoSerializer
+
+###################
+# 2. Oracle Catalog
+###################
+
+spark.sql.extensions=org.apache.spark.sql.oracle.SparkSessionExtensions
+spark.kryo.registrator=org.apache.spark.sql.connector.catalog.oracle.OraKryoRegistrator
+spark.sql.catalog.oracle=org.apache.spark.sql.connector.catalog.oracle.OracleCatalog
+
+spark.sql.catalog.oracle.use_metadata_cache=false
+spark.sql.catalog.oracle.metadata_cache_loc=$$metadata_cache_loc$$
+
+spark.sql.catalog.oracle.log_and_time_sql.enabled=true
+spark.sql.catalog.oracle.log_and_time_sql.log_level=info
+spark.sql.catalog.oracle.fetchSize=5000
+spark.sql.oracle.enable.querysplitting=false
+spark.sql.oracle.querysplit.target=1Mb
+
+#  oracle instance
+spark.sql.catalog.oracle.url=$$oracle.jdbc.url$$
+spark.sql.catalog.oracle.user=$$oracle.username$$
+spark.sql.catalog.oracle.password=$$oracle.password$$
+spark.sql.catalog.oracle.net.tns_admin=$$oracle.wallet.loc$$
+
+##############
+# Misc section
+##############
+
+spark.job.interruptOnCancel=true
+spark.sql.warehouse.dir=/tmp
+fs.default.name=file:///tmp
+
+# shuffle
+spark.sql.shuffle.partitions=7
+spark.shuffle.consolidateFiles=true

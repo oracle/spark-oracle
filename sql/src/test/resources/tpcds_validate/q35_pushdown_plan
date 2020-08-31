@@ -1,0 +1,17 @@
+'GlobalLimit 100
++- 'LocalLimit 100
+   +- 'Sort [none#0 ASC NULLS FIRST, none#1 ASC NULLS FIRST, none#2 ASC NULLS FIRST, none#3 ASC NULLS FIRST, none#8 ASC NULLS FIRST, none#13 ASC NULLS FIRST], true
+      +- 'Aggregate [none#0, none#1, none#2, none#3, none#4, none#5], [none#0, none#1, none#2, none#3, count(1) AS #0L, min(none#3) AS #1, max(none#3) AS #2, avg(none#3) AS #3, none#4, count(1) AS #4L, min(none#4) AS #5, max(none#4) AS #6, avg(none#4) AS #7, none#5, count(1) AS #8L, min(none#5) AS #9, max(none#5) AS #10, avg(none#5) AS #11]
+         +- 'Project [none#1, none#3, none#4, none#5, none#6, none#7]
+            +- 'Join Inner, (none#0 = none#2)
+               :- 'Project [none#0, none#3]
+               :  +- 'Join Inner, (none#1 = none#2)
+               :     :- 'Project [none#1, none#2]
+               :     :  +- 'Filter (none#3 OR none#4)
+               :     :     +- 'Join ExistenceJoin(exists#13214), (none#0 = none#4)
+               :     :        :- 'Join ExistenceJoin(exists#13213), (none#0 = none#3)
+               :     :        :  :- RelationV2[none#0, none#1, none#2] TPCDS.CUSTOMER
+               :     :        :  +- RelationV2[none#0] TPCDS.WEB_SALES
+               :     :        +- RelationV2[none#0] TPCDS.CATALOG_SALES
+               :     +- RelationV2[none#0, none#1] TPCDS.CUSTOMER_ADDRESS
+               +- RelationV2[none#0, none#1, none#2, none#3, none#4, none#5] TPCDS.CUSTOMER_DEMOGRAPHICS

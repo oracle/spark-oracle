@@ -1,0 +1,9 @@
+'GlobalLimit 100
++- 'LocalLimit 100
+   +- 'Sort [none#0 ASC NULLS FIRST, none#1 ASC NULLS FIRST], true
+      +- 'Aggregate [none#2, none#1], [none#2, none#1, sum(none#0) AS #0]
+         +- 'Project [none#0, none#1, none#2]
+            +- 'Filter (substr(none#2, 1, 5) IN (85460,83405,85392,81792,86475,86197,85669,88274,80348) OR none#4)
+               +- 'Join ExistenceJoin(exists#15640), (none#3 = none#4)
+                  :- RelationV2[none#0, none#1, none#2, none#3] TPCDS.WEB_SALES
+                  +- RelationV2[none#0] TPCDS.ITEM

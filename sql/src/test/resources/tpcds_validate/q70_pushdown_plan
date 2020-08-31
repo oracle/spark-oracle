@@ -1,0 +1,7 @@
+GlobalLimit 100
++- LocalLimit 100
+   +- !Sort [none#3 DESC NULLS LAST, CASE WHEN (none#3 = 0) THEN none#1 END ASC NULLS FIRST, none#4 ASC NULLS FIRST], true
+      +- !Project [none#0, none#1, none#2, none#3, none#7]
+         +- !Window [rank(none#6) windowspecdefinition(none#4, none#5, none#6 DESC NULLS LAST, specifiedwindowframe(RowFrame, unboundedpreceding$(), currentrow$())) AS #0], [none#4, none#5], [none#6 DESC NULLS LAST]
+            +- Aggregate [none#1, none#2, none#3L], [sum(none#0) AS #0, none#1, none#2, (cast((shiftright(none#3L, 1) & 1) as tinyint) + cast((shiftright(none#3L, 0) & 1) as tinyint)) AS #1, (cast((shiftright(none#3L, 1) & 1) as tinyint) + cast((shiftright(none#3L, 0) & 1) as tinyint)) AS #2, CASE WHEN (0 = cast((shiftright(none#3L, 0) & 1) as tinyint)) THEN none#1 END AS #3, sum(none#0) AS #4]
+               +- RelationV2[none#0, none#1, none#2, none#3L] TPCDS.STORE_SALES

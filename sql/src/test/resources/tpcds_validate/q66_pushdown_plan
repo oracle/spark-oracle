@@ -1,0 +1,4 @@
+GlobalLimit 100
++- LocalLimit 100
+   +- Sort [w_warehouse_name#90398 ASC NULLS FIRST], true
+      +- RelationV2[w_warehouse_name#90398, w_warehouse_sq_ft#90399, w_city#90404, w_county#90405, w_state#90406, w_country#90408, ship_carriers#90274, year#90275, jan_sales#90326, feb_sales#90327, mar_sales#90328, apr_sales#90329, may_sales#90330, jun_sales#90331, jul_sales#90332, aug_sales#90333, sep_sales#90334, oct_sales#90335, nov_sales#90336, dec_sales#90337, jan_sales_per_sq_foot#90338, feb_sales_per_sq_foot#90339, mar_sales_per_sq_foot#90340, apr_sales_per_sq_foot#90341, ... 20 more fields] TPCDS.WEB_SALES

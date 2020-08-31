@@ -1,0 +1,3 @@
+Sort [none#0 ASC NULLS FIRST], true
++- Project [none#0, round(CheckOverflow((none#1 / none#9), DecimalType(38,6), true), 2) AS #0, round(CheckOverflow((none#2 / none#10), DecimalType(38,6), true), 2) AS #1, round(CheckOverflow((none#3 / none#11), DecimalType(38,6), true), 2) AS #2, round(CheckOverflow((none#4 / none#12), DecimalType(38,6), true), 2) AS #3, round(CheckOverflow((none#5 / none#13), DecimalType(38,6), true), 2) AS #4, round(CheckOverflow((none#6 / none#14), DecimalType(38,6), true), 2) AS #5, round(CheckOverflow((none#7 / none#15), DecimalType(38,6), true), 2) AS #6]
+   +- RelationV2[none#0, none#1, none#2, none#3, none#4, none#5, none#6, none#7, none#8, none#9, none#10, none#11, none#12, none#13, none#14, none#15] TPCDS.WEB_SALES

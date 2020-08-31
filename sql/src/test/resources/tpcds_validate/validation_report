@@ -1,0 +1,2167 @@
+Validation Report (generated on Sun Dec 27 14:19:31 PST 2020):
+  num_queries= (total=99, pass=43, warn=54, fail=2)
+  skipped queries= q14-1,q14-2,q23-2,q66
+  failed queries= q67,q72
+  queries with issues= q67
+
+Query q1 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(c_customer_id,StringType,false)
+    non-push : StructField(c_customer_id,StringType,true)
+
+===========================================
+Query q2 validation passed.
+===========================================
+Query q3 validation passed.
+===========================================
+Query q4 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(customer_id,StringType,false)StructField(customer_first_name,StringType,true)StructField(customer_last_name,StringType,true)StructField(customer_preferred_cust_flag,StringType,true)
+    non-push : StructField(customer_id,StringType,true)StructField(customer_first_name,StringType,true)StructField(customer_last_name,StringType,true)StructField(customer_preferred_cust_flag,StringType,true)
+
+===========================================
+Query q5 validation passed.
+===========================================
+Query q6 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(state,StringType,true)StructField(cnt,LongType,false)
+    non-push : StructField(state,StringType,true)StructField(cnt,LongType,true)
+
+===========================================
+Query q7 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(i_item_id,StringType,false)StructField(agg1,DecimalType(38,22),true)StructField(agg2,DecimalType(38,22),true)StructField(agg3,DecimalType(38,22),true)StructField(agg4,DecimalType(38,22),true)
+    non-push : StructField(i_item_id,StringType,true)StructField(agg1,DecimalType(38,22),true)StructField(agg2,DecimalType(38,22),true)StructField(agg3,DecimalType(38,22),true)StructField(agg4,DecimalType(38,22),true)
+
+===========================================
+Query q8 validation passed.
+===========================================
+Query q9 validation passed.
+===========================================
+Query q10 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(cd_gender,StringType,true)StructField(cd_marital_status,StringType,true)StructField(cd_education_status,StringType,true)StructField(cnt1,LongType,false)StructField(cd_purchase_estimate,DecimalType(38,18),true)StructField(cnt2,LongType,false)StructField(cd_credit_rating,StringType,true)StructField(cnt3,LongType,false)StructField(cd_dep_count,DecimalType(38,18),true)StructField(cnt4,LongType,false)StructField(cd_dep_employed_count,DecimalType(38,18),true)StructField(cnt5,LongType,false)StructField(cd_dep_college_count,DecimalType(38,18),true)StructField(cnt6,LongType,false)
+    non-push : StructField(cd_gender,StringType,true)StructField(cd_marital_status,StringType,true)StructField(cd_education_status,StringType,true)StructField(cnt1,LongType,true)StructField(cd_purchase_estimate,DecimalType(38,18),true)StructField(cnt2,LongType,true)StructField(cd_credit_rating,StringType,true)StructField(cnt3,LongType,true)StructField(cd_dep_count,DecimalType(38,18),true)StructField(cnt4,LongType,true)StructField(cd_dep_employed_count,DecimalType(38,18),true)StructField(cnt5,LongType,true)StructField(cd_dep_college_count,DecimalType(38,18),true)StructField(cnt6,LongType,true)
+
+===========================================
+Query q11 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(customer_id,StringType,false)StructField(customer_first_name,StringType,true)StructField(customer_last_name,StringType,true)StructField(customer_preferred_cust_flag,StringType,true)
+    non-push : StructField(customer_id,StringType,true)StructField(customer_first_name,StringType,true)StructField(customer_last_name,StringType,true)StructField(customer_preferred_cust_flag,StringType,true)
+
+===========================================
+Query q12 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(i_item_id,StringType,false)StructField(i_item_desc,StringType,true)StructField(i_category,StringType,true)StructField(i_class,StringType,true)StructField(i_current_price,DecimalType(38,18),true)StructField(itemrevenue,DecimalType(38,18),true)StructField(revenueratio,DecimalType(38,6),true)
+    non-push : StructField(i_item_id,StringType,true)StructField(i_item_desc,StringType,true)StructField(i_category,StringType,true)StructField(i_class,StringType,true)StructField(i_current_price,DecimalType(38,18),true)StructField(itemrevenue,DecimalType(38,18),true)StructField(revenueratio,DecimalType(38,6),true)
+
+===========================================
+Query q13 validation passed.
+===========================================
+Query q15 validation passed.
+===========================================
+Query q16 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(order_count,LongType,false)StructField(total_shipping_cost,DecimalType(38,18),true)StructField(total_net_profit,DecimalType(38,18),true)
+    non-push : StructField(order_count,LongType,true)StructField(total_shipping_cost,DecimalType(38,18),true)StructField(total_net_profit,DecimalType(38,18),true)
+
+===========================================
+Query q17 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(i_item_id,StringType,false)StructField(i_item_desc,StringType,true)StructField(s_state,StringType,true)StructField(store_sales_quantitycount,LongType,false)StructField(store_sales_quantityave,DecimalType(38,22),true)StructField(store_sales_quantitystdev,DoubleType,true)StructField(store_sales_quantitycov,DoubleType,true)StructField(store_returns_quantitycount,LongType,false)StructField(store_returns_quantityave,DecimalType(38,22),true)StructField(store_returns_quantitystdev,DoubleType,true)StructField(store_returns_quantitycov,DoubleType,true)StructField(catalog_sales_quantitycount,LongType,false)StructField(catalog_sales_quantityave,DecimalType(38,22),true)StructField(catalog_sales_quantitystdev,DoubleType,true)StructField(catalog_sales_quantitycov,DoubleType,true)
+    non-push : StructField(i_item_id,StringType,true)StructField(i_item_desc,StringType,true)StructField(s_state,StringType,true)StructField(store_sales_quantitycount,LongType,true)StructField(store_sales_quantityave,DecimalType(38,22),true)StructField(store_sales_quantitystdev,DoubleType,true)StructField(store_sales_quantitycov,DoubleType,true)StructField(store_returns_quantitycount,LongType,true)StructField(store_returns_quantityave,DecimalType(38,22),true)StructField(store_returns_quantitystdev,DoubleType,true)StructField(store_returns_quantitycov,DoubleType,true)StructField(catalog_sales_quantitycount,LongType,true)StructField(catalog_sales_quantityave,DecimalType(38,22),true)StructField(catalog_sales_quantitystdev,DoubleType,true)StructField(catalog_sales_quantitycov,DoubleType,true)
+
+===========================================
+Query q18 validation passed.
+===========================================
+Query q19 validation passed.
+===========================================
+Query q20 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(i_item_id,StringType,false)StructField(i_item_desc,StringType,true)StructField(i_category,StringType,true)StructField(i_class,StringType,true)StructField(i_current_price,DecimalType(38,18),true)StructField(itemrevenue,DecimalType(38,18),true)StructField(revenueratio,DecimalType(38,6),true)
+    non-push : StructField(i_item_id,StringType,true)StructField(i_item_desc,StringType,true)StructField(i_category,StringType,true)StructField(i_class,StringType,true)StructField(i_current_price,DecimalType(38,18),true)StructField(itemrevenue,DecimalType(38,18),true)StructField(revenueratio,DecimalType(38,6),true)
+
+===========================================
+Query q21 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(w_warehouse_name,StringType,true)StructField(i_item_id,StringType,false)StructField(inv_before,DecimalType(38,18),true)StructField(inv_after,DecimalType(38,18),true)
+    non-push : StructField(w_warehouse_name,StringType,true)StructField(i_item_id,StringType,true)StructField(inv_before,DecimalType(38,18),true)StructField(inv_after,DecimalType(38,18),true)
+
+===========================================
+Query q22 validation passed.
+===========================================
+Query q23-1 validation passed.
+===========================================
+Query q24-1 validation passed.
+===========================================
+Query q24-2 validation passed.
+===========================================
+Query q25 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(i_item_id,StringType,false)StructField(i_item_desc,StringType,true)StructField(s_store_id,StringType,false)StructField(s_store_name,StringType,true)StructField(store_sales_profit,DecimalType(38,18),true)StructField(store_returns_loss,DecimalType(38,18),true)StructField(catalog_sales_profit,DecimalType(38,18),true)
+    non-push : StructField(i_item_id,StringType,true)StructField(i_item_desc,StringType,true)StructField(s_store_id,StringType,true)StructField(s_store_name,StringType,true)StructField(store_sales_profit,DecimalType(38,18),true)StructField(store_returns_loss,DecimalType(38,18),true)StructField(catalog_sales_profit,DecimalType(38,18),true)
+
+===========================================
+Query q26 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(i_item_id,StringType,false)StructField(agg1,DecimalType(38,22),true)StructField(agg2,DecimalType(38,22),true)StructField(agg3,DecimalType(38,22),true)StructField(agg4,DecimalType(38,22),true)
+    non-push : StructField(i_item_id,StringType,true)StructField(agg1,DecimalType(38,22),true)StructField(agg2,DecimalType(38,22),true)StructField(agg3,DecimalType(38,22),true)StructField(agg4,DecimalType(38,22),true)
+
+===========================================
+Query q27 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(i_item_id,StringType,true)StructField(s_state,StringType,true)StructField(g_state,ByteType,false)StructField(agg1,DecimalType(38,22),true)StructField(agg2,DecimalType(38,22),true)StructField(agg3,DecimalType(38,22),true)StructField(agg4,DecimalType(38,22),true)
+    non-push : StructField(i_item_id,StringType,true)StructField(s_state,StringType,true)StructField(g_state,ByteType,true)StructField(agg1,DecimalType(38,22),true)StructField(agg2,DecimalType(38,22),true)StructField(agg3,DecimalType(38,22),true)StructField(agg4,DecimalType(38,22),true)
+
+===========================================
+Query q28 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(B1_LP,DecimalType(38,22),true)StructField(B1_CNT,LongType,false)StructField(B1_CNTD,LongType,false)StructField(B2_LP,DecimalType(38,22),true)StructField(B2_CNT,LongType,false)StructField(B2_CNTD,LongType,false)StructField(B3_LP,DecimalType(38,22),true)StructField(B3_CNT,LongType,false)StructField(B3_CNTD,LongType,false)StructField(B4_LP,DecimalType(38,22),true)StructField(B4_CNT,LongType,false)StructField(B4_CNTD,LongType,false)StructField(B5_LP,DecimalType(38,22),true)StructField(B5_CNT,LongType,false)StructField(B5_CNTD,LongType,false)StructField(B6_LP,DecimalType(38,22),true)StructField(B6_CNT,LongType,false)StructField(B6_CNTD,LongType,false)
+    non-push : StructField(B1_LP,DecimalType(38,22),true)StructField(B1_CNT,LongType,true)StructField(B1_CNTD,LongType,true)StructField(B2_LP,DecimalType(38,22),true)StructField(B2_CNT,LongType,true)StructField(B2_CNTD,LongType,true)StructField(B3_LP,DecimalType(38,22),true)StructField(B3_CNT,LongType,true)StructField(B3_CNTD,LongType,true)StructField(B4_LP,DecimalType(38,22),true)StructField(B4_CNT,LongType,true)StructField(B4_CNTD,LongType,true)StructField(B5_LP,DecimalType(38,22),true)StructField(B5_CNT,LongType,true)StructField(B5_CNTD,LongType,true)StructField(B6_LP,DecimalType(38,22),true)StructField(B6_CNT,LongType,true)StructField(B6_CNTD,LongType,true)
+
+===========================================
+Query q29 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(i_item_id,StringType,false)StructField(i_item_desc,StringType,true)StructField(s_store_id,StringType,false)StructField(s_store_name,StringType,true)StructField(store_sales_quantity,DecimalType(38,18),true)StructField(store_returns_quantity,DecimalType(38,18),true)StructField(catalog_sales_quantity,DecimalType(38,18),true)
+    non-push : StructField(i_item_id,StringType,true)StructField(i_item_desc,StringType,true)StructField(s_store_id,StringType,true)StructField(s_store_name,StringType,true)StructField(store_sales_quantity,DecimalType(38,18),true)StructField(store_returns_quantity,DecimalType(38,18),true)StructField(catalog_sales_quantity,DecimalType(38,18),true)
+
+===========================================
+Query q30 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(c_customer_id,StringType,false)StructField(c_salutation,StringType,true)StructField(c_first_name,StringType,true)StructField(c_last_name,StringType,true)StructField(c_preferred_cust_flag,StringType,true)StructField(c_birth_day,DecimalType(38,18),true)StructField(c_birth_month,DecimalType(38,18),true)StructField(c_birth_year,DecimalType(38,18),true)StructField(c_birth_country,StringType,true)StructField(c_login,StringType,true)StructField(c_email_address,StringType,true)StructField(c_last_review_date_sk,DecimalType(38,18),true)StructField(ctr_total_return,DecimalType(38,18),true)
+    non-push : StructField(c_customer_id,StringType,true)StructField(c_salutation,StringType,true)StructField(c_first_name,StringType,true)StructField(c_last_name,StringType,true)StructField(c_preferred_cust_flag,StringType,true)StructField(c_birth_day,DecimalType(38,18),true)StructField(c_birth_month,DecimalType(38,18),true)StructField(c_birth_year,DecimalType(38,18),true)StructField(c_birth_country,StringType,true)StructField(c_login,StringType,true)StructField(c_email_address,StringType,true)StructField(c_last_review_date_sk,DecimalType(38,18),true)StructField(ctr_total_return,DecimalType(38,18),true)
+
+===========================================
+Query q31 validation passed.
+===========================================
+Query q32 validation passed.
+===========================================
+Query q33 validation passed.
+===========================================
+Query q34 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(c_last_name,StringType,true)StructField(c_first_name,StringType,true)StructField(c_salutation,StringType,true)StructField(c_preferred_cust_flag,StringType,true)StructField(ss_ticket_number,DecimalType(38,18),false)StructField(cnt,LongType,false)
+    non-push : StructField(c_last_name,StringType,true)StructField(c_first_name,StringType,true)StructField(c_salutation,StringType,true)StructField(c_preferred_cust_flag,StringType,true)StructField(ss_ticket_number,DecimalType(38,18),true)StructField(cnt,LongType,true)
+
+===========================================
+Query q35 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(ca_state,StringType,true)StructField(cd_gender,StringType,true)StructField(cd_marital_status,StringType,true)StructField(cd_dep_count,DecimalType(38,18),true)StructField(cnt1,LongType,false)StructField(min(cd_dep_count),DecimalType(38,18),true)StructField(max(cd_dep_count),DecimalType(38,18),true)StructField(avg(cd_dep_count),DecimalType(38,22),true)StructField(cd_dep_employed_count,DecimalType(38,18),true)StructField(cnt2,LongType,false)StructField(min(cd_dep_employed_count),DecimalType(38,18),true)StructField(max(cd_dep_employed_count),DecimalType(38,18),true)StructField(avg(cd_dep_employed_count),DecimalType(38,22),true)StructField(cd_dep_college_count,DecimalType(38,18),true)StructField(cnt3,LongType,false)StructField(min(cd_dep_college_count),DecimalType(38,18),true)StructField(max(cd_dep_college_count),DecimalType(38,18),true)StructField(avg(cd_dep_college_count),DecimalType(38,22),true)
+    non-push : StructField(ca_state,StringType,true)StructField(cd_gender,StringType,true)StructField(cd_marital_status,StringType,true)StructField(cd_dep_count,DecimalType(38,18),true)StructField(cnt1,LongType,true)StructField(min(cd_dep_count),DecimalType(38,18),true)StructField(max(cd_dep_count),DecimalType(38,18),true)StructField(avg(cd_dep_count),DecimalType(38,22),true)StructField(cd_dep_employed_count,DecimalType(38,18),true)StructField(cnt2,LongType,true)StructField(min(cd_dep_employed_count),DecimalType(38,18),true)StructField(max(cd_dep_employed_count),DecimalType(38,18),true)StructField(avg(cd_dep_employed_count),DecimalType(38,22),true)StructField(cd_dep_college_count,DecimalType(38,18),true)StructField(cnt3,LongType,true)StructField(min(cd_dep_college_count),DecimalType(38,18),true)StructField(max(cd_dep_college_count),DecimalType(38,18),true)StructField(avg(cd_dep_college_count),DecimalType(38,22),true)
+
+===========================================
+Query q36 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(gross_margin,DecimalType(38,6),true)StructField(i_category,StringType,true)StructField(i_class,StringType,true)StructField(lochierarchy,ByteType,false)StructField(rank_within_parent,IntegerType,true)
+    non-push : StructField(gross_margin,DecimalType(38,6),true)StructField(i_category,StringType,true)StructField(i_class,StringType,true)StructField(lochierarchy,ByteType,true)StructField(rank_within_parent,IntegerType,true)
+
+===========================================
+Query q37 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(i_item_id,StringType,false)StructField(i_item_desc,StringType,true)StructField(i_current_price,DecimalType(38,18),true)
+    non-push : StructField(i_item_id,StringType,true)StructField(i_item_desc,StringType,true)StructField(i_current_price,DecimalType(38,18),true)
+
+===========================================
+Query q38 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(count(1),LongType,false)
+    non-push : StructField(count(1),LongType,true)
+
+===========================================
+Query q39-1 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(w_warehouse_sk,DecimalType(38,18),false)StructField(i_item_sk,DecimalType(38,18),false)StructField(d_moy,DecimalType(38,18),true)StructField(mean,DecimalType(38,22),true)StructField(cov,DoubleType,true)StructField(w_warehouse_sk_2,DecimalType(38,18),false)StructField(i_item_sk_2,DecimalType(38,18),false)StructField(d_moy_2,DecimalType(38,18),true)StructField(mean_2,DecimalType(38,22),true)StructField(cov_2,DoubleType,true)
+    non-push : StructField(w_warehouse_sk,DecimalType(38,18),true)StructField(i_item_sk,DecimalType(38,18),true)StructField(d_moy,DecimalType(38,18),true)StructField(mean,DecimalType(38,22),true)StructField(cov,DoubleType,true)StructField(w_warehouse_sk_2,DecimalType(38,18),true)StructField(i_item_sk_2,DecimalType(38,18),true)StructField(d_moy_2,DecimalType(38,18),true)StructField(mean_2,DecimalType(38,22),true)StructField(cov_2,DoubleType,true)
+
+===========================================
+Query q39-2 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(w_warehouse_sk,DecimalType(38,18),false)StructField(i_item_sk,DecimalType(38,18),false)StructField(d_moy,DecimalType(38,18),true)StructField(mean,DecimalType(38,22),true)StructField(cov,DoubleType,true)StructField(w_warehouse_sk_2,DecimalType(38,18),false)StructField(i_item_sk_2,DecimalType(38,18),false)StructField(d_moy_2,DecimalType(38,18),true)StructField(mean_2,DecimalType(38,22),true)StructField(cov_2,DoubleType,true)
+    non-push : StructField(w_warehouse_sk,DecimalType(38,18),true)StructField(i_item_sk,DecimalType(38,18),true)StructField(d_moy,DecimalType(38,18),true)StructField(mean,DecimalType(38,22),true)StructField(cov,DoubleType,true)StructField(w_warehouse_sk_2,DecimalType(38,18),true)StructField(i_item_sk_2,DecimalType(38,18),true)StructField(d_moy_2,DecimalType(38,18),true)StructField(mean_2,DecimalType(38,22),true)StructField(cov_2,DoubleType,true)
+
+===========================================
+Query q40 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(w_state,StringType,true)StructField(i_item_id,StringType,false)StructField(sales_before,DecimalType(38,18),true)StructField(sales_after,DecimalType(38,18),true)
+    non-push : StructField(w_state,StringType,true)StructField(i_item_id,StringType,true)StructField(sales_before,DecimalType(38,18),true)StructField(sales_after,DecimalType(38,18),true)
+
+===========================================
+Query q41 validation passed.
+===========================================
+Query q42 validation passed.
+===========================================
+Query q43 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(s_store_name,StringType,true)StructField(s_store_id,StringType,false)StructField(sun_sales,DecimalType(38,18),true)StructField(mon_sales,DecimalType(38,18),true)StructField(tue_sales,DecimalType(38,18),true)StructField(wed_sales,DecimalType(38,18),true)StructField(thu_sales,DecimalType(38,18),true)StructField(fri_sales,DecimalType(38,18),true)StructField(sat_sales,DecimalType(38,18),true)
+    non-push : StructField(s_store_name,StringType,true)StructField(s_store_id,StringType,true)StructField(sun_sales,DecimalType(38,18),true)StructField(mon_sales,DecimalType(38,18),true)StructField(tue_sales,DecimalType(38,18),true)StructField(wed_sales,DecimalType(38,18),true)StructField(thu_sales,DecimalType(38,18),true)StructField(fri_sales,DecimalType(38,18),true)StructField(sat_sales,DecimalType(38,18),true)
+
+===========================================
+Query q44 validation passed.
+===========================================
+Query q45 validation passed.
+===========================================
+Query q46 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(c_last_name,StringType,true)StructField(c_first_name,StringType,true)StructField(ca_city,StringType,true)StructField(bought_city,StringType,true)StructField(ss_ticket_number,DecimalType(38,18),false)StructField(amt,DecimalType(38,18),true)StructField(profit,DecimalType(38,18),true)
+    non-push : StructField(c_last_name,StringType,true)StructField(c_first_name,StringType,true)StructField(ca_city,StringType,true)StructField(bought_city,StringType,true)StructField(ss_ticket_number,DecimalType(38,18),true)StructField(amt,DecimalType(38,18),true)StructField(profit,DecimalType(38,18),true)
+
+===========================================
+Query q47 validation passed.
+===========================================
+Query q48 validation passed.
+===========================================
+Query q49 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(channel,StringType,false)StructField(item,DecimalType(38,18),false)StructField(return_ratio,DecimalType(35,20),true)StructField(return_rank,IntegerType,true)StructField(currency_rank,IntegerType,true)
+    non-push : StructField(channel,StringType,true)StructField(item,DecimalType(38,18),true)StructField(return_ratio,DecimalType(35,20),true)StructField(return_rank,IntegerType,true)StructField(currency_rank,IntegerType,true)
+
+===========================================
+Query q50 validation passed.
+===========================================
+Query q51 validation passed.
+===========================================
+Query q52 validation passed.
+===========================================
+Query q53 validation passed.
+===========================================
+Query q54 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(segment,IntegerType,true)StructField(num_customers,LongType,false)StructField(segment_base,IntegerType,true)
+    non-push : StructField(segment,IntegerType,true)StructField(num_customers,LongType,true)StructField(segment_base,IntegerType,true)
+
+===========================================
+Query q55 validation passed.
+===========================================
+Query q56 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(i_item_id,StringType,false)StructField(total_sales,DecimalType(38,18),true)
+    non-push : StructField(i_item_id,StringType,true)StructField(total_sales,DecimalType(38,18),true)
+
+===========================================
+Query q57 validation passed.
+===========================================
+Query q58 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(item_id,StringType,false)StructField(ss_item_rev,DecimalType(38,18),true)StructField(ss_dev,DecimalType(38,6),true)StructField(cs_item_rev,DecimalType(38,18),true)StructField(cs_dev,DecimalType(38,6),true)StructField(ws_item_rev,DecimalType(38,18),true)StructField(ws_dev,DecimalType(38,6),true)StructField(average,DecimalType(38,16),true)
+    non-push : StructField(item_id,StringType,true)StructField(ss_item_rev,DecimalType(38,18),true)StructField(ss_dev,DecimalType(38,6),true)StructField(cs_item_rev,DecimalType(38,18),true)StructField(cs_dev,DecimalType(38,6),true)StructField(ws_item_rev,DecimalType(38,18),true)StructField(ws_dev,DecimalType(38,6),true)StructField(average,DecimalType(38,16),true)
+
+===========================================
+Query q59 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(s_store_name1,StringType,true)StructField(s_store_id1,StringType,false)StructField(d_week_seq1,DecimalType(38,18),true)StructField((sun_sales1 / sun_sales2),DecimalType(38,6),true)StructField((mon_sales1 / mon_sales2),DecimalType(38,6),true)StructField((tue_sales1 / tue_sales2),DecimalType(38,6),true)StructField((wed_sales1 / wed_sales2),DecimalType(38,6),true)StructField((thu_sales1 / thu_sales2),DecimalType(38,6),true)StructField((fri_sales1 / fri_sales2),DecimalType(38,6),true)StructField((sat_sales1 / sat_sales2),DecimalType(38,6),true)
+    non-push : StructField(s_store_name1,StringType,true)StructField(s_store_id1,StringType,true)StructField(d_week_seq1,DecimalType(38,18),true)StructField((sun_sales1 / sun_sales2),DecimalType(38,6),true)StructField((mon_sales1 / mon_sales2),DecimalType(38,6),true)StructField((tue_sales1 / tue_sales2),DecimalType(38,6),true)StructField((wed_sales1 / wed_sales2),DecimalType(38,6),true)StructField((thu_sales1 / thu_sales2),DecimalType(38,6),true)StructField((fri_sales1 / fri_sales2),DecimalType(38,6),true)StructField((sat_sales1 / sat_sales2),DecimalType(38,6),true)
+
+===========================================
+Query q60 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(i_item_id,StringType,false)StructField(total_sales,DecimalType(38,18),true)
+    non-push : StructField(i_item_id,StringType,true)StructField(total_sales,DecimalType(38,18),true)
+
+===========================================
+Query q61 validation passed.
+===========================================
+Query q62 validation passed.
+===========================================
+Query q63 validation passed.
+===========================================
+Query q64 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(product_name,StringType,true)StructField(store_name,StringType,true)StructField(store_zip,StringType,true)StructField(b_street_number,StringType,true)StructField(b_street_name,StringType,true)StructField(b_city,StringType,true)StructField(b_zip,StringType,true)StructField(c_street_number,StringType,true)StructField(c_street_name,StringType,true)StructField(c_city,StringType,true)StructField(c_zip,StringType,true)StructField(syear,DecimalType(38,18),true)StructField(cnt,LongType,false)StructField(s11,DecimalType(38,18),true)StructField(s21,DecimalType(38,18),true)StructField(s31,DecimalType(38,18),true)StructField(s12,DecimalType(38,18),true)StructField(s22,DecimalType(38,18),true)StructField(s32,DecimalType(38,18),true)StructField(syear_2,DecimalType(38,18),true)StructField(cnt_2,LongType,false)
+    non-push : StructField(product_name,StringType,true)StructField(store_name,StringType,true)StructField(store_zip,StringType,true)StructField(b_street_number,StringType,true)StructField(b_street_name,StringType,true)StructField(b_city,StringType,true)StructField(b_zip,StringType,true)StructField(c_street_number,StringType,true)StructField(c_street_name,StringType,true)StructField(c_city,StringType,true)StructField(c_zip,StringType,true)StructField(syear,DecimalType(38,18),true)StructField(cnt,LongType,true)StructField(s11,DecimalType(38,18),true)StructField(s21,DecimalType(38,18),true)StructField(s31,DecimalType(38,18),true)StructField(s12,DecimalType(38,18),true)StructField(s22,DecimalType(38,18),true)StructField(s32,DecimalType(38,18),true)StructField(syear_2,DecimalType(38,18),true)StructField(cnt_2,LongType,true)
+
+===========================================
+Query q65 validation passed.
+===========================================
+Query q67 validation failed:
+  values in row 0, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 0, column 8 don't match
+    push : push_value=1.022469719E8
+    non-push : nonPushValue=102328.6
+  values in row 0, column 9 don't match
+    push : push_value=1.0
+    non-push : nonPushValue=62.0
+  values in row 1, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 1, column 1 don't match
+    push : value=arts                                              
+    non-push : value=null
+  values in row 1, column 8 don't match
+    push : push_value=5188162.2
+    non-push : nonPushValue=596191.7
+  values in row 1, column 9 don't match
+    push : push_value=17.0
+    non-push : nonPushValue=4.0
+  values in row 2, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 2, column 1 don't match
+    push : value=arts                                              
+    non-push : value=null
+  values in row 2, column 2 don't match
+    push : value=amalgmaxi #12                                     
+    non-push : value=null
+  values in row 2, column 8 don't match
+    push : push_value=1577322.2
+    non-push : nonPushValue=1628997.0
+  values in row 2, column 9 don't match
+    push : push_value=26.0
+    non-push : nonPushValue=3.0
+  values in row 3, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 3, column 1 don't match
+    push : value=arts                                              
+    non-push : value=null
+  values in row 3, column 2 don't match
+    push : value=amalgmaxi #2                                      
+    non-push : value=null
+  values in row 3, column 8 don't match
+    push : push_value=757558.2
+    non-push : nonPushValue=3113996.9
+  values in row 3, column 9 don't match
+    push : push_value=93.0
+    non-push : nonPushValue=2.0
+  values in row 4, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 4, column 1 don't match
+    push : value=arts                                              
+    non-push : value=null
+  values in row 4, column 2 don't match
+    push : value=amalgmaxi #3                                      
+    non-push : value=null
+  values in row 4, column 8 don't match
+    push : push_value=889848.7
+    non-push : nonPushValue=1.0197892187E9
+  values in row 4, column 9 don't match
+    push : push_value=79.0
+    non-push : nonPushValue=1.0
+  values in row 5, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 5, column 1 don't match
+    push : value=arts                                              
+    non-push : value=null
+  values in row 5, column 2 don't match
+    push : value=amalgmaxi #9                                      
+    non-push : value=null
+  values in row 5, column 4 don't match
+    push : push_value=null
+    non-push : nonPushValue=2000.0
+  values in row 5, column 8 don't match
+    push : push_value=816219.1
+    non-push : nonPushValue=102328.6
+  values in row 5, column 9 don't match
+    push : push_value=89.0
+    non-push : nonPushValue=62.0
+  values in row 6, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 6, column 1 don't match
+    push : value=business                                          
+    non-push : value=null
+  values in row 6, column 3 don't match
+    push : push_value=null
+    non-push : nonPushValue=ablepriablebarought
+  values in row 6, column 8 don't match
+    push : push_value=5905977.3
+    non-push : nonPushValue=117683.5
+  values in row 6, column 9 don't match
+    push : push_value=10.0
+    non-push : nonPushValue=38.0
+  values in row 7, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 7, column 1 don't match
+    push : value=business                                          
+    non-push : value=null
+  values in row 7, column 2 don't match
+    push : value=importomaxi #12                                   
+    non-push : value=null
+  values in row 7, column 3 don't match
+    push : push_value=null
+    non-push : nonPushValue=ablepriablebarought
+  values in row 7, column 4 don't match
+    push : push_value=null
+    non-push : nonPushValue=2000.0
+  values in row 7, column 8 don't match
+    push : push_value=1288307.3
+    non-push : nonPushValue=117683.5
+  values in row 7, column 9 don't match
+    push : push_value=42.0
+    non-push : nonPushValue=38.0
+  values in row 8, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 8, column 1 don't match
+    push : value=business                                          
+    non-push : value=null
+  values in row 8, column 2 don't match
+    push : value=importomaxi #2                                    
+    non-push : value=null
+  values in row 8, column 3 don't match
+    push : push_value=null
+    non-push : nonPushValue=antiationeinganti
+  values in row 8, column 8 don't match
+    push : push_value=985887.1
+    non-push : nonPushValue=142234.2
+  values in row 8, column 9 don't match
+    push : push_value=68.0
+    non-push : nonPushValue=15.0
+  values in row 9, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 9, column 1 don't match
+    push : value=business                                          
+    non-push : value=null
+  values in row 9, column 2 don't match
+    push : value=importomaxi #8                                    
+    non-push : value=null
+  values in row 9, column 3 don't match
+    push : push_value=null
+    non-push : nonPushValue=antiationeinganti
+  values in row 9, column 4 don't match
+    push : push_value=null
+    non-push : nonPushValue=2000.0
+  values in row 9, column 8 don't match
+    push : push_value=1067725.7
+    non-push : nonPushValue=142234.2
+  values in row 9, column 9 don't match
+    push : push_value=61.0
+    non-push : nonPushValue=15.0
+  values in row 10, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 10, column 1 don't match
+    push : value=business                                          
+    non-push : value=null
+  values in row 10, column 2 don't match
+    push : value=importomaxi #9                                    
+    non-push : value=null
+  values in row 10, column 3 don't match
+    push : push_value=null
+    non-push : nonPushValue=barationableeing
+  values in row 10, column 8 don't match
+    push : push_value=1269598.9
+    non-push : nonPushValue=133715.9
+  values in row 10, column 9 don't match
+    push : push_value=45.0
+    non-push : nonPushValue=25.0
+  values in row 11, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 11, column 1 don't match
+    push : value=computers                                         
+    non-push : value=null
+  values in row 11, column 3 don't match
+    push : push_value=null
+    non-push : nonPushValue=barationableeing
+  values in row 11, column 4 don't match
+    push : push_value=null
+    non-push : nonPushValue=2000.0
+  values in row 11, column 8 don't match
+    push : push_value=7061536.0
+    non-push : nonPushValue=133715.9
+  values in row 11, column 9 don't match
+    push : push_value=7.0
+    non-push : nonPushValue=25.0
+  values in row 12, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 12, column 1 don't match
+    push : value=computers                                         
+    non-push : value=null
+  values in row 12, column 2 don't match
+    push : value=exportimaxi #12                                   
+    non-push : value=null
+  values in row 12, column 3 don't match
+    push : push_value=null
+    non-push : nonPushValue=barationableeing
+  values in row 12, column 4 don't match
+    push : push_value=null
+    non-push : nonPushValue=2000.0
+  values in row 12, column 5 don't match
+    push : push_value=null
+    non-push : nonPushValue=4.0
+  values in row 12, column 8 don't match
+    push : push_value=1456918.7
+    non-push : nonPushValue=66366.7
+  values in row 12, column 9 don't match
+    push : push_value=28.0
+    non-push : nonPushValue=100.0
+  values in row 13, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 13, column 1 don't match
+    push : value=computers                                         
+    non-push : value=null
+  values in row 13, column 2 don't match
+    push : value=exportimaxi #2                                    
+    non-push : value=null
+  values in row 13, column 3 don't match
+    push : push_value=null
+    non-push : nonPushValue=eingcallyoughteing
+  values in row 13, column 8 don't match
+    push : push_value=1626664.0
+    non-push : nonPushValue=100229.5
+  values in row 13, column 9 don't match
+    push : push_value=24.0
+    non-push : nonPushValue=67.0
+  values in row 14, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 14, column 1 don't match
+    push : value=computers                                         
+    non-push : value=null
+  values in row 14, column 2 don't match
+    push : value=exportimaxi #3                                    
+    non-push : value=null
+  values in row 14, column 3 don't match
+    push : push_value=null
+    non-push : nonPushValue=eingcallyoughteing
+  values in row 14, column 4 don't match
+    push : push_value=null
+    non-push : nonPushValue=2000.0
+  values in row 14, column 8 don't match
+    push : push_value=875667.6
+    non-push : nonPushValue=100229.5
+  values in row 14, column 9 don't match
+    push : push_value=82.0
+    non-push : nonPushValue=67.0
+  values in row 15, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 15, column 1 don't match
+    push : value=computers                                         
+    non-push : value=null
+  values in row 15, column 2 don't match
+    push : push_value=exportimaxi #6                                    
+    non-push : nonPushValue=brandmaxi #2
+  values in row 15, column 8 don't match
+    push : push_value=847659.0
+    non-push : nonPushValue=102830.0
+  values in row 15, column 9 don't match
+    push : push_value=86.0
+    non-push : nonPushValue=59.0
+  values in row 16, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 16, column 1 don't match
+    push : value=computers                                         
+    non-push : value=null
+  values in row 16, column 2 don't match
+    push : push_value=exportimaxi #8                                    
+    non-push : nonPushValue=brandmaxi #2
+  values in row 16, column 3 don't match
+    push : push_value=null
+    non-push : nonPushValue=oughteingought
+  values in row 16, column 8 don't match
+    push : push_value=1189646.7
+    non-push : nonPushValue=102830.0
+  values in row 16, column 9 don't match
+    push : push_value=49.0
+    non-push : nonPushValue=59.0
+  values in row 17, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 17, column 1 don't match
+    push : value=computers                                         
+    non-push : value=null
+  values in row 17, column 2 don't match
+    push : push_value=exportimaxi #9                                    
+    non-push : nonPushValue=brandmaxi #2
+  values in row 17, column 3 don't match
+    push : push_value=null
+    non-push : nonPushValue=oughteingought
+  values in row 17, column 4 don't match
+    push : push_value=null
+    non-push : nonPushValue=2000.0
+  values in row 17, column 8 don't match
+    push : push_value=1059846.0
+    non-push : nonPushValue=102830.0
+  values in row 17, column 9 don't match
+    push : push_value=63.0
+    non-push : nonPushValue=59.0
+  values in row 18, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 18, column 1 don't match
+    push : value=cooking                                           
+    non-push : value=null
+  values in row 18, column 2 don't match
+    push : push_value=null
+    non-push : nonPushValue=corpunivamalg #3
+  values in row 18, column 8 don't match
+    push : push_value=5357549.5
+    non-push : nonPushValue=87301.4
+  values in row 18, column 9 don't match
+    push : push_value=16.0
+    non-push : nonPushValue=80.0
+  values in row 19, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 19, column 1 don't match
+    push : value=cooking                                           
+    non-push : value=null
+  values in row 19, column 2 don't match
+    push : push_value=amalgunivamalg #12                                
+    non-push : nonPushValue=corpunivamalg #3
+  values in row 19, column 3 don't match
+    push : push_value=null
+    non-push : nonPushValue=eseantin stationought
+  values in row 19, column 8 don't match
+    push : push_value=1097730.0
+    non-push : nonPushValue=87301.4
+  values in row 19, column 9 don't match
+    push : push_value=58.0
+    non-push : nonPushValue=80.0
+  values in row 20, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 20, column 1 don't match
+    push : value=cooking                                           
+    non-push : value=null
+  values in row 20, column 2 don't match
+    push : push_value=amalgunivamalg #3                                 
+    non-push : nonPushValue=corpunivamalg #3
+  values in row 20, column 3 don't match
+    push : push_value=null
+    non-push : nonPushValue=eseantin stationought
+  values in row 20, column 4 don't match
+    push : push_value=null
+    non-push : nonPushValue=2000.0
+  values in row 20, column 8 don't match
+    push : push_value=978431.5
+    non-push : nonPushValue=87301.4
+  values in row 20, column 9 don't match
+    push : push_value=69.0
+    non-push : nonPushValue=80.0
+  values in row 21, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 21, column 1 don't match
+    push : value=cooking                                           
+    non-push : value=null
+  values in row 21, column 2 don't match
+    push : push_value=amalgunivamalg #6                                 
+    non-push : nonPushValue=edu packamalg #2
+  values in row 21, column 8 don't match
+    push : push_value=858562.3
+    non-push : nonPushValue=106947.8
+  values in row 21, column 9 don't match
+    push : push_value=84.0
+    non-push : nonPushValue=48.0
+  values in row 22, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 22, column 1 don't match
+    push : value=cooking                                           
+    non-push : value=null
+  values in row 22, column 2 don't match
+    push : push_value=amalgunivamalg #8                                 
+    non-push : nonPushValue=edu packamalg #2
+  values in row 22, column 3 don't match
+    push : push_value=null
+    non-push : nonPushValue=oughtn stn stese
+  values in row 22, column 8 don't match
+    push : push_value=917692.0
+    non-push : nonPushValue=106947.8
+  values in row 22, column 9 don't match
+    push : push_value=74.0
+    non-push : nonPushValue=48.0
+  values in row 23, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 23, column 1 don't match
+    push : value=cooking                                           
+    non-push : value=null
+  values in row 23, column 2 don't match
+    push : push_value=amalgunivamalg #9                                 
+    non-push : nonPushValue=edu packamalg #2
+  values in row 23, column 3 don't match
+    push : push_value=null
+    non-push : nonPushValue=oughtn stn stese
+  values in row 23, column 4 don't match
+    push : push_value=null
+    non-push : nonPushValue=2000.0
+  values in row 23, column 8 don't match
+    push : push_value=881045.3
+    non-push : nonPushValue=106947.8
+  values in row 23, column 9 don't match
+    push : push_value=80.0
+    non-push : nonPushValue=48.0
+  values in row 24, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 24, column 1 don't match
+    push : value=entertainments                                    
+    non-push : value=null
+  values in row 24, column 2 don't match
+    push : push_value=null
+    non-push : nonPushValue=edu packamalgamalg #17
+  values in row 24, column 8 don't match
+    push : push_value=5465761.5
+    non-push : nonPushValue=91126.7
+  values in row 24, column 9 don't match
+    push : push_value=14.0
+    non-push : nonPushValue=77.0
+  values in row 25, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 25, column 1 don't match
+    push : value=entertainments                                    
+    non-push : value=null
+  values in row 25, column 2 don't match
+    push : push_value=edu packmaxi #12                                  
+    non-push : nonPushValue=edu packamalgamalg #17
+  values in row 25, column 8 don't match
+    push : push_value=962267.0
+    non-push : nonPushValue=91126.7
+  values in row 25, column 9 don't match
+    push : push_value=70.0
+    non-push : nonPushValue=77.0
+  values in row 26, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 26, column 1 don't match
+    push : value=entertainments                                    
+    non-push : value=null
+  values in row 26, column 2 don't match
+    push : push_value=edu packmaxi #2                                   
+    non-push : nonPushValue=edu packamalgamalg #17
+  values in row 26, column 4 don't match
+    push : push_value=null
+    non-push : nonPushValue=2000.0
+  values in row 26, column 8 don't match
+    push : push_value=750249.8
+    non-push : nonPushValue=91126.7
+  values in row 26, column 9 don't match
+    push : push_value=94.0
+    non-push : nonPushValue=77.0
+  values in row 27, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 27, column 1 don't match
+    push : value=entertainments                                    
+    non-push : value=null
+  values in row 27, column 2 don't match
+    push : push_value=edu packmaxi #3                                   
+    non-push : nonPushValue=edu packexporti #1
+  values in row 27, column 8 don't match
+    push : push_value=1325140.6
+    non-push : nonPushValue=163163.8
+  values in row 27, column 9 don't match
+    push : push_value=39.0
+    non-push : nonPushValue=6.0
+  values in row 28, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 28, column 1 don't match
+    push : value=entertainments                                    
+    non-push : value=null
+  values in row 28, column 2 don't match
+    push : push_value=edu packmaxi #6                                   
+    non-push : nonPushValue=edu packexporti #1
+  values in row 28, column 8 don't match
+    push : push_value=874454.9
+    non-push : nonPushValue=163163.8
+  values in row 28, column 9 don't match
+    push : push_value=83.0
+    non-push : nonPushValue=6.0
+  values in row 29, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 29, column 1 don't match
+    push : value=entertainments                                    
+    non-push : value=null
+  values in row 29, column 2 don't match
+    push : push_value=edu packmaxi #8                                   
+    non-push : nonPushValue=edu packexporti #1
+  values in row 29, column 4 don't match
+    push : push_value=null
+    non-push : nonPushValue=2000.0
+  values in row 29, column 8 don't match
+    push : push_value=894416.6
+    non-push : nonPushValue=163163.8
+  values in row 29, column 9 don't match
+    push : push_value=78.0
+    non-push : nonPushValue=6.0
+  values in row 30, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 30, column 1 don't match
+    push : value=fiction                                           
+    non-push : value=null
+  values in row 30, column 2 don't match
+    push : push_value=null
+    non-push : nonPushValue=edu packexporti #1
+  values in row 30, column 4 don't match
+    push : push_value=null
+    non-push : nonPushValue=2000.0
+  values in row 30, column 5 don't match
+    push : push_value=null
+    non-push : nonPushValue=4.0
+  values in row 30, column 8 don't match
+    push : push_value=7867516.4
+    non-push : nonPushValue=68406.9
+  values in row 30, column 9 don't match
+    push : push_value=3.0
+    non-push : nonPushValue=97.0
+  values in row 31, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 31, column 1 don't match
+    push : value=fiction                                           
+    non-push : value=null
+  values in row 31, column 2 don't match
+    push : push_value=scholarunivamalg #12                              
+    non-push : nonPushValue=exportischolar #2
+  values in row 31, column 8 don't match
+    push : push_value=957012.6
+    non-push : nonPushValue=121562.9
+  values in row 31, column 9 don't match
+    push : push_value=71.0
+    non-push : nonPushValue=31.0
+  values in row 32, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 32, column 1 don't match
+    push : value=fiction                                           
+    non-push : value=null
+  values in row 32, column 2 don't match
+    push : push_value=scholarunivamalg #2                               
+    non-push : nonPushValue=exportischolar #2
+  values in row 32, column 3 don't match
+    push : push_value=null
+    non-push : nonPushValue=prieingeseought
+  values in row 32, column 8 don't match
+    push : push_value=1798977.0
+    non-push : nonPushValue=121562.9
+  values in row 32, column 9 don't match
+    push : push_value=20.0
+    non-push : nonPushValue=31.0
+  values in row 33, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 33, column 1 don't match
+    push : value=fiction                                           
+    non-push : value=null
+  values in row 33, column 2 don't match
+    push : push_value=scholarunivamalg #3                               
+    non-push : nonPushValue=exportischolar #2
+  values in row 33, column 3 don't match
+    push : push_value=null
+    non-push : nonPushValue=prieingeseought
+  values in row 33, column 4 don't match
+    push : push_value=null
+    non-push : nonPushValue=2000.0
+  values in row 33, column 8 don't match
+    push : push_value=1288272.9
+    non-push : nonPushValue=121562.9
+  values in row 33, column 9 don't match
+    push : push_value=43.0
+    non-push : nonPushValue=31.0
+  values in row 34, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 34, column 1 don't match
+    push : value=fiction                                           
+    non-push : value=null
+  values in row 34, column 2 don't match
+    push : push_value=scholarunivamalg #6                               
+    non-push : nonPushValue=importoedu pack #1
+  values in row 34, column 8 don't match
+    push : push_value=1031571.4
+    non-push : nonPushValue=154984.0
+  values in row 34, column 9 don't match
+    push : push_value=65.0
+    non-push : nonPushValue=9.0
+  values in row 35, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 35, column 1 don't match
+    push : value=fiction                                           
+    non-push : value=null
+  values in row 35, column 2 don't match
+    push : push_value=scholarunivamalg #8                               
+    non-push : nonPushValue=importoedu pack #1
+  values in row 35, column 8 don't match
+    push : push_value=1444468.9
+    non-push : nonPushValue=154984.0
+  values in row 35, column 9 don't match
+    push : push_value=30.0
+    non-push : nonPushValue=9.0
+  values in row 36, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 36, column 1 don't match
+    push : value=fiction                                           
+    non-push : value=null
+  values in row 36, column 2 don't match
+    push : push_value=scholarunivamalg #9                               
+    non-push : nonPushValue=importoedu pack #1
+  values in row 36, column 4 don't match
+    push : push_value=null
+    non-push : nonPushValue=2000.0
+  values in row 36, column 8 don't match
+    push : push_value=1333004.2
+    non-push : nonPushValue=154984.0
+  values in row 36, column 9 don't match
+    push : push_value=38.0
+    non-push : nonPushValue=9.0
+  values in row 37, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 37, column 1 don't match
+    push : value=history                                           
+    non-push : value=null
+  values in row 37, column 2 don't match
+    push : push_value=null
+    non-push : nonPushValue=importoedu pack #1
+  values in row 37, column 4 don't match
+    push : push_value=null
+    non-push : nonPushValue=2000.0
+  values in row 37, column 5 don't match
+    push : push_value=null
+    non-push : nonPushValue=4.0
+  values in row 37, column 8 don't match
+    push : push_value=8458815.1
+    non-push : nonPushValue=73781.2
+  values in row 37, column 9 don't match
+    push : push_value=2.0
+    non-push : nonPushValue=90.0
+  values in row 38, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 38, column 1 don't match
+    push : value=history                                           
+    non-push : value=null
+  values in row 38, column 2 don't match
+    push : push_value=scholarmaxi #12                                   
+    non-push : nonPushValue=namelesscorp #1
+  values in row 38, column 8 don't match
+    push : push_value=1407801.0
+    non-push : nonPushValue=148627.3
+  values in row 38, column 9 don't match
+    push : push_value=34.0
+    non-push : nonPushValue=12.0
+  values in row 39, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 39, column 1 don't match
+    push : value=history                                           
+    non-push : value=null
+  values in row 39, column 2 don't match
+    push : push_value=scholarmaxi #2                                    
+    non-push : nonPushValue=namelesscorp #1
+  values in row 39, column 8 don't match
+    push : push_value=1601550.9
+    non-push : nonPushValue=148627.3
+  values in row 39, column 9 don't match
+    push : push_value=25.0
+    non-push : nonPushValue=12.0
+  values in row 40, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 40, column 1 don't match
+    push : value=history                                           
+    non-push : value=null
+  values in row 40, column 2 don't match
+    push : push_value=scholarmaxi #3                                    
+    non-push : nonPushValue=namelesscorp #1
+  values in row 40, column 4 don't match
+    push : push_value=null
+    non-push : nonPushValue=2000.0
+  values in row 40, column 8 don't match
+    push : push_value=1181491.2
+    non-push : nonPushValue=148627.3
+  values in row 40, column 9 don't match
+    push : push_value=50.0
+    non-push : nonPushValue=12.0
+  values in row 41, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 41, column 1 don't match
+    push : value=history                                           
+    non-push : value=null
+  values in row 41, column 2 don't match
+    push : push_value=scholarmaxi #6                                    
+    non-push : nonPushValue=namelesscorp #1
+  values in row 41, column 4 don't match
+    push : push_value=null
+    non-push : nonPushValue=2000.0
+  values in row 41, column 5 don't match
+    push : push_value=null
+    non-push : nonPushValue=4.0
+  values in row 41, column 8 don't match
+    push : push_value=1175904.7
+    non-push : nonPushValue=67371.6
+  values in row 41, column 9 don't match
+    push : push_value=51.0
+    non-push : nonPushValue=98.0
+  values in row 42, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 42, column 1 don't match
+    push : push_value=history                                           
+    non-push : nonPushValue=archery
+  values in row 42, column 2 don't match
+    push : value=scholarmaxi #8                                    
+    non-push : value=null
+  values in row 42, column 8 don't match
+    push : push_value=1205167.1
+    non-push : nonPushValue=110089.0
+  values in row 42, column 9 don't match
+    push : push_value=48.0
+    non-push : nonPushValue=44.0
+  values in row 43, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 43, column 1 don't match
+    push : push_value=history                                           
+    non-push : nonPushValue=archery
+  values in row 43, column 2 don't match
+    push : push_value=scholarmaxi #9                                    
+    non-push : nonPushValue=amalgmaxi #6
+  values in row 43, column 8 don't match
+    push : push_value=1873408.0
+    non-push : nonPushValue=110089.0
+  values in row 43, column 9 don't match
+    push : push_value=18.0
+    non-push : nonPushValue=44.0
+  values in row 44, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 44, column 1 don't match
+    push : push_value=home repair                                       
+    non-push : nonPushValue=archery
+  values in row 44, column 2 don't match
+    push : push_value=null
+    non-push : nonPushValue=amalgmaxi #6
+  values in row 44, column 3 don't match
+    push : push_value=null
+    non-push : nonPushValue=antioughtn stought
+  values in row 44, column 8 don't match
+    push : push_value=7388154.7
+    non-push : nonPushValue=110089.0
+  values in row 44, column 9 don't match
+    push : push_value=4.0
+    non-push : nonPushValue=44.0
+  values in row 45, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 45, column 1 don't match
+    push : push_value=home repair                                       
+    non-push : nonPushValue=archery
+  values in row 45, column 2 don't match
+    push : push_value=importounivamalg #12                              
+    non-push : nonPushValue=amalgmaxi #6
+  values in row 45, column 3 don't match
+    push : push_value=null
+    non-push : nonPushValue=antioughtn stought
+  values in row 45, column 4 don't match
+    push : push_value=null
+    non-push : nonPushValue=2000.0
+  values in row 45, column 8 don't match
+    push : push_value=929871.5
+    non-push : nonPushValue=110089.0
+  values in row 45, column 9 don't match
+    push : push_value=72.0
+    non-push : nonPushValue=44.0
+  values in row 46, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 46, column 1 don't match
+    push : push_value=home repair                                       
+    non-push : nonPushValue=baseball
+  values in row 46, column 2 don't match
+    push : value=importounivamalg #2                               
+    non-push : value=null
+  values in row 46, column 8 don't match
+    push : push_value=1672201.6
+    non-push : nonPushValue=93607.1
+  values in row 46, column 9 don't match
+    push : push_value=22.0
+    non-push : nonPushValue=73.0
+  values in row 47, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 47, column 1 don't match
+    push : push_value=home repair                                       
+    non-push : nonPushValue=baseball
+  values in row 47, column 2 don't match
+    push : value=importounivamalg #3                               
+    non-push : value=null
+  values in row 47, column 8 don't match
+    push : push_value=1321000.9
+    non-push : nonPushValue=93607.1
+  values in row 47, column 9 don't match
+    push : push_value=40.0
+    non-push : nonPushValue=73.0
+  values in row 48, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 48, column 1 don't match
+    push : push_value=home repair                                       
+    non-push : nonPushValue=baseball
+  values in row 48, column 2 don't match
+    push : value=importounivamalg #6                               
+    non-push : value=null
+  values in row 48, column 8 don't match
+    push : push_value=717528.0
+    non-push : nonPushValue=93607.1
+  values in row 48, column 9 don't match
+    push : push_value=96.0
+    non-push : nonPushValue=73.0
+  values in row 49, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 49, column 1 don't match
+    push : push_value=home repair                                       
+    non-push : nonPushValue=baseball
+  values in row 49, column 2 don't match
+    push : value=importounivamalg #8                               
+    non-push : value=null
+  values in row 49, column 4 don't match
+    push : push_value=null
+    non-push : nonPushValue=2000.0
+  values in row 49, column 8 don't match
+    push : push_value=1669034.0
+    non-push : nonPushValue=93607.1
+  values in row 49, column 9 don't match
+    push : push_value=23.0
+    non-push : nonPushValue=73.0
+  values in row 50, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 50, column 1 don't match
+    push : push_value=home repair                                       
+    non-push : nonPushValue=dresses
+  values in row 50, column 2 don't match
+    push : value=importounivamalg #9                               
+    non-push : value=null
+  values in row 50, column 8 don't match
+    push : push_value=1066519.1
+    non-push : nonPushValue=138018.8
+  values in row 50, column 9 don't match
+    push : push_value=62.0
+    non-push : nonPushValue=17.0
+  values in row 51, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 51, column 1 don't match
+    push : push_value=mystery                                           
+    non-push : nonPushValue=dresses
+  values in row 51, column 8 don't match
+    push : push_value=5559086.8
+    non-push : nonPushValue=138018.8
+  values in row 51, column 9 don't match
+    push : push_value=13.0
+    non-push : nonPushValue=17.0
+  values in row 52, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 52, column 1 don't match
+    push : push_value=mystery                                           
+    non-push : nonPushValue=dresses
+  values in row 52, column 2 don't match
+    push : value=corpunivamalg #12                                 
+    non-push : value=null
+  values in row 52, column 3 don't match
+    push : push_value=null
+    non-push : nonPushValue=antieseoughtcally
+  values in row 52, column 8 don't match
+    push : push_value=1146116.1
+    non-push : nonPushValue=138018.8
+  values in row 52, column 9 don't match
+    push : push_value=54.0
+    non-push : nonPushValue=17.0
+  values in row 53, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 53, column 1 don't match
+    push : push_value=mystery                                           
+    non-push : nonPushValue=dresses
+  values in row 53, column 2 don't match
+    push : value=corpunivamalg #2                                  
+    non-push : value=null
+  values in row 53, column 3 don't match
+    push : push_value=null
+    non-push : nonPushValue=antieseoughtcally
+  values in row 53, column 4 don't match
+    push : push_value=null
+    non-push : nonPushValue=2000.0
+  values in row 53, column 8 don't match
+    push : push_value=748000.0
+    non-push : nonPushValue=138018.8
+  values in row 53, column 9 don't match
+    push : push_value=95.0
+    non-push : nonPushValue=17.0
+  values in row 54, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 54, column 1 don't match
+    push : push_value=mystery                                           
+    non-push : nonPushValue=dresses
+  values in row 54, column 2 don't match
+    push : value=corpunivamalg #3                                  
+    non-push : value=null
+  values in row 54, column 3 don't match
+    push : push_value=null
+    non-push : nonPushValue=antieseoughtcally
+  values in row 54, column 4 don't match
+    push : push_value=null
+    non-push : nonPushValue=2000.0
+  values in row 54, column 5 don't match
+    push : push_value=null
+    non-push : nonPushValue=4.0
+  values in row 54, column 8 don't match
+    push : push_value=1145258.0
+    non-push : nonPushValue=69138.8
+  values in row 54, column 9 don't match
+    push : push_value=55.0
+    non-push : nonPushValue=96.0
+  values in row 55, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 55, column 1 don't match
+    push : push_value=mystery                                           
+    non-push : nonPushValue=flatware
+  values in row 55, column 2 don't match
+    push : value=corpunivamalg #6                                  
+    non-push : value=null
+  values in row 55, column 8 don't match
+    push : push_value=1098189.7
+    non-push : nonPushValue=74808.2
+  values in row 55, column 9 don't match
+    push : push_value=57.0
+    non-push : nonPushValue=86.0
+  values in row 56, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 56, column 1 don't match
+    push : push_value=mystery                                           
+    non-push : nonPushValue=flatware
+  values in row 56, column 2 don't match
+    push : value=corpunivamalg #8                                  
+    non-push : value=null
+  values in row 56, column 8 don't match
+    push : push_value=759890.0
+    non-push : nonPushValue=74808.2
+  values in row 56, column 9 don't match
+    push : push_value=92.0
+    non-push : nonPushValue=86.0
+  values in row 57, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 57, column 1 don't match
+    push : push_value=parenting                                         
+    non-push : nonPushValue=flatware
+  values in row 57, column 3 don't match
+    push : push_value=null
+    non-push : nonPushValue=oughteingationn st
+  values in row 57, column 8 don't match
+    push : push_value=5905648.5
+    non-push : nonPushValue=74808.2
+  values in row 57, column 9 don't match
+    push : push_value=11.0
+    non-push : nonPushValue=86.0
+  values in row 58, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 58, column 1 don't match
+    push : push_value=parenting                                         
+    non-push : nonPushValue=flatware
+  values in row 58, column 2 don't match
+    push : value=corpmaxi #12                                      
+    non-push : value=null
+  values in row 58, column 3 don't match
+    push : push_value=null
+    non-push : nonPushValue=oughteingationn st
+  values in row 58, column 4 don't match
+    push : push_value=null
+    non-push : nonPushValue=2000.0
+  values in row 58, column 8 don't match
+    push : push_value=1022503.6
+    non-push : nonPushValue=74808.2
+  values in row 58, column 9 don't match
+    push : push_value=66.0
+    non-push : nonPushValue=86.0
+  values in row 59, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 59, column 1 don't match
+    push : push_value=parenting                                         
+    non-push : nonPushValue=glassware
+  values in row 59, column 2 don't match
+    push : value=corpmaxi #2                                       
+    non-push : value=null
+  values in row 59, column 8 don't match
+    push : push_value=908607.3
+    non-push : nonPushValue=98111.3
+  values in row 59, column 9 don't match
+    push : push_value=76.0
+    non-push : nonPushValue=69.0
+  values in row 60, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 60, column 1 don't match
+    push : push_value=parenting                                         
+    non-push : nonPushValue=glassware
+  values in row 60, column 2 don't match
+    push : value=corpmaxi #6                                       
+    non-push : value=null
+  values in row 60, column 8 don't match
+    push : push_value=1717275.2
+    non-push : nonPushValue=98111.3
+  values in row 60, column 9 don't match
+    push : push_value=21.0
+    non-push : nonPushValue=69.0
+  values in row 61, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 61, column 1 don't match
+    push : push_value=parenting                                         
+    non-push : nonPushValue=glassware
+  values in row 61, column 2 don't match
+    push : value=corpmaxi #9                                       
+    non-push : value=null
+  values in row 61, column 8 don't match
+    push : push_value=895829.4
+    non-push : nonPushValue=98111.3
+  values in row 61, column 9 don't match
+    push : push_value=77.0
+    non-push : nonPushValue=69.0
+  values in row 62, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 62, column 1 don't match
+    push : push_value=reference                                         
+    non-push : nonPushValue=glassware
+  values in row 62, column 4 don't match
+    push : push_value=null
+    non-push : nonPushValue=2000.0
+  values in row 62, column 8 don't match
+    push : push_value=7245435.6
+    non-push : nonPushValue=98111.3
+  values in row 62, column 9 don't match
+    push : push_value=6.0
+    non-push : nonPushValue=69.0
+  values in row 63, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 63, column 1 don't match
+    push : push_value=reference                                         
+    non-push : nonPushValue=outdoor
+  values in row 63, column 2 don't match
+    push : value=brandmaxi #12                                     
+    non-push : value=null
+  values in row 63, column 8 don't match
+    push : push_value=1418372.8
+    non-push : nonPushValue=115448.6
+  values in row 63, column 9 don't match
+    push : push_value=33.0
+    non-push : nonPushValue=40.0
+  values in row 64, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 64, column 1 don't match
+    push : push_value=reference                                         
+    non-push : nonPushValue=outdoor
+  values in row 64, column 2 don't match
+    push : push_value=brandmaxi #2                                      
+    non-push : nonPushValue=namelessnameless #3
+  values in row 64, column 8 don't match
+    push : push_value=1154379.8
+    non-push : nonPushValue=115448.6
+  values in row 64, column 9 don't match
+    push : push_value=53.0
+    non-push : nonPushValue=40.0
+  values in row 65, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 65, column 1 don't match
+    push : push_value=reference                                         
+    non-push : nonPushValue=outdoor
+  values in row 65, column 2 don't match
+    push : push_value=brandmaxi #3                                      
+    non-push : nonPushValue=namelessnameless #3
+  values in row 65, column 8 don't match
+    push : push_value=1168210.2
+    non-push : nonPushValue=115448.6
+  values in row 65, column 9 don't match
+    push : push_value=52.0
+    non-push : nonPushValue=40.0
+  values in row 66, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 66, column 1 don't match
+    push : push_value=reference                                         
+    non-push : nonPushValue=outdoor
+  values in row 66, column 2 don't match
+    push : push_value=brandmaxi #6                                      
+    non-push : nonPushValue=namelessnameless #3
+  values in row 66, column 4 don't match
+    push : push_value=null
+    non-push : nonPushValue=2000.0
+  values in row 66, column 8 don't match
+    push : push_value=1349780.8
+    non-push : nonPushValue=115448.6
+  values in row 66, column 9 don't match
+    push : push_value=37.0
+    non-push : nonPushValue=40.0
+  values in row 67, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 67, column 1 don't match
+    push : push_value=reference                                         
+    non-push : nonPushValue=pants
+  values in row 67, column 2 don't match
+    push : value=brandmaxi #8                                      
+    non-push : value=null
+  values in row 67, column 8 don't match
+    push : push_value=1429502.9
+    non-push : nonPushValue=135856.0
+  values in row 67, column 9 don't match
+    push : push_value=31.0
+    non-push : nonPushValue=21.0
+  values in row 68, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 68, column 1 don't match
+    push : push_value=reference                                         
+    non-push : nonPushValue=pants
+  values in row 68, column 2 don't match
+    push : push_value=brandmaxi #9                                      
+    non-push : nonPushValue=exportiimporto #2
+  values in row 68, column 8 don't match
+    push : push_value=714094.4
+    non-push : nonPushValue=135856.0
+  values in row 68, column 9 don't match
+    push : push_value=97.0
+    non-push : nonPushValue=21.0
+  values in row 69, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 69, column 1 don't match
+    push : push_value=romance                                           
+    non-push : nonPushValue=pants
+  values in row 69, column 2 don't match
+    push : push_value=null
+    non-push : nonPushValue=exportiimporto #2
+  values in row 69, column 3 don't match
+    push : push_value=null
+    non-push : nonPushValue=antibarableableought
+  values in row 69, column 8 don't match
+    push : push_value=7252274.4
+    non-push : nonPushValue=135856.0
+  values in row 69, column 9 don't match
+    push : push_value=5.0
+    non-push : nonPushValue=21.0
+  values in row 70, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 70, column 1 don't match
+    push : push_value=romance                                           
+    non-push : nonPushValue=pants
+  values in row 70, column 2 don't match
+    push : push_value=namelessmaxi #12                                  
+    non-push : nonPushValue=exportiimporto #2
+  values in row 70, column 3 don't match
+    push : push_value=null
+    non-push : nonPushValue=antibarableableought
+  values in row 70, column 4 don't match
+    push : push_value=null
+    non-push : nonPushValue=2000.0
+  values in row 70, column 8 don't match
+    push : push_value=1356568.5
+    non-push : nonPushValue=135856.0
+  values in row 70, column 9 don't match
+    push : push_value=36.0
+    non-push : nonPushValue=21.0
+  values in row 71, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 71, column 1 don't match
+    push : push_value=romance                                           
+    non-push : nonPushValue=pants
+  values in row 71, column 2 don't match
+    push : push_value=namelessmaxi #2                                   
+    non-push : nonPushValue=exportiimporto #2
+  values in row 71, column 3 don't match
+    push : push_value=null
+    non-push : nonPushValue=antibarableableought
+  values in row 71, column 4 don't match
+    push : push_value=null
+    non-push : nonPushValue=2000.0
+  values in row 71, column 5 don't match
+    push : push_value=null
+    non-push : nonPushValue=4.0
+  values in row 71, column 8 don't match
+    push : push_value=1236630.2
+    non-push : nonPushValue=66808.0
+  values in row 71, column 9 don't match
+    push : push_value=47.0
+    non-push : nonPushValue=99.0
+  values in row 72, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 72, column 1 don't match
+    push : push_value=romance                                           
+    non-push : nonPushValue=scanners
+  values in row 72, column 2 don't match
+    push : value=namelessmaxi #3                                   
+    non-push : value=null
+  values in row 72, column 8 don't match
+    push : push_value=1866764.2
+    non-push : nonPushValue=118366.6
+  values in row 72, column 9 don't match
+    push : push_value=19.0
+    non-push : nonPushValue=34.0
+  values in row 73, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 73, column 1 don't match
+    push : push_value=romance                                           
+    non-push : nonPushValue=scanners
+  values in row 73, column 2 don't match
+    push : push_value=namelessmaxi #6                                   
+    non-push : nonPushValue=namelessunivamalg #10
+  values in row 73, column 8 don't match
+    push : push_value=1086707.9
+    non-push : nonPushValue=118366.6
+  values in row 73, column 9 don't match
+    push : push_value=59.0
+    non-push : nonPushValue=34.0
+  values in row 74, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 74, column 1 don't match
+    push : push_value=romance                                           
+    non-push : nonPushValue=scanners
+  values in row 74, column 2 don't match
+    push : push_value=namelessmaxi #8                                   
+    non-push : nonPushValue=namelessunivamalg #10
+  values in row 74, column 3 don't match
+    push : push_value=null
+    non-push : nonPushValue=n stbaresepri
+  values in row 74, column 8 don't match
+    push : push_value=825762.4
+    non-push : nonPushValue=118366.6
+  values in row 74, column 9 don't match
+    push : push_value=88.0
+    non-push : nonPushValue=34.0
+  values in row 75, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 75, column 1 don't match
+    push : push_value=romance                                           
+    non-push : nonPushValue=scanners
+  values in row 75, column 2 don't match
+    push : push_value=namelessmaxi #9                                   
+    non-push : nonPushValue=namelessunivamalg #10
+  values in row 75, column 3 don't match
+    push : push_value=null
+    non-push : nonPushValue=n stbaresepri
+  values in row 75, column 4 don't match
+    push : push_value=null
+    non-push : nonPushValue=2000.0
+  values in row 75, column 8 don't match
+    push : push_value=876869.8
+    non-push : nonPushValue=118366.6
+  values in row 75, column 9 don't match
+    push : push_value=81.0
+    non-push : nonPushValue=34.0
+  values in row 76, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 76, column 1 don't match
+    push : push_value=science                                           
+    non-push : nonPushValue=scanners
+  values in row 76, column 2 don't match
+    push : push_value=null
+    non-push : nonPushValue=namelessunivamalg #10
+  values in row 76, column 3 don't match
+    push : push_value=null
+    non-push : nonPushValue=n stbaresepri
+  values in row 76, column 4 don't match
+    push : push_value=null
+    non-push : nonPushValue=2000.0
+  values in row 76, column 5 don't match
+    push : push_value=null
+    non-push : nonPushValue=4.0
+  values in row 76, column 8 don't match
+    push : push_value=5359276.2
+    non-push : nonPushValue=70358.0
+  values in row 76, column 9 don't match
+    push : push_value=15.0
+    non-push : nonPushValue=95.0
+  values in row 77, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 77, column 1 don't match
+    push : push_value=science                                           
+    non-push : nonPushValue=semi-precious
+  values in row 77, column 2 don't match
+    push : value=maximaxi #2                                       
+    non-push : value=null
+  values in row 77, column 8 don't match
+    push : push_value=702171.3
+    non-push : nonPushValue=105040.4
+  values in row 77, column 9 don't match
+    push : push_value=98.0
+    non-push : nonPushValue=51.0
+  values in row 78, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 78, column 1 don't match
+    push : push_value=science                                           
+    non-push : nonPushValue=semi-precious
+  values in row 78, column 2 don't match
+    push : push_value=maximaxi #3                                       
+    non-push : nonPushValue=amalgbrand #4
+  values in row 78, column 8 don't match
+    push : push_value=777021.9
+    non-push : nonPushValue=105040.4
+  values in row 78, column 9 don't match
+    push : push_value=90.0
+    non-push : nonPushValue=51.0
+  values in row 79, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 79, column 1 don't match
+    push : push_value=science                                           
+    non-push : nonPushValue=semi-precious
+  values in row 79, column 2 don't match
+    push : push_value=maximaxi #6                                       
+    non-push : nonPushValue=amalgbrand #4
+  values in row 79, column 3 don't match
+    push : push_value=null
+    non-push : nonPushValue=ationeseoughtanti
+  values in row 79, column 8 don't match
+    push : push_value=1446589.4
+    non-push : nonPushValue=105040.4
+  values in row 79, column 9 don't match
+    push : push_value=29.0
+    non-push : nonPushValue=51.0
+  values in row 80, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 80, column 1 don't match
+    push : push_value=science                                           
+    non-push : nonPushValue=semi-precious
+  values in row 80, column 2 don't match
+    push : push_value=maximaxi #8                                       
+    non-push : nonPushValue=amalgbrand #4
+  values in row 80, column 3 don't match
+    push : push_value=null
+    non-push : nonPushValue=ationeseoughtanti
+  values in row 80, column 4 don't match
+    push : push_value=null
+    non-push : nonPushValue=2000.0
+  values in row 80, column 8 don't match
+    push : push_value=1004042.0
+    non-push : nonPushValue=105040.4
+  values in row 80, column 9 don't match
+    push : push_value=67.0
+    non-push : nonPushValue=51.0
+  values in row 81, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 81, column 1 don't match
+    push : push_value=science                                           
+    non-push : nonPushValue=sports-apparel
+  values in row 81, column 2 don't match
+    push : value=maximaxi #9                                       
+    non-push : value=null
+  values in row 81, column 8 don't match
+    push : push_value=849422.2
+    non-push : nonPushValue=104579.1
+  values in row 81, column 9 don't match
+    push : push_value=85.0
+    non-push : nonPushValue=55.0
+  values in row 82, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 82, column 1 don't match
+    push : push_value=self-help                                         
+    non-push : nonPushValue=sports-apparel
+  values in row 82, column 8 don't match
+    push : push_value=6261649.7
+    non-push : nonPushValue=104579.1
+  values in row 82, column 9 don't match
+    push : push_value=8.0
+    non-push : nonPushValue=55.0
+  values in row 83, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 83, column 1 don't match
+    push : push_value=self-help                                         
+    non-push : nonPushValue=sports-apparel
+  values in row 83, column 2 don't match
+    push : value=exportiunivamalg #2                               
+    non-push : value=null
+  values in row 83, column 8 don't match
+    push : push_value=1283148.5
+    non-push : nonPushValue=104579.1
+  values in row 83, column 9 don't match
+    push : push_value=44.0
+    non-push : nonPushValue=55.0
+  values in row 84, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 84, column 1 don't match
+    push : push_value=self-help                                         
+    non-push : nonPushValue=sports-apparel
+  values in row 84, column 2 don't match
+    push : value=exportiunivamalg #3                               
+    non-push : value=null
+  values in row 84, column 4 don't match
+    push : push_value=null
+    non-push : nonPushValue=2000.0
+  values in row 84, column 8 don't match
+    push : push_value=770181.6
+    non-push : nonPushValue=104579.1
+  values in row 84, column 9 don't match
+    push : push_value=91.0
+    non-push : nonPushValue=55.0
+  values in row 85, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 85, column 1 don't match
+    push : push_value=self-help                                         
+    non-push : nonPushValue=swimwear
+  values in row 85, column 2 don't match
+    push : value=exportiunivamalg #6                               
+    non-push : value=null
+  values in row 85, column 8 don't match
+    push : push_value=1391623.9
+    non-push : nonPushValue=132397.0
+  values in row 85, column 9 don't match
+    push : push_value=35.0
+    non-push : nonPushValue=27.0
+  values in row 86, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 86, column 1 don't match
+    push : push_value=self-help                                         
+    non-push : nonPushValue=swimwear
+  values in row 86, column 2 don't match
+    push : push_value=exportiunivamalg #8                               
+    non-push : nonPushValue=edu packamalg #2
+  values in row 86, column 8 don't match
+    push : push_value=695644.6
+    non-push : nonPushValue=132397.0
+  values in row 86, column 9 don't match
+    push : push_value=100.0
+    non-push : nonPushValue=27.0
+  values in row 87, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 87, column 1 don't match
+    push : push_value=self-help                                         
+    non-push : nonPushValue=swimwear
+  values in row 87, column 2 don't match
+    push : push_value=exportiunivamalg #9                               
+    non-push : nonPushValue=edu packamalg #2
+  values in row 87, column 3 don't match
+    push : push_value=null
+    non-push : nonPushValue=antieingoughtcally
+  values in row 87, column 8 don't match
+    push : push_value=1427999.9
+    non-push : nonPushValue=132397.0
+  values in row 87, column 9 don't match
+    push : push_value=32.0
+    non-push : nonPushValue=27.0
+  values in row 88, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 88, column 1 don't match
+    push : push_value=sports                                            
+    non-push : nonPushValue=swimwear
+  values in row 88, column 2 don't match
+    push : push_value=null
+    non-push : nonPushValue=edu packamalg #2
+  values in row 88, column 3 don't match
+    push : push_value=null
+    non-push : nonPushValue=antieingoughtcally
+  values in row 88, column 4 don't match
+    push : push_value=null
+    non-push : nonPushValue=2000.0
+  values in row 88, column 8 don't match
+    push : push_value=5610649.1
+    non-push : nonPushValue=132397.0
+  values in row 88, column 9 don't match
+    push : push_value=12.0
+    non-push : nonPushValue=27.0
+  values in row 89, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 89, column 1 don't match
+    push : push_value=sports                                            
+    non-push : nonPushValue=tennis
+  values in row 89, column 2 don't match
+    push : value=edu packunivamalg #12                             
+    non-push : value=null
+  values in row 89, column 8 don't match
+    push : push_value=928301.9
+    non-push : nonPushValue=73252.6
+  values in row 89, column 9 don't match
+    push : push_value=73.0
+    non-push : nonPushValue=91.0
+  values in row 90, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 90, column 1 don't match
+    push : push_value=sports                                            
+    non-push : nonPushValue=tennis
+  values in row 90, column 2 don't match
+    push : value=edu packunivamalg #6                              
+    non-push : value=null
+  values in row 90, column 8 don't match
+    push : push_value=1503681.8
+    non-push : nonPushValue=73252.6
+  values in row 90, column 9 don't match
+    push : push_value=27.0
+    non-push : nonPushValue=91.0
+  values in row 91, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 91, column 1 don't match
+    push : push_value=sports                                            
+    non-push : nonPushValue=tennis
+  values in row 91, column 2 don't match
+    push : value=edu packunivamalg #8                              
+    non-push : value=null
+  values in row 91, column 3 don't match
+    push : push_value=null
+    non-push : nonPushValue=barpribaranti
+  values in row 91, column 8 don't match
+    push : push_value=1263974.8
+    non-push : nonPushValue=73252.6
+  values in row 91, column 9 don't match
+    push : push_value=46.0
+    non-push : nonPushValue=91.0
+  values in row 92, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 92, column 1 don't match
+    push : push_value=sports                                            
+    non-push : nonPushValue=tennis
+  values in row 92, column 2 don't match
+    push : value=edu packunivamalg #9                              
+    non-push : value=null
+  values in row 92, column 3 don't match
+    push : push_value=null
+    non-push : nonPushValue=barpribaranti
+  values in row 92, column 4 don't match
+    push : push_value=null
+    non-push : nonPushValue=2000.0
+  values in row 92, column 8 don't match
+    push : push_value=840684.3
+    non-push : nonPushValue=73252.6
+  values in row 92, column 9 don't match
+    push : push_value=87.0
+    non-push : nonPushValue=91.0
+  values in row 93, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 93, column 1 don't match
+    push : push_value=travel                                            
+    non-push : nonPushValue=womens
+  values in row 93, column 8 don't match
+    push : push_value=6200882.4
+    non-push : nonPushValue=78649.4
+  values in row 93, column 9 don't match
+    push : push_value=9.0
+    non-push : nonPushValue=83.0
+  values in row 94, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 94, column 1 don't match
+    push : push_value=travel                                            
+    non-push : nonPushValue=womens
+  values in row 94, column 2 don't match
+    push : value=univunivamalg #12                                 
+    non-push : value=null
+  values in row 94, column 8 don't match
+    push : push_value=1135250.5
+    non-push : nonPushValue=78649.4
+  values in row 94, column 9 don't match
+    push : push_value=56.0
+    non-push : nonPushValue=83.0
+  values in row 95, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 95, column 1 don't match
+    push : push_value=travel                                            
+    non-push : nonPushValue=womens
+  values in row 95, column 2 don't match
+    push : value=univunivamalg #2                                  
+    non-push : value=null
+  values in row 95, column 8 don't match
+    push : push_value=1053533.9
+    non-push : nonPushValue=180234.3
+  values in row 95, column 9 don't match
+    push : push_value=64.0
+    non-push : nonPushValue=5.0
+  values in row 96, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 96, column 1 don't match
+    push : push_value=travel                                            
+    non-push : nonPushValue=womens
+  values in row 96, column 2 don't match
+    push : value=univunivamalg #3                                  
+    non-push : value=null
+  values in row 96, column 4 don't match
+    push : push_value=null
+    non-push : nonPushValue=2000.0
+  values in row 96, column 8 don't match
+    push : push_value=1085484.2
+    non-push : nonPushValue=78649.4
+  values in row 96, column 9 don't match
+    push : push_value=60.0
+    non-push : nonPushValue=83.0
+  values in row 97, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 97, column 1 don't match
+    push : push_value=travel                                            
+    non-push : nonPushValue=womens
+  values in row 97, column 2 don't match
+    push : push_value=univunivamalg #6                                  
+    non-push : nonPushValue=amalgedu pack #2
+  values in row 97, column 8 don't match
+    push : push_value=696576.0
+    non-push : nonPushValue=101584.9
+  values in row 97, column 9 don't match
+    push : push_value=99.0
+    non-push : nonPushValue=64.0
+  values in row 98, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 98, column 1 don't match
+    push : push_value=travel                                            
+    non-push : nonPushValue=womens
+  values in row 98, column 2 don't match
+    push : push_value=univunivamalg #8                                  
+    non-push : nonPushValue=amalgedu pack #2
+  values in row 98, column 8 don't match
+    push : push_value=1310411.8
+    non-push : nonPushValue=101584.9
+  values in row 98, column 9 don't match
+    push : push_value=41.0
+    non-push : nonPushValue=64.0
+  values in row 99, column 0 don't match
+    push : value=Books                                             
+    non-push : value=null
+  values in row 99, column 1 don't match
+    push : push_value=travel                                            
+    non-push : nonPushValue=womens
+  values in row 99, column 2 don't match
+    push : push_value=univunivamalg #9                                  
+    non-push : nonPushValue=amalgedu pack #2
+  values in row 99, column 4 don't match
+    push : push_value=null
+    non-push : nonPushValue=2000.0
+  values in row 99, column 8 don't match
+    push : push_value=917487.2
+    non-push : nonPushValue=101584.9
+  values in row 99, column 9 don't match
+    push : push_value=75.0
+    non-push : nonPushValue=64.0
+
+===========================================
+Query q68 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(c_last_name,StringType,true)StructField(c_first_name,StringType,true)StructField(ca_city,StringType,true)StructField(bought_city,StringType,true)StructField(ss_ticket_number,DecimalType(38,18),false)StructField(extended_price,DecimalType(38,18),true)StructField(extended_tax,DecimalType(38,18),true)StructField(list_price,DecimalType(38,18),true)
+    non-push : StructField(c_last_name,StringType,true)StructField(c_first_name,StringType,true)StructField(ca_city,StringType,true)StructField(bought_city,StringType,true)StructField(ss_ticket_number,DecimalType(38,18),true)StructField(extended_price,DecimalType(38,18),true)StructField(extended_tax,DecimalType(38,18),true)StructField(list_price,DecimalType(38,18),true)
+
+===========================================
+Query q69 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(cd_gender,StringType,true)StructField(cd_marital_status,StringType,true)StructField(cd_education_status,StringType,true)StructField(cnt1,LongType,false)StructField(cd_purchase_estimate,DecimalType(38,18),true)StructField(cnt2,LongType,false)StructField(cd_credit_rating,StringType,true)StructField(cnt3,LongType,false)
+    non-push : StructField(cd_gender,StringType,true)StructField(cd_marital_status,StringType,true)StructField(cd_education_status,StringType,true)StructField(cnt1,LongType,true)StructField(cd_purchase_estimate,DecimalType(38,18),true)StructField(cnt2,LongType,true)StructField(cd_credit_rating,StringType,true)StructField(cnt3,LongType,true)
+
+===========================================
+Query q70 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(total_sum,DecimalType(38,18),true)StructField(s_state,StringType,true)StructField(s_county,StringType,true)StructField(lochierarchy,ByteType,false)StructField(rank_within_parent,IntegerType,true)
+    non-push : StructField(total_sum,DecimalType(38,18),true)StructField(s_state,StringType,true)StructField(s_county,StringType,true)StructField(lochierarchy,ByteType,true)StructField(rank_within_parent,IntegerType,true)
+
+===========================================
+Query q71 validation passed.
+===========================================
+Query q72 validation failed:
+  Warning: Schema's are different
+    push : StructField(i_item_desc,StringType,true)StructField(w_warehouse_name,StringType,true)StructField(d_week_seq,DecimalType(38,18),true)StructField(no_promo,LongType,true)StructField(promo,LongType,true)StructField(total_cnt,LongType,false)
+    non-push : StructField(i_item_desc,StringType,true)StructField(w_warehouse_name,StringType,true)StructField(d_week_seq,DecimalType(38,18),true)StructField(no_promo,LongType,true)StructField(promo,LongType,true)StructField(total_cnt,LongType,true)
+  values in row 18, column 1 don't match
+    push : value=Bad cards must make.
+    non-push : value=null
+  values in row 18, column 2 don't match
+    push : push_value=5203.0
+    non-push : nonPushValue=5206.0
+  values in row 19, column 1 don't match
+    push : push_value=Doors canno
+    non-push : nonPushValue=Bad cards must make.
+  values in row 20, column 1 don't match
+    push : push_value=null
+    non-push : nonPushValue=Doors canno
+  values in row 20, column 2 don't match
+    push : push_value=5206.0
+    non-push : nonPushValue=5203.0
+
+===========================================
+Query q73 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(c_last_name,StringType,true)StructField(c_first_name,StringType,true)StructField(c_salutation,StringType,true)StructField(c_preferred_cust_flag,StringType,true)StructField(ss_ticket_number,DecimalType(38,18),false)StructField(cnt,LongType,false)
+    non-push : StructField(c_last_name,StringType,true)StructField(c_first_name,StringType,true)StructField(c_salutation,StringType,true)StructField(c_preferred_cust_flag,StringType,true)StructField(ss_ticket_number,DecimalType(38,18),true)StructField(cnt,LongType,true)
+
+===========================================
+Query q74 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(customer_id,StringType,false)StructField(customer_first_name,StringType,true)StructField(customer_last_name,StringType,true)
+    non-push : StructField(customer_id,StringType,true)StructField(customer_first_name,StringType,true)StructField(customer_last_name,StringType,true)
+
+===========================================
+Query q75 validation passed.
+===========================================
+Query q76 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(channel,StringType,false)StructField(col_name,StringType,false)StructField(d_year,DecimalType(38,18),true)StructField(d_qoy,DecimalType(38,18),true)StructField(i_category,StringType,true)StructField(sales_cnt,LongType,false)StructField(sales_amt,DecimalType(38,18),true)
+    non-push : StructField(channel,StringType,true)StructField(col_name,StringType,true)StructField(d_year,DecimalType(38,18),true)StructField(d_qoy,DecimalType(38,18),true)StructField(i_category,StringType,true)StructField(sales_cnt,LongType,true)StructField(sales_amt,DecimalType(38,18),true)
+
+===========================================
+Query q77 validation passed.
+===========================================
+Query q78 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(ss_sold_year,DecimalType(38,18),true)StructField(ss_item_sk,DecimalType(38,18),false)StructField(ss_customer_sk,DecimalType(38,18),true)StructField(ratio,DecimalType(38,2),true)StructField(store_qty,DecimalType(38,18),true)StructField(store_wholesale_cost,DecimalType(38,18),true)StructField(store_sales_price,DecimalType(38,18),true)StructField(other_chan_qty,DecimalType(38,17),true)StructField(other_chan_wholesale_cost,DecimalType(38,17),true)StructField(other_chan_sales_price,DecimalType(38,17),true)
+    non-push : StructField(ss_sold_year,DecimalType(38,18),true)StructField(ss_item_sk,DecimalType(38,18),true)StructField(ss_customer_sk,DecimalType(38,18),true)StructField(ratio,DecimalType(38,2),true)StructField(store_qty,DecimalType(38,18),true)StructField(store_wholesale_cost,DecimalType(38,18),true)StructField(store_sales_price,DecimalType(38,18),true)StructField(other_chan_qty,DecimalType(38,17),true)StructField(other_chan_wholesale_cost,DecimalType(38,17),true)StructField(other_chan_sales_price,DecimalType(38,17),true)
+
+===========================================
+Query q79 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(c_last_name,StringType,true)StructField(c_first_name,StringType,true)StructField(substr(s_city, 1, 30),StringType,true)StructField(ss_ticket_number,DecimalType(38,18),false)StructField(amt,DecimalType(38,18),true)StructField(profit,DecimalType(38,18),true)
+    non-push : StructField(c_last_name,StringType,true)StructField(c_first_name,StringType,true)StructField(substr(s_city, 1, 30),StringType,true)StructField(ss_ticket_number,DecimalType(38,18),true)StructField(amt,DecimalType(38,18),true)StructField(profit,DecimalType(38,18),true)
+
+===========================================
+Query q80 validation passed.
+===========================================
+Query q81 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(c_customer_id,StringType,false)StructField(c_salutation,StringType,true)StructField(c_first_name,StringType,true)StructField(c_last_name,StringType,true)StructField(ca_street_number,StringType,true)StructField(ca_street_name,StringType,true)StructField(ca_street_type,StringType,true)StructField(ca_suite_number,StringType,true)StructField(ca_city,StringType,true)StructField(ca_county,StringType,true)StructField(ca_state,StringType,true)StructField(ca_zip,StringType,true)StructField(ca_country,StringType,true)StructField(ca_gmt_offset,DecimalType(5,2),true)StructField(ca_location_type,StringType,true)StructField(ctr_total_return,DecimalType(38,18),true)
+    non-push : StructField(c_customer_id,StringType,true)StructField(c_salutation,StringType,true)StructField(c_first_name,StringType,true)StructField(c_last_name,StringType,true)StructField(ca_street_number,StringType,true)StructField(ca_street_name,StringType,true)StructField(ca_street_type,StringType,true)StructField(ca_suite_number,StringType,true)StructField(ca_city,StringType,true)StructField(ca_county,StringType,true)StructField(ca_state,StringType,true)StructField(ca_zip,StringType,true)StructField(ca_country,StringType,true)StructField(ca_gmt_offset,DecimalType(5,2),true)StructField(ca_location_type,StringType,true)StructField(ctr_total_return,DecimalType(38,18),true)
+
+===========================================
+Query q82 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(i_item_id,StringType,false)StructField(i_item_desc,StringType,true)StructField(i_current_price,DecimalType(38,18),true)
+    non-push : StructField(i_item_id,StringType,true)StructField(i_item_desc,StringType,true)StructField(i_current_price,DecimalType(38,18),true)
+
+===========================================
+Query q83 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(item_id,StringType,false)StructField(sr_item_qty,DecimalType(38,18),true)StructField(sr_dev,DecimalType(38,6),true)StructField(cr_item_qty,DecimalType(38,18),true)StructField(cr_dev,DecimalType(38,6),true)StructField(wr_item_qty,DecimalType(38,18),true)StructField(wr_dev,DecimalType(38,6),true)StructField(average,DecimalType(38,15),true)
+    non-push : StructField(item_id,StringType,true)StructField(sr_item_qty,DecimalType(38,18),true)StructField(sr_dev,DecimalType(38,6),true)StructField(cr_item_qty,DecimalType(38,18),true)StructField(cr_dev,DecimalType(38,6),true)StructField(wr_item_qty,DecimalType(38,18),true)StructField(wr_dev,DecimalType(38,6),true)StructField(average,DecimalType(38,15),true)
+
+===========================================
+Query q84 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(customer_id,StringType,false)StructField(customername,StringType,true)
+    non-push : StructField(customer_id,StringType,true)StructField(customername,StringType,true)
+
+===========================================
+Query q85 validation passed.
+===========================================
+Query q86 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(total_sum,DecimalType(38,18),true)StructField(i_category,StringType,true)StructField(i_class,StringType,true)StructField(lochierarchy,ByteType,false)StructField(rank_within_parent,IntegerType,true)
+    non-push : StructField(total_sum,DecimalType(38,18),true)StructField(i_category,StringType,true)StructField(i_class,StringType,true)StructField(lochierarchy,ByteType,true)StructField(rank_within_parent,IntegerType,true)
+
+===========================================
+Query q87 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(count(1),LongType,false)
+    non-push : StructField(count(1),LongType,true)
+
+===========================================
+Query q88 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(h8_30_to_9,LongType,false)StructField(h9_to_9_30,LongType,false)StructField(h9_30_to_10,LongType,false)StructField(h10_to_10_30,LongType,false)StructField(h10_30_to_11,LongType,false)StructField(h11_to_11_30,LongType,false)StructField(h11_30_to_12,LongType,false)StructField(h12_to_12_30,LongType,false)
+    non-push : StructField(h8_30_to_9,LongType,true)StructField(h9_to_9_30,LongType,true)StructField(h9_30_to_10,LongType,true)StructField(h10_to_10_30,LongType,true)StructField(h10_30_to_11,LongType,true)StructField(h11_to_11_30,LongType,true)StructField(h11_30_to_12,LongType,true)StructField(h12_to_12_30,LongType,true)
+
+===========================================
+Query q89 validation passed.
+===========================================
+Query q90 validation passed.
+===========================================
+Query q91 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(Call_Center,StringType,false)StructField(Call_Center_Name,StringType,true)StructField(Manager,StringType,true)StructField(Returns_Loss,DecimalType(38,18),true)
+    non-push : StructField(Call_Center,StringType,true)StructField(Call_Center_Name,StringType,true)StructField(Manager,StringType,true)StructField(Returns_Loss,DecimalType(38,18),true)
+
+===========================================
+Query q92 validation passed.
+===========================================
+Query q93 validation passed.
+===========================================
+Query q94 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(order_count,LongType,false)StructField(total_shipping_cost,DecimalType(38,18),true)StructField(total_net_profit,DecimalType(38,18),true)
+    non-push : StructField(order_count,LongType,true)StructField(total_shipping_cost,DecimalType(38,18),true)StructField(total_net_profit,DecimalType(38,18),true)
+
+===========================================
+Query q95 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(order_count,LongType,false)StructField(total_shipping_cost,DecimalType(38,18),true)StructField(total_net_profit,DecimalType(38,18),true)
+    non-push : StructField(order_count,LongType,true)StructField(total_shipping_cost,DecimalType(38,18),true)StructField(total_net_profit,DecimalType(38,18),true)
+
+===========================================
+Query q96 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(count(1),LongType,false)
+    non-push : StructField(count(1),LongType,true)
+
+===========================================
+Query q97 validation passed.
+===========================================
+Query q98 validation passed with warnings:
+  Warning: Schema's are different
+    push : StructField(i_item_id,StringType,false)StructField(i_item_desc,StringType,true)StructField(i_category,StringType,true)StructField(i_class,StringType,true)StructField(i_current_price,DecimalType(38,18),true)StructField(itemrevenue,DecimalType(38,18),true)StructField(revenueratio,DecimalType(38,6),true)
+    non-push : StructField(i_item_id,StringType,true)StructField(i_item_desc,StringType,true)StructField(i_category,StringType,true)StructField(i_class,StringType,true)StructField(i_current_price,DecimalType(38,18),true)StructField(itemrevenue,DecimalType(38,18),true)StructField(revenueratio,DecimalType(38,6),true)
+
+===========================================
+Query q99 validation passed.
+===========================================
+KNOWN ISSUES:
+-------------
+Query q67:
+Oracle SQL: Creating a query block for order-by seems to change the resultset order.
+So the following 2 return results in different orders even though their plans are the same.
+The 2nd query returns the results in the wrong order.
+
+select i_category
+     , sum(coalesce(ss_sales_price * ss_quantity, 0)) sumsales
+from store_sales, item
+where ss_item_sk = i_item_sk
+group by rollup(i_category)
+order by i_category ASC nulls first
+
+select i_category, sumsales
+from
+(
+    select i_category
+         , sum(coalesce(ss_sales_price * ss_quantity, 0)) sumsales
+    from store_sales, item
+    where ss_item_sk = i_item_sk
+    group by rollup(i_category)
+)
+order by i_category ASC nulls first
+;
+===========================================

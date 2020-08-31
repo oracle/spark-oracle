@@ -1,0 +1,5 @@
+GlobalLimit 100
++- LocalLimit 100
+   +- Sort [none#0 ASC NULLS FIRST, none#1 ASC NULLS FIRST], true
+      +- Aggregate [none#4, none#5, none#6L], [none#4, none#5, cast((shiftright(none#6L, 0) & 1) as tinyint) AS #0, avg(none#0) AS #1, avg(none#1) AS #2, avg(none#3) AS #3, avg(none#2) AS #4]
+         +- RelationV2[none#0, none#1, none#2, none#3, none#4, none#5, none#6L] TPCDS.STORE_SALES

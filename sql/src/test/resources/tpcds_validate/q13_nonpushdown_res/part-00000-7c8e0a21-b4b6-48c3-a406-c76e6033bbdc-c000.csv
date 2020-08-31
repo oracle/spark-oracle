@@ -1,0 +1,2 @@
+avg(ss_quantity) | avg(ss_ext_sales_price) | avg(ss_ext_wholesale_cost) | sum(ss_ext_wholesale_cost)
+31.0000000000000000000000 | 2551.8633333333333483330000 | 2365.9433333333333066670000 | 14195.659999999999840000

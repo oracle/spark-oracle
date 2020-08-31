@@ -1,0 +1,4 @@
+GlobalLimit 100
++- LocalLimit 100
+   +- Sort [i_brand_id#53371 ASC NULLS FIRST, i_class_id#53373 ASC NULLS FIRST, i_category_id#53375 ASC NULLS FIRST], true
+      +- RelationV2[channel#53317, i_brand_id#53371, i_class_id#53373, i_category_id#53375, sales#53318, number_sales#53319L, channel_2#53323, i_brand_id_2#53324, i_class_id_2#53325, i_category_id_2#53326, sales_2#53327, number_sales_2#53328L] TPCDS.STORE_SALES

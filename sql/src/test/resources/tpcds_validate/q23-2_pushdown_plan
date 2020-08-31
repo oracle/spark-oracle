@@ -1,0 +1,4 @@
+GlobalLimit 100
++- LocalLimit 100
+   +- Sort [c_last_name#60746 ASC NULLS FIRST, c_first_name#60745 ASC NULLS FIRST, sales#60691 ASC NULLS FIRST], true
+      +- RelationV2[c_last_name#60746, c_first_name#60745, sales#60691] TPCDS.CATALOG_SALES
