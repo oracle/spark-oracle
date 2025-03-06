@@ -24,7 +24,7 @@
 
 package org.apache.spark.sql.oracle.expressions
 
-import org.apache.spark.sql.catalyst.expressions.{CaseWhen, Expression, If}
+import org.apache.spark.sql.catalyst.expressions.{BooleanLiteral, CaseWhen, Expression, If}
 import org.apache.spark.sql.oracle.{OraSparkUtils, SQLSnippet}
 import org.apache.spark.sql.types.BooleanType
 
@@ -94,6 +94,8 @@ object Conditional {
         OraSimpleCase(cE, Seq((condOE, trueOE)), Some(falseOE))
       case cE @ CaseWhen(CaseBranches(branches @ _*), None) =>
         OraSearchedCase(cE, branches, None)
+      case cE @ CaseWhen(CaseBranches(branches @ _*), Some(bLit @ BooleanLiteral(_))) =>
+        OraSearchedCase(cE, branches, OraExpression.convert(bLit))
       case cE @ CaseWhen(CaseBranches(branches @ _*), Some(OraExpression(elseOE))) =>
         OraSearchedCase(cE, branches, Some(elseOE))
       case _ => null
