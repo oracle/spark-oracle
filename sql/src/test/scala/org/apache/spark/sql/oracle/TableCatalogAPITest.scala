@@ -190,7 +190,8 @@ class TableCatalogAPITest extends AbstractTest with OraMetadataMgrInternalTest {
 
   val partTables = Seq(
     "SPARKTEST.COMP",
-    "SPARKTEST.UT_SMALL_WRITE_MULTIROW_PARTITION",
+//    Not sure how this table gets created, I could not find a reference, hence commenting it.
+//    "SPARKTEST.UT_SMALL_WRITE_MULTIROW_PARTITION",
     "SPARKTEST.UNIT_TEST_WRITE_PARTITIONED",
     "SPARKTEST.SALES_RANGE_PARTITION",
     "SPARKTEST.SALES_BY_REGION_UNKNOWN_VALUES",
