@@ -28,7 +28,7 @@ import org.apache.spark.sql.{DataFrame, Dataset}
 import org.apache.spark.sql.catalyst.TableIdentifier
 import org.apache.spark.sql.connector.catalog.Table
 import org.apache.spark.sql.connector.catalog.oracle.OraMetadataMgrInternalTest
-import org.apache.spark.sql.execution.{QueryExecution, SparkPlan}
+import org.apache.spark.sql.execution.{CommandExecutionMode, QueryExecution, SparkPlan}
 import org.apache.spark.sql.execution.datasources.v2.{AppendDataExec, DeleteFromTableExec, OverwriteByExpressionExec, OverwritePartitionsDynamicExec, V2CommandExec, V2TableWriteExec}
 import org.apache.spark.sql.hive.test.oracle.TestOracleHive
 import org.apache.spark.sql.oracle.readpath.AbstractReadTests
@@ -57,12 +57,12 @@ abstract class AbstractWriteTests extends AbstractReadTests with OraMetadataMgrI
    */
   def getAroundTestBugQE(sql: String): QueryExecution = {
     val plan = TestOracleHive.sparkSession.sessionState.sqlParser.parsePlan(sql)
-    new QueryExecution(TestOracleHive.sparkSession, plan)
+    new QueryExecution(TestOracleHive.sparkSession, plan, mode = CommandExecutionMode.SKIP)
   }
 
   def getAroundTestBugDF(sql: String): DataFrame = {
     val qE = getAroundTestBugQE(sql)
-    Dataset.ofRows(TestOracleHive.sparkSession, qE.analyzed)
+    Dataset.ofRows(TestOracleHive.sparkSession, qE.commandExecuted)
   }
 
   def scenarioQE(scenario : WriteScenario) : Seq[QueryExecution] = scenario match {

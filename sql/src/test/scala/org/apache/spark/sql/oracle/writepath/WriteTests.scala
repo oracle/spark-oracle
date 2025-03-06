@@ -65,7 +65,8 @@ class WriteTests extends AbstractWriteTests {
     }
 
     assert(ex.getMessage.startsWith(
-      "Cannot write to 'SPARKTEST.UNIT_TEST_WRITE', not enough data columns")
+      "[INSERT_COLUMN_ARITY_MISMATCH.NOT_ENOUGH_DATA_COLUMNS]" +
+        " Cannot write to `SPARKTEST`.`UNIT_TEST_WRITE`, the reason is not enough data columns")
     )
   }
 
