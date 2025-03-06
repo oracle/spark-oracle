@@ -72,13 +72,13 @@ class SupportsNamespacesTest extends AbstractTest {
         """Unsupported Action on Oracle Catalog: alter namespace: [SetProperty]
           | you should perform this using Oracle SQL""".stripMargin)
 
-    ex = intercept[SparkException] {
+    ex = intercept[UnsupportedAction] {
       TestOracleHive.sql("drop namespace oracle.tpcds").show()
     }
     assert(
       ex.getMessage ==
-        "Cannot drop a non-empty namespace: tpcds." +
-          " Use CASCADE option to drop a non-empty namespace.")
+        """Unsupported Action on Oracle Catalog: drop namespace
+          | drop schema using Oracle DDL""".stripMargin)
 
     ex = intercept[UnsupportedAction] {
       TestOracleHive.sql("drop namespace oracle.sparktest cascade").show()
