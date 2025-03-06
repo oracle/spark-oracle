@@ -38,7 +38,7 @@ class SetOpTranslationTest extends AbstractTranslationTest {
       |""".stripMargin,
     """select "C_INT" AS "val"
       |from "SPARKTEST"."UNIT_TEST" """.stripMargin + """
-      |where ("C_INT" IS NOT NULL AND ("C_INT" > ?)) UNION ALL select ("C_INT" + "C_LONG") AS "1_sparkora"
+      |where ("C_INT" IS NOT NULL AND ("C_INT" > ?)) UNION ALL select ("C_INT" + "C_LONG") AS "(c_int + c_long)"
       |from "SPARKTEST"."UNIT_TEST" """.stripMargin + """
       |where ("C_INT" IS NOT NULL AND ("C_INT" <= ?))""".stripMargin
   )
