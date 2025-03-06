@@ -30,9 +30,11 @@ import scala.jdk.CollectionConverters.mapAsJavaMapConverter
 import scala.util.Try
 
 import org.apache.spark.sql.SparkSession
-import org.apache.spark.sql.catalyst.analysis.{NoSuchNamespaceException, NoSuchTableException}
+import org.apache.spark.sql.catalyst.FunctionIdentifier
+import org.apache.spark.sql.catalyst.analysis.{NoSuchFunctionException, NoSuchNamespaceException, NoSuchTableException}
 import org.apache.spark.sql.catalyst.util.CaseInsensitiveMap
 import org.apache.spark.sql.connector.catalog._
+import org.apache.spark.sql.connector.catalog.functions.UnboundFunction
 import org.apache.spark.sql.connector.catalog.oracle.OracleMetadata.OraTable
 import org.apache.spark.sql.connector.expressions.Transform
 import org.apache.spark.sql.oracle.{OracleCatalogOptions, OraSparkUtils}
@@ -54,8 +56,7 @@ import org.apache.spark.sql.util.CaseInsensitiveStringMap
  */
 class OracleCatalog
   extends CatalogPlugin
-    with TableCatalog
-    with SupportsNamespaces
+    with CatalogExtension
     with StagingTableCatalog
     with OraExternalTableDDLSupport
     with OraCatalogFunctionActions
@@ -77,7 +78,7 @@ class OracleCatalog
 
   override def defaultNamespace: Array[String] = Array(metadataManager.defaultNamespace)
 
-  // override def setDelegateCatalog(delegate: CatalogPlugin): Unit = ???
+  override def setDelegateCatalog(delegate: CatalogPlugin): Unit = ???
 
   override def listNamespaces(): Array[Array[String]] = metadataManager.namespaces
 
@@ -235,6 +236,31 @@ class OracleCatalog
       properties: util.Map[String, String]): StagedTable = ???
 
   private[sql] def getMetadataManager: OracleMetadataManager = metadataManager
+  
+  override def listFunctions(namespace: Array[String]): Array[Identifier] = {
+    checkNamespace(namespace)
+    val fnRegistry = OraSparkUtils.currentSparkSession.sessionState.functionRegistry
+    fnRegistry.listFunction().map(funcId => Identifier.of(namespace, funcId.identifier)).toArray
+
+  }
+
+  // Though our plugin does not support V2 based functions,
+  // spark code uses below method to find out function existence check.
+  override def loadFunction(ident: Identifier): UnboundFunction = {
+
+    val funcId = FunctionIdentifier(ident.name(), Some(name()))
+    val fnRegistry = OraSparkUtils.currentSparkSession.sessionState.functionRegistry
+
+    if(fnRegistry.lookupFunction(funcId).isEmpty) {
+      throw new NoSuchFunctionException(db = name(), func = ident.name())
+    }
+
+    // For now this load function is used only to check function exist or not,
+    // so returned object not used.
+    // Below is just a dummy implementation of unbound function,
+    // ideally this will not get used anywhere.
+    OraNativeRowUnboundFunction(funcId)
+  }  
 }
 
 object OracleCatalog {

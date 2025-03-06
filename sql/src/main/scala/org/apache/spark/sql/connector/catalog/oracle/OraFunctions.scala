@@ -32,13 +32,14 @@ import scala.util.control.Breaks._
 import oracle.spark.ORASQLUtils.performDSQuery
 
 import org.apache.spark.internal.Logging
+import org.apache.spark.sql.catalyst.expressions.aggregate.DeclarativeAggregate
 import org.apache.spark.sql.{AnalysisException, SparkSession}
 import org.apache.spark.sql.catalyst.FunctionIdentifier
-import org.apache.spark.sql.catalyst.expressions.{Cast, Expression, RuntimeReplaceableAggregate, Unevaluable, UserDefinedExpression}
-import org.apache.spark.sql.catalyst.expressions.aggregate.AggregateFunction
+import org.apache.spark.sql.catalyst.expressions.{AttributeReference, Cast, Expression, Unevaluable, UserDefinedExpression}
+import org.apache.spark.sql.connector.catalog.functions.{BoundFunction, UnboundFunction}
 import org.apache.spark.sql.oracle.SQLSnippet
 import org.apache.spark.sql.oracle.expressions.{JDBCGetSet, OraLiterals}
-import org.apache.spark.sql.types.{DataType, IntegerType, StringType}
+import org.apache.spark.sql.types.{DataType, IntegerType, StringType, StructType}
 
 trait OraFunctionDefs { self : OracleMetadata.type =>
 
@@ -343,14 +344,12 @@ case class OraNativeAggFuncInvoke(fnDef : OracleMetadata.OraFuncDef,
                                   sigIdx : Int,
                                   children : Seq[Expression]
                                  )
-extends AggregateFunction with RuntimeReplaceableAggregate with Logging
+extends DeclarativeAggregate with Logging
   with UserDefinedExpression {
 
   assert(fnDef.isAggregate)
 
   private val overloadFuncDef = fnDef.sigs(sigIdx)
-
-  override lazy val replacement: Expression = children.head
 
   override def nullable: Boolean = true
 
@@ -358,10 +357,44 @@ extends AggregateFunction with RuntimeReplaceableAggregate with Logging
 
   override def name: String = fnDef.name
 
+   override lazy val initialValues: Seq[Expression] =
+     throw new IllegalStateException(
+       "initialValues should not be called")
+
+   override lazy val updateExpressions: Seq[Expression] =
+     throw new IllegalStateException(
+       "updateExpressions should not be called")
+
+   override lazy val mergeExpressions: Seq[Expression] =
+     throw new IllegalStateException(
+       "mergeExpressions should not be called")
+
+   override lazy val evaluateExpression: Expression =
+     throw new IllegalStateException(
+       "evaluateExpression should not be called")
+
+   override lazy val aggBufferAttributes: Seq[AttributeReference] =
+     throw new IllegalStateException(
+     "aggBufferAttributes should not be called")
+
   override protected def withNewChildrenInternal(newChildren: IndexedSeq[Expression]): Expression =
     copy(children = newChildren)
 
 }
+
+case class OraNativeRowUnboundFunction(funcId: FunctionIdentifier) extends UnboundFunction {
+
+  override def name(): String = "OraNativeRowUnboundFunction"
+
+  override def bind(inputType: StructType): BoundFunction = {
+    OracleMetadata.unsupportedAction(
+      "V2 function bind", Some(""))
+  }
+
+  override def description(): String =
+    """OraNativeRowUnboundFunction: produces Oracle Native Functions""".stripMargin
+}
+
 
 /**
  * function actions supported on an [[OracleCatalog]]

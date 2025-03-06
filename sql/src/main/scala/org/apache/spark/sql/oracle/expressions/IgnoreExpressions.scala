@@ -24,7 +24,7 @@
 package org.apache.spark.sql.oracle.expressions
 
 import org.apache.spark.internal.Logging
-import org.apache.spark.sql.catalyst.expressions.{CheckOverflow, Expression}
+import org.apache.spark.sql.catalyst.expressions.{CheckOverflow, Expression, ToPrettyString}
 import org.apache.spark.sql.oracle.OraSQLImplicits
 
 /**
@@ -42,7 +42,12 @@ object IgnoreExpressions extends OraSQLImplicits with Logging {
              |  for expression: ${co}""".stripMargin
         )
         oE
-
+      case tps@ToPrettyString(OraExpression(oE), _) =>
+        logWarning(
+          s"""Ignoring toprettystring when translating to oracle sql:
+             |  for expression: ${tps}""".stripMargin
+        )
+        oE
       case _ => null
     })
 }
