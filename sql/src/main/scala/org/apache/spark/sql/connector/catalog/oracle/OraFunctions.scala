@@ -34,7 +34,8 @@ import oracle.spark.ORASQLUtils.performDSQuery
 import org.apache.spark.internal.Logging
 import org.apache.spark.sql.{AnalysisException, SparkSession}
 import org.apache.spark.sql.catalyst.FunctionIdentifier
-import org.apache.spark.sql.catalyst.expressions.{Cast, Expression, Unevaluable, UnevaluableAggregate, UserDefinedExpression}
+import org.apache.spark.sql.catalyst.expressions.{Cast, Expression, RuntimeReplaceableAggregate, Unevaluable, UserDefinedExpression}
+import org.apache.spark.sql.catalyst.expressions.aggregate.AggregateFunction
 import org.apache.spark.sql.oracle.SQLSnippet
 import org.apache.spark.sql.oracle.expressions.{JDBCGetSet, OraLiterals}
 import org.apache.spark.sql.types.{DataType, IntegerType, StringType}
@@ -330,22 +331,36 @@ case class OraNativeRowFuncInvoke(fnDef : OracleMetadata.OraFuncDef,
   override def nullable: Boolean = true
 
   override def dataType: DataType = overloadFuncDef.retType.catalystType
+
+  override def name: String = fnDef.name
+
+  override protected def withNewChildrenInternal(newChildren: IndexedSeq[Expression]): Expression =
+    copy(children = newChildren)
+
 }
 
 case class OraNativeAggFuncInvoke(fnDef : OracleMetadata.OraFuncDef,
                                   sigIdx : Int,
                                   children : Seq[Expression]
                                  )
-extends UnevaluableAggregate with Logging
+extends AggregateFunction with RuntimeReplaceableAggregate with Logging
   with UserDefinedExpression {
 
   assert(fnDef.isAggregate)
 
   private val overloadFuncDef = fnDef.sigs(sigIdx)
 
+  override lazy val replacement: Expression = children.head
+
   override def nullable: Boolean = true
 
   override def dataType: DataType = overloadFuncDef.retType.catalystType
+
+  override def name: String = fnDef.name
+
+  override protected def withNewChildrenInternal(newChildren: IndexedSeq[Expression]): Expression =
+    copy(children = newChildren)
+
 }
 
 /**
@@ -363,8 +378,8 @@ trait OraCatalogFunctionActions {self : OracleCatalog =>
     val fnRegistry = sparkSession.sessionState.functionRegistry
     val fnName = sparkFuncName.getOrElse(funcName)
     val fnId = FunctionIdentifier(fnName, Some(name()))
-
-    fnRegistry.registerFunction(fnId, new OraNativeRowFuncInvokeBuilder(oraFuncDef))
+    val source = "scala_udf"
+    fnRegistry.registerFunction(fnId, new OraNativeRowFuncInvokeBuilder(oraFuncDef), source)
 
     oraFuncDef.toString
 
