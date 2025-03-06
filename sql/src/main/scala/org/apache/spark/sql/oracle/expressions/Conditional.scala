@@ -26,6 +26,7 @@ package org.apache.spark.sql.oracle.expressions
 
 import org.apache.spark.sql.catalyst.expressions.{CaseWhen, Expression, If}
 import org.apache.spark.sql.oracle.{OraSparkUtils, SQLSnippet}
+import org.apache.spark.sql.types.BooleanType
 
 /**
  * Conversions for expressions in ''conditionalExpressions.scala''
@@ -60,7 +61,7 @@ object Conditional {
 
     def orasql: SQLSnippet = SQLSnippet.searchedCase(
       branches.map(t => (t._1.orasql, t._2.orasql)),
-      elseCase.map(_.orasql))
+      elseCase.map(_.orasql), branches.head._2.catalystExpr.dataType == BooleanType)
 
     override def children: Seq[OraExpression] =
       branches.flatMap(t => Seq(t._1, t._2)) ++ elseCase.toSeq

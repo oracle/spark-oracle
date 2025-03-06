@@ -248,12 +248,16 @@ object SQLSnippet {
 
   def searchedCase(
       cases: Seq[(SQLSnippet, SQLSnippet)],
-      elseCase: Option[SQLSnippet]): SQLSnippet = {
+      elseCase: Option[SQLSnippet], isBoolean: Boolean): SQLSnippet = {
     val caseSnips = for ((caseCond, caseValue) <- cases) yield {
       WHEN + caseCond + THEN + caseValue
     }
     val elseSnip = elseCase.map(ELSE + _).getOrElse(empty)
-    CASE ++ caseSnips + elseSnip + END
+    if (isBoolean & elseCase.isEmpty) {
+      CASE ++ caseSnips + elseSnip + END + osql" = 1"
+    } else {
+      CASE ++ caseSnips + elseSnip + END
+    }
   }
 
   def unapply(snippet: SQLSnippet): Option[(String, Seq[Literal])] =
