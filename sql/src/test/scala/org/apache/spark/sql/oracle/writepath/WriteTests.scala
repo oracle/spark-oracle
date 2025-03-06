@@ -24,6 +24,7 @@
 
 package org.apache.spark.sql.oracle.writepath
 
+import oracle.spark.{ConnectionManagement, ORASQLUtils}
 import org.apache.spark.sql.AnalysisException
 import org.apache.spark.sql.hive.test.oracle.TestOracleHive
 
@@ -70,13 +71,25 @@ class WriteTests extends AbstractWriteTests {
     )
   }
 
-  test("negTruncateTest") {td =>
-    val ex = intercept[AnalysisException] {
-      TestOracleHive.sql("truncate table unit_test_write").
-        show(1000, false)
+  test("truncateTest") { td =>
+
+    TestOracleHive.sql("truncate table unit_test_write").
+      show(1000, false)
+
+    val dsKey = ConnectionManagement.getDSKeyInTestEnv
+    val query = "select count(*) from sparktest.unit_test_write"
+    val retVal = ORASQLUtils.performDSQuery[Int](
+      dsKey,
+      query,
+      s"validating truncate table shouldn't error out!",
+    ) { rs =>
+      rs.next()
+      rs.getInt(1)
     }
 
-    assert(ex.getMessage.startsWith("TRUNCATE TABLE is not supported for v2 tables."))
+    assert(
+      retVal == 0, s"Truncate table - retVal: '${retVal}' does not match expVal: '0'"
+    )
   }
 
   // run to validate src_tab_for_writes data file and get stats on data
