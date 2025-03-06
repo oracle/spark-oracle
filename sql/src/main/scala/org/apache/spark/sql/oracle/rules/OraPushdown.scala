@@ -146,6 +146,6 @@ trait ProjectListPushdownHelper extends AliasHelper {
   def buildCleanedProjectList(upper: Seq[NamedExpression],
                               lower: Seq[NamedExpression]): Seq[NamedExpression] = {
     val aliases = getAliasMap(lower)
-    upper.map(replaceAliasButKeepName(_, aliases))
+    upper.map(replaceAliasButKeepName(_, aliases)).distinct
   }
 }

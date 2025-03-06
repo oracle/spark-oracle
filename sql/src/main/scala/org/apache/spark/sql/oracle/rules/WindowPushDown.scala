@@ -65,7 +65,7 @@ case class WindowPushDown(inDSScan: DataSourceV2ScanRelation,
         oraSelExpressions <- OraExpressions.unapplySeq(pushdownProjList)
       ) yield {
         currQBlk.copyBlock(
-          select = currQBlk.select ++ oraSelExpressions,
+          select = (currQBlk.select ++ oraSelExpressions).distinct,
           catalystProjectList = currQBlk.catalystProjectList ++ windowOp.windowExpressions)
       }
     } else {
