@@ -41,6 +41,9 @@ object Sorts {
     private val nullOrderSnip = SQLSnippet.literalSnippet(nullOrdering.sql)
 
     override def orasql: SQLSnippet = osql"${child} ${sortDirSnip} ${nullOrderSnip}"
+
+    override protected def withNewChildrenInternal(newChildren: IndexedSeq[OraExpression]):
+    OraSortOrder = super.legacyWithNewChildren(newChildren).asInstanceOf[OraSortOrder]
   }
 
   def unapply(e: Expression) : Option[OraExpression] = Option(e match {

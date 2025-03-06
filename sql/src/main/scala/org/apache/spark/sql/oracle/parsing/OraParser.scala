@@ -60,6 +60,16 @@ class OraParser(baseParser : ParserInterface) extends ParserInterface {
   val sparkOraExtensionsParser = new SparkOraExtensionsParser(baseParser)
 
   override def parsePlan(sqlText: String): LogicalPlan = {
+    val isPlan = true
+    parsePlanOrQuery(sqlText, isPlan)
+  }
+
+  override def parseQuery(sqlText: String): LogicalPlan = {
+    val isPlan = false
+    parsePlanOrQuery(sqlText, isPlan)
+  }
+
+  private def parsePlanOrQuery(sqlText: String, isPlan: Boolean): LogicalPlan = {
     ensurePushdownRuleRegistered(OraSparkUtils.currentSparkSession)
 
     val extensionsPlan = sparkOraExtensionsParser.parseExtensions(sqlText)
@@ -68,7 +78,11 @@ class OraParser(baseParser : ParserInterface) extends ParserInterface {
       extensionsPlan.get
     } else {
       try {
-        baseParser.parsePlan(sqlText)
+        if (isPlan) {
+          baseParser.parsePlan(sqlText)
+        } else {
+          baseParser.parseQuery(sqlText)
+        }
       } catch {
         case pe : ParseException =>
           val splFailureDetails =
@@ -200,7 +214,7 @@ private[parsing] class SparkOraExtensionsParser(val baseParser : ParserInterface
   private def createCommand(mId: Seq[String],
                            cmdString : String,
                            createCmd : OracleTable => LogicalPlan) : LogicalPlan = {
-    val tab = UnresolvedTable(mId, cmdString)
+    val tab = UnresolvedTable(mId, cmdString, Some(""))
     val resolvedTab = sparkSession.sessionState.analyzer.execute(tab)
     if (resolvedTab.isInstanceOf[ResolvedTable]) {
       val resovTab = resolvedTab.asInstanceOf[ResolvedTable]

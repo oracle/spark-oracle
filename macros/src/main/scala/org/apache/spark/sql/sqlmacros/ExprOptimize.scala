@@ -25,6 +25,7 @@ package org.apache.spark.sql.sqlmacros
 
 import org.apache.spark.sql.catalyst.{expressions => sparkexpr}
 import org.apache.spark.sql.types.IntegralType
+import org.apache.spark.sql.catalyst.types.PhysicalIntegralType
 
 /**
  * Collapse [[sparkexpr.GetMapValue]], [[sparkexpr.GetStructField]] and
@@ -65,7 +66,7 @@ trait ExprOptimize {
   private def validIndex(a: sparkexpr.CreateArray, l: sparkexpr.Literal): Option[Int] = {
     if (l.dataType.isInstanceOf[IntegralType]) {
       val typ: IntegralType = l.dataType.asInstanceOf[IntegralType]
-      val idx = typ.numeric.toInt(l.value.asInstanceOf[typ.InternalType])
+      val idx = PhysicalIntegralType.integral(typ).toInt(l.value)
       if (idx >= 0 && idx < a.children.size) {
         Some(idx)
       } else None
@@ -78,7 +79,7 @@ trait ExprOptimize {
 
   def optimizeExpr(expr: sparkexpr.Expression): sparkexpr.Expression = expr transformUp {
     case sparkexpr.objects.UnwrapOption(_, sparkexpr.objects.WrapOption(c, _)) => c
-    case sparkexpr.GetMapValue(cm: sparkexpr.CreateMap, k: sparkexpr.Literal, false)
+    case sparkexpr.GetMapValue(cm: sparkexpr.CreateMap, k: sparkexpr.Literal)
         if hasStaticKeys(cm) =>
       getValueExpr(cm, k)
     case e @ sparkexpr.GetStructField(s: sparkexpr.CreateNamedStruct, fIdx, _)
@@ -86,7 +87,7 @@ trait ExprOptimize {
       getFieldExpr(s, fIdx)
     case e @ sparkexpr.GetArrayItem(a: sparkexpr.CreateArray, ordExpr: sparkexpr.Literal, _) =>
       validIndex(a, ordExpr).map(geArrEntryExpr(a, _)).getOrElse(e)
-    case e @ sparkexpr.GetMapValue(_: sparkexpr.Literal, _: sparkexpr.Literal, false) =>
+    case e @ sparkexpr.GetMapValue(_: sparkexpr.Literal, _: sparkexpr.Literal) =>
       val value = e.eval(null)
       sparkexpr.Literal(value, e.dataType)
     case e @ sparkexpr.GetStructField(l: sparkexpr.Literal, fIdx, _) =>

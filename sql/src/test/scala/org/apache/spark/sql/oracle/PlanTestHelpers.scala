@@ -105,7 +105,7 @@ trait PlanTestHelpers {
 
   def collectOraPlans(plan : LogicalPlan,
                       filter : OraScan => Boolean) : Seq[OraPlan] = plan collect {
-    case dsv2@DataSourceV2ScanRelation(_, oraScan: OraScan, _)
+    case dsv2@DataSourceV2ScanRelation(_, oraScan: OraScan, _, _, _)
       if filter(oraScan) => oraScan.oraPlan
   }
 

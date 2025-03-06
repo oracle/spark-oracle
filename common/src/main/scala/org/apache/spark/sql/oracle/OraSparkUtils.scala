@@ -47,7 +47,7 @@ object OraSparkUtils {
 
   def setLogLevel(logLevel: String): Unit = {
     val upperCased = logLevel.toUpperCase(Locale.ENGLISH)
-    org.apache.spark.util.Utils.setLogLevel(org.apache.log4j.Level.toLevel(logLevel))
+    org.apache.spark.util.Utils.setLogLevel(org.apache.logging.log4j.Level.toLevel(logLevel))
   }
 
   def currentSparkSessionOption : Option[SparkSession] = {

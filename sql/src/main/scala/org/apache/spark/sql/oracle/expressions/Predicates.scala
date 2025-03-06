@@ -43,6 +43,9 @@ object Predicates {
       oExpr.orasql + IN + LPAREN + csv(inList.map(_.orasql): _*) + RPAREN
 
     val children: Seq[OraExpression] = oExpr +: inList
+
+    override protected def withNewChildrenInternal(newChildren: IndexedSeq[OraExpression]):
+    OraIn = { copy(oExpr = newChildren.head, inList = newChildren.drop(1)) }
   }
 
   case class OraInSubQuery(
@@ -54,6 +57,9 @@ object Predicates {
     lazy val orasql: SQLSnippet =
       osql" (${csv(inColumns.map(_.orasql): _*)}) in ( ${oraSubQry.orasql} )"
     val children: Seq[OraExpression] = inColumns :+ oraSubQry
+
+    override protected def withNewChildrenInternal(newChildren: IndexedSeq[OraExpression]):
+    OraInSubQuery = { copy(inColumns = newChildren.dropRight(1), oraSubQry = newChildren.last) }
   }
 
   case class RownumLimit(op: SQLSnippet, limitVal: Long) extends OraExpression {
@@ -61,6 +67,9 @@ object Predicates {
     val oraExpr = OraLiteral(catalystExpr).toLiteralSql
     lazy val orasql: SQLSnippet = osql"rownum ${op} ${oraExpr}"
     val children: Seq[OraExpression] = Seq(oraExpr)
+
+    override protected def withNewChildrenInternal(newChildren: IndexedSeq[OraExpression]):
+    RownumLimit = super.legacyWithNewChildren(newChildren).asInstanceOf[RownumLimit]
   }
 
   def unapply(e: Expression): Option[OraExpression] =

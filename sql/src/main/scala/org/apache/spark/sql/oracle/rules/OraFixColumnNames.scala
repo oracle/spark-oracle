@@ -134,7 +134,7 @@ object OraFixColumnNames extends OraLogicalRule with Logging {
 
   override def _apply(plan: LogicalPlan)(implicit sparkSession: SparkSession): LogicalPlan =
     plan transformUp {
-      case dsv2@DataSourceV2ScanRelation(_, oraScan: OraScan, _) =>
+      case dsv2@DataSourceV2ScanRelation(_, oraScan: OraScan, _, _, _) =>
         val oraPlan = oraScan.oraPlan
         val namesFixed = oraPlan.getTagValue(ORA_FIXED_NAMES_TAG).getOrElse(false)
         if (!namesFixed) {

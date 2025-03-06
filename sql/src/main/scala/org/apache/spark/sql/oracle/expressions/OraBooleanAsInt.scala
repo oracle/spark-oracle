@@ -54,4 +54,9 @@ case class OraBooleanAsInt(child : OraExpression) extends OraExpression {
 
   override def orasql: SQLSnippet =
     osql"CASE WHEN ${child} THEN 1 ELSE 0 END"
-}
+
+  override def  withNewChildrenInternal(newChildren: IndexedSeq[OraExpression]):
+  OraExpression = {
+     super.legacyWithNewChildren(newChildren)
+   }
+  }

@@ -54,7 +54,8 @@ import org.apache.spark.sql.util.CaseInsensitiveStringMap
  */
 class OracleCatalog
   extends CatalogPlugin
-    with CatalogExtension
+    with TableCatalog
+    with SupportsNamespaces
     with StagingTableCatalog
     with OraExternalTableDDLSupport
     with OraCatalogFunctionActions
@@ -76,7 +77,7 @@ class OracleCatalog
 
   override def defaultNamespace: Array[String] = Array(metadataManager.defaultNamespace)
 
-  override def setDelegateCatalog(delegate: CatalogPlugin): Unit = ???
+  // override def setDelegateCatalog(delegate: CatalogPlugin): Unit = ???
 
   override def listNamespaces(): Array[Array[String]] = metadataManager.namespaces
 
@@ -123,7 +124,7 @@ class OracleCatalog
         s"${changes.map(_.getClass.getSimpleName).mkString("[", ", ", "]")}")
   }
 
-  override def dropNamespace(namespace: Array[String]): Boolean = {
+  override def dropNamespace(namespace: Array[String], cascade: Boolean): Boolean = {
     checkNamespace(namespace)
     OracleMetadata.unsupportedAction(s"drop namespace", Some("drop schema using Oracle DDL"))
   }

@@ -54,11 +54,17 @@ case class OraLatJoinProjEntry(oraExpr: OraExpression, outAttr: Option[Attribute
   override def catalystExpr: Expression = oraExpr.catalystExpr
 
   override def children: Seq[OraExpression] = Seq(oraExpr)
+
+  override protected def withNewChildrenInternal(newChildren: IndexedSeq[OraExpression]):
+  OraExpression = super.legacyWithNewChildren(newChildren)
 }
 
 case class OraLatJoinProjectionExpr(children: Seq[Expression]) extends Unevaluable {
   override def nullable: Boolean = true
   override def dataType: DataType = NullType
+
+  override protected def withNewChildrenInternal(newChildren: IndexedSeq[Expression]):
+  Expression = copy(children = newChildren)
 }
 
 case class OraLatJoinProjection(projectList: Seq[OraLatJoinProjEntry]) extends OraExpression {
@@ -69,11 +75,17 @@ case class OraLatJoinProjection(projectList: Seq[OraLatJoinProjEntry]) extends O
   lazy val catalystExpr: Expression = OraLatJoinProjectionExpr(projectList.map(_.catalystExpr))
 
   override def children: Seq[OraExpression] = projectList
+
+  override protected def withNewChildrenInternal(newChildren: IndexedSeq[OraExpression]):
+  OraExpression = copy(projectList = newChildren.asInstanceOf[Seq[OraLatJoinProjEntry]])
 }
 
 case class OraLatJoinExpr(children: Seq[Expression]) extends Unevaluable {
   override def nullable: Boolean = true
   override def dataType: DataType = NullType
+
+  override protected def withNewChildrenInternal(newChildren: IndexedSeq[Expression]):
+  Expression = copy(children = newChildren)
 }
 
 case class OraLateralJoin(expand: Expand, projections: Seq[OraLatJoinProjection])
@@ -87,6 +99,8 @@ case class OraLateralJoin(expand: Expand, projections: Seq[OraLatJoinProjection]
 
   override def catalystExpr: Expression = OraLatJoinExpr(expand.output)
 
+  override protected def withNewChildrenInternal(newChildren: IndexedSeq[OraExpression]):
+  OraExpression = copy(projections = newChildren.asInstanceOf[Seq[OraLatJoinProjection]])
 }
 
 /**

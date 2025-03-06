@@ -24,7 +24,7 @@
 
 package org.apache.spark.sql.oracle.tpcds
 
-import org.apache.spark.sql.{Dataset, SPARK_LEGACY_INT96}
+import org.apache.spark.sql.Dataset
 import org.apache.spark.sql.catalyst.plans.logical.LogicalPlan
 import org.apache.spark.sql.connector.read.oracle.OraPushdownScan
 import org.apache.spark.sql.execution.datasources.v2.DataSourceV2ScanRelation
@@ -64,7 +64,7 @@ class TracePushDownTest extends AbstractTest with PlanTestHelpers {
 
   def runOraExplain(plan: LogicalPlan, stepNum: Int): Unit = {
     val pushdownOraScan = plan.collectFirst {
-      case dsv2 @ DataSourceV2ScanRelation(_, oScan: OraPushdownScan, _) => oScan
+      case dsv2 @ DataSourceV2ScanRelation(_, oScan: OraPushdownScan, _, _, _) => oScan
     }
     if (pushdownOraScan.isDefined) {
       if (false) {

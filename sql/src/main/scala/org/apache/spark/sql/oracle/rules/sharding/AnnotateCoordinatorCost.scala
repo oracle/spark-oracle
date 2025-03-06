@@ -55,7 +55,7 @@ object AnnotateCoordinatorCost
     logDebug(s"applying AnnotateCoordinatorCost on ${plan.treeString}")
 
     plan foreachUp  {
-      case ds @ DataSourceV2ScanRelation(_, oraScan: OraScan, _) =>
+      case ds @ DataSourceV2ScanRelation(_, oraScan: OraScan, _, _, _) =>
         for (sInfo <- ShardQueryInfo.getShardingQueryInfo(ds)
             if (sInfo.queryType == CoordinatorQuery);
              planInfo <- OraExplainPlan.constructPlanInfo(dsKey, oraScan.oraPlan,

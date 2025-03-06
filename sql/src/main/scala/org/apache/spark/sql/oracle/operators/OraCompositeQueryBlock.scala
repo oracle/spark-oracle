@@ -76,4 +76,7 @@ case class OraCompositeQueryBlock(children : Seq[OraQueryBlock],
 
   override def splitOraSQL(dbSplitId : Int, splitStrategy : OraSplitStrategy): SQLSnippet
   = SQLSnippet.join(children.map(c => c.splitOraSQL(dbSplitId, splitStrategy)), oraCompOp)
+
+  override protected def withNewChildrenInternal(newChildren: IndexedSeq[OraPlan]):
+  OraCompositeQueryBlock = copy(children = newChildren.asInstanceOf[Seq[OraQueryBlock]])
 }

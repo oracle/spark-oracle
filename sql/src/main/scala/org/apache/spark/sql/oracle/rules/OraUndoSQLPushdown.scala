@@ -53,7 +53,7 @@ object OraUndoSQLPushdown {
 
   private def undoNextOraPushdown(plan : LogicalPlan) : Option[LogicalPlan] = {
     val oraPushDSv2 = plan.collectFirst {
-      case dsv2@DataSourceV2ScanRelation(_, oScan : OraPushdownScan, _)
+      case dsv2@DataSourceV2ScanRelation(_, oScan : OraPushdownScan, _, _, _)
         if oScan.oraPlan.catalystOp.isDefined => dsv2
     }
 
@@ -101,7 +101,7 @@ object OraUndoSQLPushdown {
     fn(plan, stepNum)
 
     val undoOp = plan.collectFirst {
-      case dsv2@DataSourceV2ScanRelation(_, oScan : OraPushdownScan, _)
+      case dsv2@DataSourceV2ScanRelation(_, oScan : OraPushdownScan, _, _, _)
         if oScan.oraPlan.catalystOp.isDefined => dsv2
     }
 

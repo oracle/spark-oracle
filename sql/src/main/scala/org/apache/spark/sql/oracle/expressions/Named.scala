@@ -87,6 +87,12 @@ object Named {
     lazy val children: Seq[OraExpression] = Seq(child)
 
     def outNmInOraSQL : String = getOraFixedAlias.getOrElse(catalystExpr.name)
+
+    override def  withNewChildrenInternal(newChildren: IndexedSeq[OraExpression]):
+    OraExpression = {
+      super.legacyWithNewChildren(newChildren)
+    }
+
   }
 
   case class OraColumnRef(catalystExpr: AttributeReference)
@@ -112,12 +118,23 @@ object Named {
     def outNmInOraSQL : String =
       getOraFixedAlias.getOrElse(getOraFixedNm.map(_.nm).getOrElse(catalystExpr.name))
 
+    override def  withNewChildrenInternal(newChildren: IndexedSeq[OraExpression]):
+    OraExpression = {
+      super.legacyWithNewChildren(newChildren)
+    }
+
   }
 
   case class OraOuterRef(oraColRef : OraColumnRef) extends OraExpression with OraLeafExpression {
     lazy val catalystExpr: Expression = OuterReference(oraColRef.catalystExpr)
 
     override def orasql: SQLSnippet = oraColRef.orasql
+
+    override def  withNewChildrenInternal(newChildren: IndexedSeq[OraExpression]):
+    OraExpression = {
+      super.legacyWithNewChildren(newChildren)
+    }
+
   }
 
   def unapply(e: Expression): Option[OraExpression] =

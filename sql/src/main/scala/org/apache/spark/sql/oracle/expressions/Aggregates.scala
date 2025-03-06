@@ -42,6 +42,11 @@ object Aggregates {
       this(fn,
         if (ignoreNulls) new OraLiteralSql(IGNORE_NULLS) else new OraLiteralSql(RESPECT_NULLS)
       )
+
+    override def  withNewChildrenInternal(newChildren: IndexedSeq[OraExpression]):
+    OraExpression = {
+      super.legacyWithNewChildren(newChildren)
+    }
   }
 
   case class OraAggDistinct(aggFnName : String,
@@ -52,6 +57,12 @@ object Aggregates {
     private def args = children.map(_.orasql)
     override def orasql: SQLSnippet =
       osql"$fnSnip(DISTINCT ${join(args, comma, true)})"
+
+    override def  withNewChildrenInternal(newChildren: IndexedSeq[OraExpression]):
+    OraExpression = {
+      copy(children = newChildren)
+    }
+
   }
 
   def unapply(e: Expression): Option[OraExpression] =
@@ -64,8 +75,8 @@ object Aggregates {
       case cE @ CumeDist() => OraNoArgFnExpression(CUME_DIST, cE)
       case cE @ NTile(OraExpression(bOE)) => OraUnaryFnExpression(NTILE, cE, bOE)
       case cE @ RowNumber() => OraNoArgFnExpression(ROW_NUMBER, cE)
-      case cE @ Average(OraExpression(oE)) => OraUnaryFnExpression(AVG, cE, oE)
-      case cE @ Sum(OraExpression(oE)) => OraUnaryFnExpression(SUM, cE, oE)
+      case cE @ Average(OraExpression(oE), evalMode) => OraUnaryFnExpression(AVG, cE, oE)
+      case cE @ Sum(OraExpression(oE), evalMode) => OraUnaryFnExpression(SUM, cE, oE)
       case cE @ Count(OraExpressions(oEs @ _*)) => OraFnExpression(COUNT, cE, oEs)
       case cE @ Min(OraExpression(oE)) => OraUnaryFnExpression(MIN, cE, oE)
       case cE @ Max(OraExpression(oE)) => OraUnaryFnExpression(MAX, cE, oE)

@@ -40,7 +40,7 @@ object OraUnfixColumnNames {
 
   def unfix(plan : LogicalPlan) : LogicalPlan = {
     plan foreachUp {
-      case dsv2@DataSourceV2ScanRelation(_, oScan : OraScan, _) =>
+      case dsv2@DataSourceV2ScanRelation(_, oScan : OraScan, _, _, _) =>
         unfix(oScan.oraPlan)
         oScan.oraPlan.unsetTagValue(ORA_FIXED_NAMES_TAG)
       case _ => ()

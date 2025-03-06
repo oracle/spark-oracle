@@ -46,7 +46,7 @@ class OraExprPushdownTest extends AbstractTest with OraMetadataMgrInternalTest {
                             plan: LogicalPlan = unit_test_table.queryExecution.analyzed
                            ): Expression = {
     val expr = parser.parseExpression(exprStr)
-    val r1 = analyzer.resolveExpressionBottomUp(expr, plan, false)
+    val r1 = analyzer.resolveExpressionByPlanOutput(expr, plan, false)
 
     val fPlan = Filter(r1, plan)
     val aPlan = analyzer.executeAndCheck(fPlan, new QueryPlanningTracker)

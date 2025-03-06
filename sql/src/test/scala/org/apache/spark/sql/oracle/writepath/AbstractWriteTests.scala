@@ -82,31 +82,21 @@ abstract class AbstractWriteTests extends AbstractReadTests with OraMetadataMgrI
 
     def appendDetails(op: AppendDataExec): String = {
       s"""
-         |Append Operation:
-         |  Destination table = ${op.table.name()}
-         |  WriteOptions = ${op.writeOptions.asScala.mkString(",")}
-         |Input query plan:
+         |AppendData Input query plan:
          |${op.query.treeString}
          |""".stripMargin
     }
 
     def overWrtByExprDetails(op: OverwriteByExpressionExec): String = {
       s"""
-         |OverwriteByExpression Operation:
-         |  Destination table = ${op.table.name()}
-         |  Delete Filters = ${op.deleteWhere.mkString(", ")}
-         |  WriteOptions = ${op.writeOptions.asScala.mkString(",")}
-         |Input query plan:
+         |OverwriteByExpression Input query plan:
          |${op.query.treeString}
          |""".stripMargin
     }
 
     def overWrtPartDynDetails(op: OverwritePartitionsDynamicExec): String = {
       s"""
-         |OverwritePartitionsDynamic Operation:
-         |  Destination table = ${op.table.name()}
-         |  WriteOptions = ${op.writeOptions.asScala.mkString(",")}
-         |Input query plan:
+         |OverwritePartitionsDynamic Input query plan:
          |${op.query.treeString}
          |""".stripMargin
     }

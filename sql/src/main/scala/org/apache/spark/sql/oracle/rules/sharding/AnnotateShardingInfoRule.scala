@@ -56,7 +56,7 @@ object AnnotateShardingInfoRule
       shardedMD: ShardingMetadata): LogicalPlan = {
     plan foreachUp {
       case plan if ShardQueryInfo.hasShardingQueryInfo(plan) => ()
-      case ds @ DataSourceV2ScanRelation(_, oraFScan: OraFileScan, _) =>
+      case ds @ DataSourceV2ScanRelation(_, oraFScan: OraFileScan, _, _, _) =>
         val oraTabScan : OraTableScan = oraFScan.oraPlan
         val oraTab = oraTabScan.oraTable
         val shardQInfo = shardedMD.shardQueryInfo(oraTab)
@@ -64,7 +64,7 @@ object AnnotateShardingInfoRule
         ShardQueryInfo.setShardingQueryInfo(ds, shardQInfo)
         // take into account, filters associated with the OraTableScan
         filter(oraTabScan, ds)
-      case ds @ DataSourceV2ScanRelation(_, oraScan: OraPushdownScan, _) =>
+      case ds @ DataSourceV2ScanRelation(_, oraScan: OraPushdownScan, _, _, _) =>
         val oraPlan = oraScan.oraPlan
         val catalystOp = oraPlan.catalystOp
         if (catalystOp.isDefined) {
@@ -85,6 +85,7 @@ object AnnotateShardingInfoRule
             leftKeys,
             rightKeys,
             joinCond,
+            _,
             _,
             _,
             _)  if joinType != ExistenceJoin =>
@@ -122,7 +123,7 @@ object AnnotateShardingInfoRule
     logDebug(s"applying AnnotateShardingInfoRule on ${plan.treeString}")
 
     plan transformUp {
-      case ds @ DataSourceV2ScanRelation(_, oraScan: OraScan, _) =>
+      case ds @ DataSourceV2ScanRelation(_, oraScan: OraScan, _, _, _) =>
         annotate(ds)
         ds
     }

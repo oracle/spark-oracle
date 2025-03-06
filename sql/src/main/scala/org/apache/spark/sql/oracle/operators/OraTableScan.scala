@@ -103,6 +103,9 @@ case class OraTableScan(
   def setQuerySplitCandidate : Unit = {
     setTagValue(OraTableScan.ORA_QUERY_SPLIT_CANDIDATE_TAG, true)
   }
+
+  override protected def withNewChildrenInternal(newChildren: IndexedSeq[OraPlan]): OraPlan =
+    super.legacyWithNewChildren(newChildren)
 }
 
 object OraTableScan {

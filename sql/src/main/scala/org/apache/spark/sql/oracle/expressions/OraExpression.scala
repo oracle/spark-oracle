@@ -91,24 +91,36 @@ case class OraUnaryOpExpression(op: String, catalystExpr: Expression, child: Ora
     extends OraExpression {
   val children: Seq[OraExpression] = Seq(child)
   override def orasql: SQLSnippet = SQLSnippet.unaryOp(op, child.orasql)
+
+  override protected def withNewChildrenInternal(newChildren: IndexedSeq[OraExpression]):
+  OraExpression = { copy(child = newChildren(0)) }
 }
 
 case class OraPostfixUnaryOpExpression(op: String, catalystExpr: Expression, child: OraExpression)
     extends OraExpression {
   val children: Seq[OraExpression] = Seq(child)
   override def orasql: SQLSnippet = SQLSnippet.postfixUnaryOp(op, child.orasql)
+
+  override protected def withNewChildrenInternal(newChildren: IndexedSeq[OraExpression]):
+  OraExpression = { copy(child = newChildren(0)) }
 }
 
 case class OraNoArgFnExpression(fn: String, catalystExpr: Expression)
   extends OraExpression {
   val children: Seq[OraExpression] = Seq.empty
   override def orasql: SQLSnippet = SQLSnippet.call(fn)
+
+  override protected def withNewChildrenInternal(newChildren: IndexedSeq[OraExpression]):
+  OraExpression = { super.legacyWithNewChildren(newChildren) }
 }
 
 case class OraUnaryFnExpression(fn: String, catalystExpr: Expression, child: OraExpression)
     extends OraExpression {
   val children: Seq[OraExpression] = Seq(child)
   override def orasql: SQLSnippet = SQLSnippet.call(fn, child.orasql)
+
+  override protected def withNewChildrenInternal(newChildren: IndexedSeq[OraExpression]):
+  OraExpression = { copy(child = newChildren(0)) }
 }
 
 case class OraBinaryOpExpression(
@@ -119,6 +131,9 @@ case class OraBinaryOpExpression(
     extends OraExpression {
   val children: Seq[OraExpression] = Seq(left, right)
   override def orasql: SQLSnippet = SQLSnippet.operator(op, left.orasql, right.orasql)
+
+  override protected def withNewChildrenInternal(newChildren: IndexedSeq[OraExpression]):
+  OraExpression = { copy(left = newChildren(0), right = newChildren(1)) }
 }
 
 case class OraBinaryFnExpression(
@@ -129,12 +144,18 @@ case class OraBinaryFnExpression(
     extends OraExpression {
   val children: Seq[OraExpression] = Seq(left, right)
   override def orasql: SQLSnippet = SQLSnippet.call(fn, left.orasql, right.orasql)
+
+  override protected def withNewChildrenInternal(newChildren: IndexedSeq[OraExpression]):
+  OraExpression = { copy(left = newChildren(0), right = newChildren(1)) }
 }
 
 case class OraFnExpression(fn: String, catalystExpr: Expression, children: Seq[OraExpression])
     extends OraExpression {
   private def cSnips = children.map(_.orasql)
   override def orasql: SQLSnippet = SQLSnippet.call(fn, cSnips: _*)
+
+  override protected def withNewChildrenInternal(newChildren: IndexedSeq[OraExpression]):
+  OraExpression = { copy(children = newChildren) }
 }
 
 object OraExpression {

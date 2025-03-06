@@ -94,11 +94,11 @@ object QuerySplitAnalyzer {
   private object JoinPlan {
 
     def isEquiJoinPlan(plan : LogicalPlan) : Boolean = plan match {
-      case ExtractEquiJoinKeys(Inner, _, _, _, leftChild, rightChild, _) =>
+      case ExtractEquiJoinKeys(Inner, _, _, _, _, leftChild, rightChild, _) =>
         isEquiJoinPlan(leftChild) && isEquiJoinPlan(rightChild)
-      case DataSourceV2ScanRelation(_, oraFScan: OraFileScan, _) =>
+      case DataSourceV2ScanRelation(_, oraFScan: OraFileScan, _, _, _) =>
         !oraFScan.oraPlan.catalystOp.isDefined
-      case DataSourceV2ScanRelation(_, oraScan: OraScan, _) =>
+      case DataSourceV2ScanRelation(_, oraScan: OraScan, _, _, _) =>
         isEquiJoinSubPlan(oraScan.oraPlan.catalystOp)
       case p : Project => isEquiJoinPlan(p.child)
       case f : Filter => isEquiJoinPlan(f.child)

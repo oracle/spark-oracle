@@ -27,8 +27,8 @@ import oracle.spark.{DataSourceKey, ORASQLUtils}
 
 import org.apache.spark.internal.Logging
 import org.apache.spark.sql.SparkSession
-import org.apache.spark.sql.connector.read.oracle.OraUnknownDistribution
 import org.apache.spark.sql.connector.read.partitioning.Partitioning
+import org.apache.spark.sql.connector.read.partitioning.UnknownPartitioning
 import org.apache.spark.sql.oracle.{OraSparkConfig, OraSparkUtils, OraSQLImplicits, SQLSnippet}
 import org.apache.spark.sql.oracle.expressions.{OraExpressions, OraLiteralSql}
 import org.apache.spark.sql.oracle.operators.{OraPlan, OraTableScan}
@@ -46,7 +46,7 @@ trait OraSplitStrategy {
    * that this Strategy applie to.
    * @return
    */
-  def partitioning: Partitioning = OraUnknownDistribution(0)
+  def partitioning: Partitioning = new UnknownPartitioning(0)
 
   /**
    * A [[OraDBSplit]] potentially implies a block or partition restriction.

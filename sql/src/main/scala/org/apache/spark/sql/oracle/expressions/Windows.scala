@@ -30,7 +30,11 @@ import org.apache.spark.sql.oracle.SQLSnippet
 object Windows {
 
   case class OraWindowFrame(catalystExpr : WindowFrame,
-                            orasql : SQLSnippet) extends OraExpression with OraLeafExpression
+                            orasql : SQLSnippet) extends OraExpression with OraLeafExpression {
+
+    override protected def withNewChildrenInternal(newChildren: IndexedSeq[OraExpression]):
+    OraWindowFrame = super.legacyWithNewChildren(newChildren).asInstanceOf[OraWindowFrame]
+  }
 
   case class OraWindowSpec(catalystExpr : WindowSpecDefinition,
                            partitionSpec: Seq[OraExpression],
@@ -62,6 +66,8 @@ object Windows {
       }
     }
 
+    override protected def withNewChildrenInternal(newChildren: IndexedSeq[OraExpression]):
+    OraWindowSpec = super.legacyWithNewChildren(newChildren).asInstanceOf[OraWindowSpec]
   }
 
   case class OraWindowExpression(catalystExpr : WindowExpression,
@@ -72,6 +78,10 @@ object Windows {
     override def orasql: SQLSnippet = {
       osql"${windowFunction} ${windowSpec}"
     }
+
+    override protected def withNewChildrenInternal(newChildren: IndexedSeq[OraExpression]):
+    OraWindowExpression = { copy(windowFunction = newChildren(0),
+      windowSpec = newChildren(1).asInstanceOf[OraWindowSpec]) }
   }
 
   /**

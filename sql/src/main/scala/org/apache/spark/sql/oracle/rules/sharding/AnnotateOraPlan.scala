@@ -44,7 +44,7 @@ object AnnotateOraPlan extends OraShardingLogicalRule
     logDebug(s"applying AnnotateOraPlan on ${plan.treeString}")
 
     plan foreachUp {
-      case ds@DataSourceV2ScanRelation(_, oraScan: OraScan, _) =>
+      case ds@DataSourceV2ScanRelation(_, oraScan: OraScan, _, _, _) =>
         for (sInfo <- ShardQueryInfo.getShardingQueryInfo(ds)) {
           ShardQueryInfo.setShardingQueryInfo(oraScan.oraPlan, sInfo)
         }

@@ -39,7 +39,7 @@ class ShardingExplainPlanTest extends AbstractShardingTranslationTest {
       val plan = TestOracleHive.sql(s"$q").queryExecution.optimizedPlan
 
       val dsvO = plan.collectFirst {
-        case dsv2 @ DataSourceV2ScanRelation(_, oScan: OraPushdownScan, _) => dsv2
+        case dsv2 @ DataSourceV2ScanRelation(_, oScan: OraPushdownScan, _, _, _) => dsv2
       }
 
       for (dsv2 <- dsvO;
@@ -60,7 +60,7 @@ class ShardingExplainPlanTest extends AbstractShardingTranslationTest {
       val plan = TestOracleHive.sql(s"$q").queryExecution.optimizedPlan
 
       val pushdownOraScan = plan.collectFirst {
-        case dsv2 @ DataSourceV2ScanRelation(_, oScan: OraPushdownScan, _) => oScan
+        case dsv2 @ DataSourceV2ScanRelation(_, oScan: OraPushdownScan, _, _, _) => oScan
       }
 
       if (pushdownOraScan.isDefined) {

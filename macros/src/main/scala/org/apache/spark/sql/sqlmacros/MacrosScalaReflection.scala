@@ -36,6 +36,8 @@ import org.apache.spark.sql.catalyst.expressions.{Expression, _}
 import org.apache.spark.sql.catalyst.expressions.objects._
 import org.apache.spark.sql.catalyst.util.{ArrayData, MapData}
 import org.apache.spark.sql.types._
+import org.apache.spark.sql.catalyst.encoders.EncoderUtils
+import org.apache.spark.sql.catalyst.types.{DataTypeUtils, PhysicalBinaryType, PhysicalIntegerType, PhysicalLongType}
 import org.apache.spark.unsafe.types.{CalendarInterval, UTF8String}
 import org.apache.spark.util.Utils
 
@@ -172,7 +174,7 @@ private[sqlmacros] object MacrosScalaReflection extends ScalaReflection {
     // Assumes we are deserializing the first column of a row.
     deserializerForWithNullSafetyAndUpcast(GetColumnByOrdinal(0, dataType), dataType,
       nullable = nullable, walkedTypePath,
-      (casted, typePath) => deserializerFor(tpe, casted, typePath))
+      deserializerFor(tpe, _, walkedTypePath))
   }
 
   /**
@@ -265,7 +267,7 @@ private[sqlmacros] object MacrosScalaReflection extends ScalaReflection {
             dataType,
             nullable = elementNullable,
             newTypePath,
-            (casted, typePath) => deserializerFor(elementType, casted, typePath))
+            deserializerFor(elementType, _, newTypePath))
         }
 
         val arrayData = UnresolvedMapObjects(mapFunction, path)
@@ -299,7 +301,7 @@ private[sqlmacros] object MacrosScalaReflection extends ScalaReflection {
             dataType,
             nullable = elementNullable,
             newTypePath,
-            (casted, typePath) => deserializerFor(elementType, casted, typePath))
+            deserializerFor(elementType, _, newTypePath ))
         }
 
         val companion = t.dealias.typeSymbol.companion.typeSignature
@@ -521,16 +523,16 @@ private[sqlmacros] object MacrosScalaReflection extends ScalaReflection {
       case t if isSubtype(t, localTypeOf[java.sql.Date]) => createSerializerForSqlDate(inputObject)
 
       case t if isSubtype(t, localTypeOf[BigDecimal]) =>
-        createSerializerForScalaBigDecimal(inputObject)
+        createSerializerForBigDecimal(inputObject)
 
       case t if isSubtype(t, localTypeOf[java.math.BigDecimal]) =>
-        createSerializerForJavaBigDecimal(inputObject)
+        createSerializerForBigDecimal(inputObject)
 
       case t if isSubtype(t, localTypeOf[java.math.BigInteger]) =>
-        createSerializerForJavaBigInteger(inputObject)
+        createSerializerForBigInteger(inputObject)
 
       case t if isSubtype(t, localTypeOf[scala.math.BigInt]) =>
-        createSerializerForScalaBigInt(inputObject)
+        createSerializerForBigInteger(inputObject)
 
       case t if isSubtype(t, localTypeOf[java.lang.Integer]) =>
         createSerializerForInteger(inputObject)
@@ -683,7 +685,7 @@ private[sqlmacros] object MacrosScalaReflection extends ScalaReflection {
   /** Returns a Sequence of attributes for the given case class type. */
   def attributesFor[T: TypeTag]: Seq[Attribute] = schemaFor[T] match {
     case Schema(s: StructType, _) =>
-      s.toAttributes
+      DataTypeUtils.toAttributes(s)
     case others =>
       throw new UnsupportedOperationException(s"Attributes for type $others is not supported")
   }
@@ -828,9 +830,9 @@ private[sqlmacros] object MacrosScalaReflection extends ScalaReflection {
     FloatType -> classOf[Float],
     DoubleType -> classOf[Double],
     StringType -> classOf[UTF8String],
-    DateType -> classOf[DateType.InternalType],
-    TimestampType -> classOf[TimestampType.InternalType],
-    BinaryType -> classOf[BinaryType.InternalType],
+    DateType -> classOf[PhysicalIntegerType.InternalType],
+    TimestampType -> classOf[PhysicalLongType.InternalType],
+    BinaryType -> classOf[PhysicalBinaryType.InternalType],
     CalendarIntervalType -> classOf[CalendarInterval]
   )
 
@@ -867,7 +869,7 @@ private[sqlmacros] object MacrosScalaReflection extends ScalaReflection {
     case _: MapType => classOf[MapType]
     case udt: UserDefinedType[_] => javaBoxedType(udt.sqlType)
     case ObjectType(cls) => cls
-    case _ => ScalaReflection.typeBoxedJavaMapping.getOrElse(dt, classOf[java.lang.Object])
+    case _ => EncoderUtils.typeBoxedJavaMapping.getOrElse(dt, classOf[java.lang.Object])
   }
 
   def expressionJavaClasses(arguments: Seq[Expression]): Seq[Class[_]] = {

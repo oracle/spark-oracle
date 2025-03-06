@@ -37,17 +37,17 @@ import org.apache.spark.sql.oracle.rules.OraSQLPushdownRule
 object Subquery {
   def unapply(e: Expression): Option[OraExpression] =
     Option(e match {
-      case sq@ScalarSubquery(plan, _, _) =>
+      case sq@ScalarSubquery(plan, _, _, _, _, _) =>
         val pushdownPlan = OraSQLPushdownRule(plan)
         pushdownPlan match {
-          case DataSourceV2ScanRelation(_, oraScan: OraScan, _) =>
+          case DataSourceV2ScanRelation(_, oraScan: OraScan, _, _, _) =>
             OraSubQuery(sq, oraScan.oraPlan)
           case _ => null
         }
-      case lq@ListQuery(plan, _, _, _) =>
+      case lq@ListQuery(plan, _, _, _, _, _) =>
         val pushdownPlan = OraSQLPushdownRule(plan)
         pushdownPlan match {
-          case DataSourceV2ScanRelation(_, oraScan: OraScan, _) =>
+          case DataSourceV2ScanRelation(_, oraScan: OraScan, _, _, _) =>
             OraSubQuery(lq, oraScan.oraPlan)
           case _ => null
         }
@@ -91,6 +91,9 @@ object Subquery {
     }
 
     override val children: Seq[OraExpression] = joiningExprs
+
+    override protected def withNewChildrenInternal(newChildren: IndexedSeq[OraExpression]):
+    OraSubQueryJoin = { copy( joiningExprs = newChildren ) }
   }
 
   case class OraSubQuery(catalystExpr : SubqueryExpression,
@@ -98,6 +101,9 @@ object Subquery {
     override def orasql: SQLSnippet =
       osql" ( ${oraPlan} )"
     override val children: Seq[OraExpression] = Seq.empty
+
+    override protected def withNewChildrenInternal(newChildren: IndexedSeq[OraExpression]):
+    OraSubQuery = super.legacyWithNewChildren(newChildren).asInstanceOf[OraSubQuery]
   }
 
   /**
@@ -110,5 +116,9 @@ object Subquery {
                                   sq : OraSubQuery) extends OraExpression {
     override def orasql: SQLSnippet = osql"${op} ${sq.orasql}"
     override val children: Seq[OraExpression] = Seq(sq)
+
+    override protected def withNewChildrenInternal(newChildren: IndexedSeq[OraExpression]):
+    OraNullCheckSubQuery =
+      super.legacyWithNewChildren(newChildren).asInstanceOf[OraNullCheckSubQuery]
   }
 }

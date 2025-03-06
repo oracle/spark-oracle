@@ -48,7 +48,7 @@ trait AnnotatePredicateHelper extends PredicateHelper {
                                           plan: LogicalPlan): Option[(Expression, LogicalPlan)] = {
 
     plan match {
-      case DataSourceV2ScanRelation(_, oScan: OraScan, _)
+      case DataSourceV2ScanRelation(_, oScan: OraScan, _, _, _)
         if oScan.oraPlan.catalystOp.isDefined =>
         _findExpressionAndTrackLineageDown(exp, oScan.oraPlan.catalystOp.get)
       case p: Project =>

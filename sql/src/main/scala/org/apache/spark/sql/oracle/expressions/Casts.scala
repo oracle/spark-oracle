@@ -25,16 +25,15 @@ package org.apache.spark.sql.oracle.expressions
 
 import org.apache.spark.internal.Logging
 import org.apache.spark.sql.catalyst.analysis.TypeCoercion
-import org.apache.spark.sql.catalyst.expressions.{Cast, CheckOverflow, Expression, Literal, PromotePrecision}
+import org.apache.spark.sql.catalyst.expressions.{Cast, CheckOverflow, Expression, Literal}
 import org.apache.spark.sql.catalyst.util.DateTimeUtils
 import org.apache.spark.sql.connector.catalog.oracle.OraDataType
 import org.apache.spark.sql.oracle.{OraSQLImplicits, SQLSnippet}
 import org.apache.spark.sql.types._
 
 /**
- * translate [[Cast]], [[PromotePrecision]] and [[CheckOverflow]]
+ * translate [[Cast]] and [[CheckOverflow]]
  *
- *  - for [[PromotePrecision]] just return child translation.
  *  - for [[CheckOverflow]]
  *    - if `nullOnOverflow` is true add a case check
  *    - if `nullOnOverflow` is false: do nothing? translated oExpr will throw
@@ -50,16 +49,19 @@ object Casts extends OraSQLImplicits with Logging {
     }
 
     override def children: Seq[OraExpression] = Seq(childOE)
+
+    override def  withNewChildrenInternal(newChildren: IndexedSeq[OraExpression]):
+    OraExpression = {
+      super.legacyWithNewChildren(newChildren)
+    }
+
   }
 
   def unapply(e: Expression): Option[OraExpression] = {
     Option(e match {
-      case CheckOverflow(PromotePrecision(cE@Cast(OraExpression(oE), _, _)), _, nullOnOverflow) =>
+      case CheckOverflow(cE@Cast(OraExpression(oE), _, _, _), _, nullOnOverflow) =>
         Casting(cE, oE, nullOnOverflow)
-      case CheckOverflow(cE@Cast(OraExpression(oE), _, _), _, nullOnOverflow) =>
-        Casting(cE, oE, nullOnOverflow)
-      case PromotePrecision(cE@Cast(OraExpression(oE), _, _)) => Casting(cE, oE, false)
-      case cE@Cast(OraExpression(oE), _, _) => Casting(cE, oE, false)
+      case cE@Cast(OraExpression(oE), _, _, _) => Casting(cE, oE, false)
       case _ => null
     }).flatMap {
       /*

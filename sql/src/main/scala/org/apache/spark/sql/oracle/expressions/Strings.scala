@@ -49,6 +49,9 @@ object Strings {
       osql"$fnSnip(${trimType} ${trimCharSnip} FROM ${trimSrc})"
 
     override def children: Seq[OraExpression] = trimChar.toSeq ++ Seq(trimSrc)
+
+    override protected def withNewChildrenInternal(newChildren: IndexedSeq[OraExpression]):
+    OraStringTrim = super.legacyWithNewChildren(newChildren).asInstanceOf[OraStringTrim]
   }
 
   private val TRIM_LEADING : SQLSnippet = literalSnippet(LEADING)
@@ -72,6 +75,9 @@ object Strings {
     }
 
     override def children: Seq[OraExpression] = Seq(char1, char2)
+
+    override protected def withNewChildrenInternal(newChildren: IndexedSeq[OraExpression]):
+    OraLike = super.legacyWithNewChildren(newChildren).asInstanceOf[OraLike]
   }
 
   case class OraContains(catalystExpr: Expression, child: OraExpression, pattern: String)
@@ -83,6 +89,9 @@ object Strings {
       osql" (${child} LIKE '%${literalSnippet(pattern)}%') "
 
     override def children: Seq[OraExpression] = Seq(child)
+
+    override protected def withNewChildrenInternal(newChildren: IndexedSeq[OraExpression]):
+    OraContains = super.legacyWithNewChildren(newChildren).asInstanceOf[OraContains]
   }
 
   def unapply(e: Expression): Option[OraExpression] =

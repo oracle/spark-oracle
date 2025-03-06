@@ -27,11 +27,11 @@ package org.apache.spark.sql.oracle.commands
 import org.apache.spark.internal.Logging
 import org.apache.spark.sql.{Row, SparkSession}
 import org.apache.spark.sql.catalyst.expressions.{Attribute, AttributeReference}
-import org.apache.spark.sql.execution.command.RunnableCommand
+import org.apache.spark.sql.execution.command.LeafRunnableCommand
 import org.apache.spark.sql.oracle.BuildInfo
 import org.apache.spark.sql.types.StringType
 
-case class SparkOraVersion(dummyArg: String = null) extends RunnableCommand with Logging {
+case class SparkOraVersion(dummyArg: String = null) extends LeafRunnableCommand with Logging {
 
   override val output: Seq[Attribute] = {
     AttributeReference("Details", StringType, nullable = false)() :: Nil

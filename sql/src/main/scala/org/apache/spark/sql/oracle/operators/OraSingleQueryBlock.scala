@@ -229,4 +229,14 @@ case class OraSingleQueryBlock(source: OraPlan,
       catalystProjectList = catalystProjectList,
       orderBy = orderBy
     )
+
+  override protected def withNewChildrenInternal(newChildren: IndexedSeq[OraPlan]):
+  OraPlan =
+
+  if (joins.nonEmpty) {
+    copy(source = newChildren.head,
+      joins = newChildren.drop(1).asInstanceOf[Seq[OraJoinClause]])
+  } else {
+    super.legacyWithNewChildren(newChildren)
+  }
 }

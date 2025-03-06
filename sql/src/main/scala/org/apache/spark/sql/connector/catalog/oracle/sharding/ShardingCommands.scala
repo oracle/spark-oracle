@@ -28,6 +28,7 @@ import org.apache.spark.internal.Logging
 import org.apache.spark.sql.{Row, SparkSession}
 import org.apache.spark.sql.catalyst.QualifiedTableName
 import org.apache.spark.sql.catalyst.expressions.{Attribute, AttributeReference}
+import org.apache.spark.sql.catalyst.plans.logical.LogicalPlan
 import org.apache.spark.sql.connector.catalog.oracle.{OracleCatalog, OracleMetadata, OracleTable}
 import org.apache.spark.sql.execution.command.RunnableCommand
 import org.apache.spark.sql.types.{IntegerType, StringType}
@@ -45,6 +46,9 @@ trait ShardingCommands extends RunnableCommand with Logging {
       _run(sparkSession, oraCatalog.getMetadataManager.getShardingMetadata)
     }
   }
+
+  override def withNewChildrenInternal(newChildren: IndexedSeq[LogicalPlan]): LogicalPlan =
+    super.legacyWithNewChildren(newChildren)
 
   protected def _run(sparkSession: SparkSession, shardingMetadata: ShardingMetadata): Seq[Row]
 }

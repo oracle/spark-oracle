@@ -49,7 +49,7 @@ object Arithmetic {
     Option(e match {
       case cE @ UnaryMinus(OraExpression(oE), _) => OraUnaryOpExpression(MINUS, cE, oE)
       case cE @ UnaryPositive(OraExpression(oE)) => OraUnaryOpExpression(PLUS, cE, oE)
-      case cE @ Abs(OraExpression(oE)) => OraUnaryFnExpression(ABS, cE, oE)
+      case cE @ Abs(OraExpression(oE), _) => OraUnaryFnExpression(ABS, cE, oE)
       case cE @ Add(OraExpression(left), OraExpression(right), _) =>
         OraBinaryOpExpression(PLUS, cE, left, right)
       case cE @ Subtract(OraExpression(left), OraExpression(right), _) =>

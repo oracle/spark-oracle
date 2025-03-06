@@ -49,7 +49,7 @@ object defineMacros {
         case Left(fn) =>
           sparkSession.udf.register(nm, udf(fn))
         case Right(sqlMacroBldr) =>
-          sparkSession.sessionState.functionRegistry.createOrReplaceTempFunction(nm, sqlMacroBldr)
+          sparkSession.sessionState.functionRegistry.createOrReplaceTempFunction(nm, sqlMacroBldr, "scala_udf")
       }
     }
 
@@ -63,7 +63,7 @@ object defineMacros {
         case Left(fn) =>
           sparkSession.udf.register(nm, udf(fn))
         case Right(sqlMacroBldr) =>
-          sparkSession.sessionState.functionRegistry.createOrReplaceTempFunction(nm, sqlMacroBldr)
+          sparkSession.sessionState.functionRegistry.createOrReplaceTempFunction(nm, sqlMacroBldr, "scala_udf")
       }
     }
 
@@ -79,7 +79,7 @@ object defineMacros {
         case Left(fn) =>
           sparkSession.udf.register(nm, udf(fn))
         case Right(sqlMacroBldr) =>
-          sparkSession.sessionState.functionRegistry.createOrReplaceTempFunction(nm, sqlMacroBldr)
+          sparkSession.sessionState.functionRegistry.createOrReplaceTempFunction(nm, sqlMacroBldr, "scala_udf")
       }
     }
 
@@ -94,7 +94,7 @@ object defineMacros {
         case Left(fn) =>
           sparkSession.udf.register(nm, udf(fn))
         case Right(sqlMacroBldr) =>
-          sparkSession.sessionState.functionRegistry.createOrReplaceTempFunction(nm, sqlMacroBldr)
+          sparkSession.sessionState.functionRegistry.createOrReplaceTempFunction(nm, sqlMacroBldr, "scala_udf")
       }
     }
 
@@ -109,7 +109,7 @@ object defineMacros {
         case Left(fn) =>
           sparkSession.udf.register(nm, udf(fn))
         case Right(sqlMacroBldr) =>
-          sparkSession.sessionState.functionRegistry.createOrReplaceTempFunction(nm, sqlMacroBldr)
+          sparkSession.sessionState.functionRegistry.createOrReplaceTempFunction(nm, sqlMacroBldr, "scala_udf")
       }
     }
 
@@ -124,7 +124,7 @@ object defineMacros {
         case Left(fn) =>
           sparkSession.udf.register(nm, udf(fn))
         case Right(sqlMacroBldr) =>
-          sparkSession.sessionState.functionRegistry.createOrReplaceTempFunction(nm, sqlMacroBldr)
+          sparkSession.sessionState.functionRegistry.createOrReplaceTempFunction(nm, sqlMacroBldr, "scala_udf")
       }
     }
 
@@ -139,7 +139,7 @@ object defineMacros {
         case Left(fn) =>
           sparkSession.udf.register(nm, udf(fn))
         case Right(sqlMacroBldr) =>
-          sparkSession.sessionState.functionRegistry.createOrReplaceTempFunction(nm, sqlMacroBldr)
+          sparkSession.sessionState.functionRegistry.createOrReplaceTempFunction(nm, sqlMacroBldr, "scala_udf")
       }
     }
 
@@ -154,7 +154,7 @@ object defineMacros {
         case Left(fn) =>
           sparkSession.udf.register(nm, udf(fn))
         case Right(sqlMacroBldr) =>
-          sparkSession.sessionState.functionRegistry.createOrReplaceTempFunction(nm, sqlMacroBldr)
+          sparkSession.sessionState.functionRegistry.createOrReplaceTempFunction(nm, sqlMacroBldr, "scala_udf")
       }
     }
 
@@ -169,7 +169,7 @@ object defineMacros {
         case Left(fn) =>
           sparkSession.udf.register(nm, udf(fn))
         case Right(sqlMacroBldr) =>
-          sparkSession.sessionState.functionRegistry.createOrReplaceTempFunction(nm, sqlMacroBldr)
+          sparkSession.sessionState.functionRegistry.createOrReplaceTempFunction(nm, sqlMacroBldr, "scala_udf")
       }
     }
 
@@ -184,7 +184,7 @@ object defineMacros {
         case Left(fn) =>
           sparkSession.udf.register(nm, udf(fn))
         case Right(sqlMacroBldr) =>
-          sparkSession.sessionState.functionRegistry.createOrReplaceTempFunction(nm, sqlMacroBldr)
+          sparkSession.sessionState.functionRegistry.createOrReplaceTempFunction(nm, sqlMacroBldr, "scala_udf")
       }
     }
   }

@@ -44,6 +44,12 @@ object Conditional {
 
     override def children: Seq[OraExpression] =
       cases.flatMap(t => Seq(t._1, t._2)) ++ elseCase.toSeq
+
+    override def  withNewChildrenInternal(newChildren: IndexedSeq[OraExpression]):
+    OraExpression = {
+      copy(cases = Seq((newChildren(0), newChildren(1))),
+        elseCase = if (elseCase.isDefined) Some(newChildren(2)) else None)
+    }
   }
 
   case class OraSearchedCase(
@@ -58,6 +64,13 @@ object Conditional {
 
     override def children: Seq[OraExpression] =
       branches.flatMap(t => Seq(t._1, t._2)) ++ elseCase.toSeq
+
+    override def  withNewChildrenInternal(newChildren: IndexedSeq[OraExpression]):
+    OraExpression = {
+      copy(branches = Seq((newChildren(0), newChildren(1))),
+        elseCase = if (elseCase.isDefined) Some(newChildren(2)) else None)
+    }
+
   }
 
   private object CaseBranch {

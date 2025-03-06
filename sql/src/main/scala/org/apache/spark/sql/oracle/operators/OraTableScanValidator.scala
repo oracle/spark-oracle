@@ -54,7 +54,7 @@ case class OraTableScanValidator(plan: LogicalPlan) {
       case DataSourceV2ScanRelation(
           t,
           OraFileScan(_, _, _, _, _, oraPlan: OraTableScan, _, _, _),
-          _) =>
+          _, _, _) =>
         t.name -> oraPlan
     }
 

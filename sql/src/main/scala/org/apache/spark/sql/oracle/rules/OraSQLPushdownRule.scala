@@ -129,14 +129,14 @@ object OraSQLPushdownRule extends OraLogicalRule with Logging {
     val pushedDSV2 =
       pushPlans.foldLeft(Some(dsV2WithOraQBlock): Option[DataSourceV2ScanRelation]) {
         case (None, _) => None
-        case (Some(dsV2 @ DataSourceV2ScanRelation(_, oraScan: OraScan, _)), p: Project) =>
+        case (Some(dsV2 @ DataSourceV2ScanRelation(_, oraScan: OraScan, _, _, _)), p: Project) =>
           ProjectPushdown(
             dsV2,
             oraScan: OraScan,
             oraScan.oraPlan.asInstanceOf[OraQueryBlock],
             p,
             sparkSession: SparkSession).pushdown
-        case (Some(dsV2 @ DataSourceV2ScanRelation(_, oraScan: OraScan, _)), f: Filter) =>
+        case (Some(dsV2 @ DataSourceV2ScanRelation(_, oraScan: OraScan, _, _, _)), f: Filter) =>
           FilterPushdown(
             dsV2,
             oraScan: OraScan,
@@ -166,8 +166,8 @@ object OraSQLPushdownRule extends OraLogicalRule with Logging {
             leftKeys,
             rightKeys,
             condition,
-            leftChild @ DataSourceV2ScanRelation(_, oraScanL: OraScan, _),
-            rightChild @ DataSourceV2ScanRelation(_, oraScanR: OraScan, _),
+            _, leftChild @ DataSourceV2ScanRelation(_, oraScanL: OraScan, _, _, _),
+            rightChild @ DataSourceV2ScanRelation(_, oraScanR: OraScan, _, _, _),
             _) =>
         joinType match {
           /*
@@ -201,8 +201,8 @@ object OraSQLPushdownRule extends OraLogicalRule with Logging {
               sparkSession).pushdown.getOrElse(joinOp)
         }
       case joinOp @ Join(
-            leftChild @ DataSourceV2ScanRelation(_, oraScanL: OraScan, _),
-            rightChild @ DataSourceV2ScanRelation(_, oraScanR: OraScan, _),
+            leftChild @ DataSourceV2ScanRelation(_, oraScanL: OraScan, _, _, _),
+            rightChild @ DataSourceV2ScanRelation(_, oraScanR: OraScan, _, _, _),
             Inner | Cross,
             None,
             _) =>
@@ -220,8 +220,8 @@ object OraSQLPushdownRule extends OraLogicalRule with Logging {
       // in case of a LeftAnti, ExtractEquiJoin doesn't pattern match
       // NotInJoinPattern. See note in NotInJoinPattern.scala
       case joinOp @ Join(
-            leftChild @ DataSourceV2ScanRelation(_, oraScanL: OraScan, _),
-            rightChild @ DataSourceV2ScanRelation(_, oraScanR: OraScan, _),
+            leftChild @ DataSourceV2ScanRelation(_, oraScanL: OraScan, _, _, _),
+            rightChild @ DataSourceV2ScanRelation(_, oraScanR: OraScan, _, _, _),
             LeftAnti,
             Some(condition),
             _) =>
@@ -236,14 +236,15 @@ object OraSQLPushdownRule extends OraLogicalRule with Logging {
           Seq.empty,
           Some(condition),
           sparkSession).pushdown.getOrElse(joinOp)
-      case aggOp @ Aggregate(_, _, child @ DataSourceV2ScanRelation(_, oraScan: OraScan, _)) =>
+      case aggOp @ Aggregate(_, _, child @ DataSourceV2ScanRelation(_,
+      oraScan: OraScan, _, _, _)) =>
         AggregatePushdown(
           child,
           oraScan,
           toOraQueryBlock(oraScan.oraPlan, child),
           aggOp,
           sparkSession).pushdown.getOrElse(aggOp)
-      case expOp @ Expand(_, _, child @ DataSourceV2ScanRelation(_, oraScan: OraScan, _)) =>
+      case expOp @ Expand(_, _, child @ DataSourceV2ScanRelation(_, oraScan: OraScan, _, _, _)) =>
         ExpandPushdown(
           child,
           oraScan,
@@ -251,7 +252,7 @@ object OraSQLPushdownRule extends OraLogicalRule with Logging {
           expOp,
           sparkSession).pushdown.getOrElse(expOp)
       case gl @ GlobalLimit(_,
-            LocalLimit(_, dsV2 @ DataSourceV2ScanRelation(_, oraScan: OraScan, _))) =>
+            LocalLimit(_, dsV2 @ DataSourceV2ScanRelation(_, oraScan: OraScan, _, _, _))) =>
         LimitPushdown(
           dsV2,
           oraScan,
@@ -259,14 +260,14 @@ object OraSQLPushdownRule extends OraLogicalRule with Logging {
           gl,
           sparkSession).pushdown.getOrElse(gl)
       case sort @ Sort(_, global, child @
-        DataSourceV2ScanRelation(_, oraScan: OraScan, _)) if global =>
+        DataSourceV2ScanRelation(_, oraScan: OraScan, _, _, _)) if global =>
         OrderByPushDown(child,
           oraScan,
           toOraQueryBlock(oraScan.oraPlan, child),
           sort,
           sparkSession).pushdown.getOrElse(sort)
       case window @ Window(_, _, _, child @
-        DataSourceV2ScanRelation(_, oraScan: OraScan, _)) =>
+        DataSourceV2ScanRelation(_, oraScan: OraScan, _, _, _)) =>
         WindowPushDown(child,
           oraScan,
           toOraQueryBlock(oraScan.oraPlan, child),
@@ -283,8 +284,8 @@ object OraSQLPushdownRule extends OraLogicalRule with Logging {
           u, osql"UNION ALL", sparkSession
         ).pushdown.getOrElse(u)
       case e @ Except(
-            leftChild @ DataSourceV2ScanRelation(_, oraScanL: OraScan, _),
-            rightChild @ DataSourceV2ScanRelation(_, oraScanR: OraScan, _),
+            leftChild @ DataSourceV2ScanRelation(_, oraScanL: OraScan, _, _, _),
+            rightChild @ DataSourceV2ScanRelation(_, oraScanR: OraScan, _, _, _),
             false) =>
         import org.apache.spark.sql.oracle.OraSQLImplicits._
         SetOpPushdown(leftChild, oraScanL,
@@ -293,8 +294,8 @@ object OraSQLPushdownRule extends OraLogicalRule with Logging {
           e, osql"MINUS", sparkSession
         ).pushdown.getOrElse(e)
       case i @ Intersect(
-            leftChild @ DataSourceV2ScanRelation(_, oraScanL: OraScan, _),
-            rightChild @ DataSourceV2ScanRelation(_, oraScanR: OraScan, _),
+            leftChild @ DataSourceV2ScanRelation(_, oraScanL: OraScan, _, _, _),
+            rightChild @ DataSourceV2ScanRelation(_, oraScanR: OraScan, _, _, _),
             false) =>
         import org.apache.spark.sql.oracle.OraSQLImplicits._
         SetOpPushdown(leftChild, oraScanL,
@@ -308,7 +309,7 @@ object OraSQLPushdownRule extends OraLogicalRule with Logging {
   object OraScans {
     def unapplySeq(plans: Seq[LogicalPlan]): Option[Seq[(DataSourceV2ScanRelation, OraScan)]] =
       OraSparkUtils.sequence(plans map {
-        case dsv2 @ DataSourceV2ScanRelation(_, oraScan: OraScan, _) =>
+        case dsv2 @ DataSourceV2ScanRelation(_, oraScan: OraScan, _, _, _) =>
           Some((dsv2, oraScan)).asInstanceOf[Option[(DataSourceV2ScanRelation, OraScan)]]
         case _ => None
       }

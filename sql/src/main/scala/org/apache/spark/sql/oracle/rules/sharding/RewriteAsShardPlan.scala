@@ -95,7 +95,7 @@ object RewriteAsShardPlan extends OraShardingLogicalRule
 
 
     val oraPushDSv2 = plan.collectFirst {
-      case dsv2@DataSourceV2ScanRelation(_, oScan : OraScan, _)
+      case dsv2@DataSourceV2ScanRelation(_, oScan : OraScan, _, _, _)
         if doPushdown(dsv2, oScan) => dsv2
     }
 
@@ -116,7 +116,7 @@ object RewriteAsShardPlan extends OraShardingLogicalRule
     logDebug(s"applying RewriteAsShardPlan on ${plan.treeString}")
 
     val r = plan transformUp  {
-      case ds @ DataSourceV2ScanRelation(_, _, _) if isPushdownCandidate(ds) =>
+      case ds @ DataSourceV2ScanRelation(_, _, _, _, _) if isPushdownCandidate(ds) =>
         OraUndoSQLPushdown.undoCoordinatorQueries(ds)(shardPushdown _)
     }
 

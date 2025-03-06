@@ -203,7 +203,7 @@ trait DateTime { self: ExprTranslator =>
             case id if id.symbol == stringToTimestampAnsiSym =>
               for (strExpr <- CatalystExpression.unapply(args.head);
                    zId <- zoneId(args.tail.head))
-                yield sparkexpr.AnsiCast(strExpr, TimestampType, Some(zId.toString))
+                yield sparkexpr.Cast(strExpr, TimestampType, Some(zId.toString), true)
             case id if id.symbol == stringToDateSym =>
               for (strExpr <- CatalystExpression.unapply(args.head);
                    zId <- zoneId(args.tail.head))

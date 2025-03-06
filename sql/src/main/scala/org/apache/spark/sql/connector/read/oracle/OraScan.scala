@@ -32,6 +32,7 @@ import oracle.spark.DataSourceKey
 
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.catalyst.expressions.Expression
+import org.apache.spark.sql.catalyst.types.DataTypeUtils
 import org.apache.spark.sql.connector.catalog.oracle.OracleCatalog
 import org.apache.spark.sql.connector.catalog.oracle.sharding.ShardQueryInfo
 import org.apache.spark.sql.connector.read.{Batch, InputPartition, PartitionReaderFactory, Scan, Statistics, SupportsReportPartitioning, SupportsReportStatistics}
@@ -138,33 +139,6 @@ case class OraFileScan(
       Some(dataSchema))
   }
 
-  /**
-   * Why the tracking of pushed `partitionFilters` and `dataFilters`?
-   * [[PruneFileSourcePartitions]] converts a
-   * [[org.apache.spark.sql.execution.datasources.v2.DataSourceV2ScanRelation]]
-   * by calling this method and then since it does a `transformDown` rewrite
-   * it turns around and calls the rewrite on the new Plan. This
-   * plan has a [[org.apache.spark.sql.catalyst.plans.logical.Filter]]
-   * on top of a new `DataSourceV2ScanRelation` with the original
-   * predicates, which causes a recrusive invocation on the same filters
-   * on top of a `DataSourceV2ScanRelation`, this keeps going for ever...
-   * causing a StackOverflowError.
-   *
-   * @param pFilters
-   * @param dFilters
-   * @return
-   */
-  override def withFilters(pFilters: Seq[Expression], dFilters: Seq[Expression]): FileScan = {
-    val newPFilters = pFilters != partitionFilters
-    val newDFilters = dFilters != dataFilters
-    if (newPFilters || newDFilters) {
-      val oraPlanWithFilters = OraPlan.filter(oraPlan, pFilters, dFilters)
-      this.copy(oraPlan = oraPlanWithFilters, partitionFilters = pFilters, dataFilters = dFilters)
-    } else {
-      this
-    }
-  }
-
   override def hashCode(): Int = oraPlan.hashCode()
 
   override def equals(obj: Any): Boolean = obj match {
@@ -202,7 +176,7 @@ case class OraPushdownScan(sparkSession: SparkSession, dsKey: DataSourceKey, ora
     with SupportsReportPartitioning
     with OraScan {
 
-  lazy val readSchema = StructType.fromAttributes(oraPlan.catalystAttributes)
+  lazy val readSchema = DataTypeUtils.fromAttributes(oraPlan.catalystAttributes)
 
   override def hashCode(): Int = oraPlan.hashCode()
 

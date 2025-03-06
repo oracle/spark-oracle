@@ -39,6 +39,9 @@ case class OraLiteral(catalystExpr: Literal) extends OraExpression with OraLeafE
   def toLiteralSql: OraLiteralSql =
     new OraLiteralSql(OraLiterals.toOraLiteralSql(catalystExpr).get)
 
+  override protected def withNewChildrenInternal(newChildren: IndexedSeq[OraExpression]):
+  OraLiteral = super.legacyWithNewChildren(newChildren).asInstanceOf[OraLiteral]
+
 }
 
 case class OraLiteralSql(catalystExpr: Literal) extends OraExpression with OraLeafExpression {
@@ -47,6 +50,9 @@ case class OraLiteralSql(catalystExpr: Literal) extends OraExpression with OraLe
     SQLSnippet.literalSnippet(catalystExpr)
 
   def this(s: String) = this(Literal(UTF8String.fromString(s), StringType))
+
+  override protected def withNewChildrenInternal(newChildren: IndexedSeq[OraExpression]):
+  OraLiteralSql = super.legacyWithNewChildren(newChildren).asInstanceOf[OraLiteralSql]
 }
 
 /**

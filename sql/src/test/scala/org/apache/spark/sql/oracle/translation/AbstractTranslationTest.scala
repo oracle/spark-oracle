@@ -68,7 +68,7 @@ object AbstractTranslationTest {
   }
 
   def collectScans(plan : LogicalPlan) : Seq[Pushdown] = plan collect {
-    case dsv2@DataSourceV2ScanRelation(_, oraScan: OraScan, _) =>
+    case dsv2@DataSourceV2ScanRelation(_, oraScan: OraScan, _, _, _) =>
       Pushdown(dsv2, oraScan, oraScan.oraPlan.asInstanceOf[OraQueryBlock])
   }
 }

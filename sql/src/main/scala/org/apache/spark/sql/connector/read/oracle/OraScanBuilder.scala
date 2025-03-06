@@ -27,6 +27,7 @@ package org.apache.spark.sql.connector.read.oracle
 import oracle.spark.DataSourceKey
 
 import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.catalyst.types.DataTypeUtils
 import org.apache.spark.sql.connector.catalog.Identifier
 import org.apache.spark.sql.connector.catalog.oracle.OracleMetadata.OraTable
 import org.apache.spark.sql.connector.read.{
@@ -65,7 +66,7 @@ case class OraScanBuilder(
 
     val oraPlan = OraPlan.buildOraPlan(
       table,
-      readSchema.toAttributes ++ partitionSchema.toAttributes,
+      DataTypeUtils.toAttributes(readSchema) ++ DataTypeUtils.toAttributes(partitionSchema),
       pushedFilters())
 
     OraFileScan(

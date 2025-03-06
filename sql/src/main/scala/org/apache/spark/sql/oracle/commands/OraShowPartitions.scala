@@ -27,10 +27,10 @@ package org.apache.spark.sql.oracle.commands
 import org.apache.spark.sql.{Row, SparkSession}
 import org.apache.spark.sql.catalyst.expressions.{Attribute, AttributeReference}
 import org.apache.spark.sql.connector.catalog.oracle.OracleTable
-import org.apache.spark.sql.execution.command.RunnableCommand
+import org.apache.spark.sql.execution.command.LeafRunnableCommand
 import org.apache.spark.sql.types.StringType
 
-case class OraShowPartitions(oraTab : OracleTable) extends RunnableCommand {
+case class OraShowPartitions(oraTab : OracleTable) extends LeafRunnableCommand {
 
   override val output: Seq[Attribute] =
     Seq(AttributeReference("partition", StringType, nullable = false)())
