@@ -266,6 +266,14 @@ object OraSQLPushdownRule extends OraLogicalRule with Logging {
           toOraQueryBlock(oraScan.oraPlan, child),
           sort,
           sparkSession).pushdown.getOrElse(sort)
+      case windowGL @ WindowGroupLimit(_, _, _, _, child @
+        DataSourceV2ScanRelation(_, oraScan: OraScan, _, _, _)) =>
+        WindowGroupLimitPushdown(
+          child,
+          oraScan,
+          toOraQueryBlock(oraScan.oraPlan, child),
+          windowGL,
+          sparkSession).pushdown.getOrElse(windowGL)
       case window @ Window(_, _, _, child @
         DataSourceV2ScanRelation(_, oraScan: OraScan, _, _, _)) =>
         WindowPushDown(child,

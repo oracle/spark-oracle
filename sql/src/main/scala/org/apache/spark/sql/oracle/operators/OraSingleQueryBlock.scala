@@ -26,7 +26,7 @@ package org.apache.spark.sql.oracle.operators
 import org.apache.spark.sql.catalyst.expressions.{NamedExpression, WindowExpression}
 import org.apache.spark.sql.catalyst.expressions.aggregate.AggregateExpression
 import org.apache.spark.sql.catalyst.plans.{FullOuter, JoinType, LeftOuter, RightOuter}
-import org.apache.spark.sql.catalyst.plans.logical.{Aggregate, Expand, Filter, GlobalLimit, Join, LogicalPlan, Project, Sort, Window}
+import org.apache.spark.sql.catalyst.plans.logical.{Aggregate, Expand, Filter, GlobalLimit, Join, LogicalPlan, Project, Sort, Window, WindowGroupLimit}
 import org.apache.spark.sql.oracle.{OraSQLImplicits, SQLSnippet}
 import org.apache.spark.sql.oracle.expressions.{OraExpression, OraLiteralSql}
 import org.apache.spark.sql.oracle.expressions.Named.OraColumnRef
@@ -95,6 +95,7 @@ trait OraQueryBlockState { self: OraSingleQueryBlock =>
     case e: Expand => !(hasComputedShape || hasAggregate || hasLatJoin || hasOrder)
     case a: Aggregate => !(hasComputedShape || hasAggregate || hasOrder)
     case gl : GlobalLimit => !(hasOuterJoin || hasAggregate || hasOrder || hasWindow)
+    case wgl : WindowGroupLimit => !(hasOuterJoin || hasAggregate || hasOrder)
   }
 
   def canApplyFilter : Boolean = !(hasOrder || hasOuterJoin || hasAggregate)
