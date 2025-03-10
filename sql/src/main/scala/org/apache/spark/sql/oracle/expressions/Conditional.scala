@@ -74,10 +74,20 @@ object Conditional {
 
   }
 
+  private object CaseBooleanLitBranch {
+    def unapply(e: Expression): Option[OraExpression] =
+      Option(e match {
+        case OraExpression(oE) => oE
+        case bLit @ BooleanLiteral(_) => OraExpression.convert(bLit).orNull
+        case _ => null
+      })
+  }
+
   private object CaseBranch {
     def unapply(t: (Expression, Expression)): Option[(OraExpression, OraExpression)] =
       Option(t match {
         case (OraExpression(l), OraExpression(r)) => (l, r)
+        case (OraExpression(l), CaseBooleanLitBranch(r)) => (l, r)
         case _ => null
       })
   }
