@@ -25,18 +25,15 @@
 package org.apache.spark.sql.connector.read.oracle
 
 import java.util.{Locale, OptionalLong}
-
 import scala.collection.JavaConverters._
-
 import oracle.spark.DataSourceKey
-
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.catalyst.expressions.Expression
 import org.apache.spark.sql.catalyst.types.DataTypeUtils
 import org.apache.spark.sql.connector.catalog.oracle.OracleCatalog
 import org.apache.spark.sql.connector.catalog.oracle.sharding.ShardQueryInfo
 import org.apache.spark.sql.connector.read.{Batch, InputPartition, PartitionReaderFactory, Scan, Statistics, SupportsReportPartitioning, SupportsReportStatistics}
-import org.apache.spark.sql.connector.read.partitioning.Partitioning
+import org.apache.spark.sql.connector.read.partitioning.{Partitioning, UnknownPartitioning}
 import org.apache.spark.sql.execution.datasources.{FilePartition, InMemoryFileIndex, PartitioningAwareFileIndex}
 import org.apache.spark.sql.execution.datasources.v2.FileScan
 import org.apache.spark.sql.internal.connector.SupportsMetadata
@@ -88,7 +85,7 @@ trait OraScan {
     }).toArray
   }
 
-  override def outputPartitioning(): Partitioning = splitStrategy.partitioning
+  override def outputPartitioning(): Partitioning = new UnknownPartitioning(0)
 
   override def createReaderFactory(): PartitionReaderFactory = {
     OraPartitionReaderFactory(
