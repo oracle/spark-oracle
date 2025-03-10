@@ -42,12 +42,6 @@ object IgnoreExpressions extends OraSQLImplicits with Logging {
              |  for expression: ${co}""".stripMargin
         )
         oE
-      case tps@ToPrettyString(OraExpression(oE), _) =>
-        logWarning(
-          s"""Ignoring toprettystring when translating to oracle sql:
-             |  for expression: ${tps}""".stripMargin
-        )
-        oE
       case _ => null
     })
 }
