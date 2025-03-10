@@ -27,6 +27,7 @@ import java.io.{File, IOException, PrintWriter}
 import java.util.Date
 
 import scala.collection.mutable.ArrayBuffer
+import scala.io.Source
 
 import org.apache.spark.internal.Logging
 import org.apache.spark.sql.DataFrame
@@ -35,6 +36,8 @@ import org.apache.spark.sql.catalyst.plans.logical.{GlobalLimit, LocalLimit, Loc
 import org.apache.spark.sql.hive.test.oracle.TestOracleHive
 import org.apache.spark.sql.oracle.{OraSparkConfig, OraSparkUtils, SparkSessionExtensions}
 import org.apache.spark.sql.types.{DataType, StringType, StructType}
+
+import java.io.{BufferedWriter, FileWriter}
 
 /**
  * A tool for validating TPCDSQuery results
@@ -57,7 +60,8 @@ object TPCDSValidator {
                                 outFolder : File,
                                 queries : Seq[String],
                                 rebuildResults : Boolean,
-                                rebuildPlans : Boolean
+                                rebuildPlans : Boolean,
+                                calculateExecutionTime : Boolean
                               ) {
     lazy val outPath = outFolder.getAbsolutePath
 
@@ -176,6 +180,7 @@ object TPCDSValidator {
          |             If not specified all queries are evaluated.
          |   --rebuildQueries if specified non-pushdown query outputs are rebuild and stored.
          |   --rebuildPlans if specified pushdown query plans are rebuild and stored.
+         |   --calculateExecutionTime  if specified queries execution time is recorded in file.
          |""".stripMargin)
     // scalastyle:on println
     System.exit(1)
@@ -203,6 +208,8 @@ object TPCDSValidator {
     var queries : Seq[String] = TPCDSQueries.queries.map(_._1)
     var rebuildQueries : Boolean = false
     var rebuildPlans : Boolean = false
+    var calculateExecutionTime = false
+    var timeOutputFolderNm : String = null
 
     var argv = args.toList
     while (!argv.isEmpty) {
@@ -225,6 +232,9 @@ object TPCDSValidator {
         case ("--rebuildPlans") :: tail =>
           rebuildPlans = true
           argv = tail
+        case ("--calculateExecutionTime") :: tail =>
+          calculateExecutionTime = true
+          argv = tail
         case Nil =>
         case tail =>
           // scalastyle:on println
@@ -243,7 +253,8 @@ object TPCDSValidator {
       f
     }
 
-    Arguments(dbInstance, wallet_loc, outFolder, queries, rebuildQueries, rebuildPlans)
+    Arguments(dbInstance, wallet_loc, outFolder, queries, rebuildQueries,
+                rebuildPlans, calculateExecutionTime)
   }
 
   private val KNOWN_ISSUES : Map[String, String] = Map(
@@ -541,9 +552,38 @@ class TPCDSValidator(args: TPCDSValidator.Arguments) extends Logging {
       )
     }
   }
+  def appendToFile(fileName: String, data: String): Unit = {
+    var bufferedWriter: BufferedWriter = null
+
+    try {
+      // Create a FileWriter in append mode
+      val fileWriter = new FileWriter(fileName, true)
+
+      // Wrap the FileWriter with a BufferedWriter
+      bufferedWriter = new BufferedWriter(fileWriter)
+
+      // Write data to the file
+      bufferedWriter.write(data)
+      // Optionally write a newline character
+      bufferedWriter.newLine()
+    } catch {
+      case e: IOException => e.printStackTrace()
+    } finally {
+      // Ensure the BufferedWriter is closed
+      if (bufferedWriter != null) {
+        try {
+          bufferedWriter.close()
+        } catch {
+          case e: IOException => e.printStackTrace()
+        }
+      }
+    }
+  }
+
+
 
   private def validateQuery(qNm : String) : ResultDiff = {
-
+    var t01 = System.nanoTime() / 1000000
     val resultDiff = new ResultDiff(qNm)
 
     try {
@@ -580,18 +620,112 @@ class TPCDSValidator(args: TPCDSValidator.Arguments) extends Logging {
         "Internal Failure",
         Some(t.getMessage),
         None
-      )
+        )
     }
   }
 
   // q14-1, q14-2, q23-2, q66
   val excludeSet : Set[String] = Set("q14-1", "q14-2", "q23-2", "q66")
 
+  def readCSVAsArrayOfLists(filePath: String): Array[List[String]] = {
+
+    val file = new File(filePath)
+
+    if (!file.exists()) {
+      // Create the file if it doesn't exist
+      val writer = new PrintWriter(file)
+      writer.close()
+    }
+
+    val source = Source.fromFile(filePath)
+
+    // Read and parse the file line by line
+    val data = source.getLines().map { line =>
+      // Split each line by comma and convert to List
+      line.split(",").toList
+    }.toArray
+
+    // Close the file
+    source.close()
+
+    // Return the parsed data
+    data
+  }
+
+  def writeArrayOfListsToCSV(filename: String, data: Array[List[String]]): Unit = {
+    // Create a new PrintWriter object
+    val writer = new PrintWriter(filename)
+
+    // Iterate through each list in the array
+    data.foreach { row =>
+      // Convert the list to a comma-separated string
+      val line = row.mkString(",")
+      // Write the line to the file
+      writer.println(line)
+    }
+
+    // Close the writer to flush and save the file
+    writer.close()
+  }
+
+
+
+  // Example usage
+
+  def initializeReport: Array[List[String]] ={
+    var Report : Array[List[String]] = Array.fill(args.queries.size - excludeSet.size)(List[String]())
+    var count = 0
+    for (qNm <- args.queries if !excludeSet.contains(qNm)) yield {
+      Report(count) = Report(count) :+ qNm
+      count += 1
+    }
+    Report
+  }
+
   def run : Unit = {
     initializeSpark
+    var results : Seq[ResultDiff] = null
+    if(args.calculateExecutionTime) {
 
-    val results = for (qNm <- args.queries if !excludeSet.contains(qNm)) yield {
-      validateQuery(qNm)
+      val validationReportValuesFile = s"${args.outFolder.getAbsolutePath}/validationReportValuesFile.csv"
+      val validationReportAvgFile = s"${args.outFolder.getAbsolutePath}/validationReportAvgFile.csv"
+      var validationReportValues: Array[List[String]] = readCSVAsArrayOfLists(validationReportValuesFile)
+      var validationReportAvg: Array[List[String]] = readCSVAsArrayOfLists(validationReportAvgFile)
+      var count = 0
+
+      if( validationReportAvg==null || validationReportAvg.length == 0 ) {
+        validationReportAvg = initializeReport
+      }
+      if( validationReportValues==null || validationReportValues.length == 0 ) {
+        validationReportValues = initializeReport
+      }
+      results =  for (qNm <- args.queries if !excludeSet.contains(qNm)) yield {
+        //
+        val iterations = 3
+        var totalExecutionTime : Long = 0
+        var resultDiff: ResultDiff = null
+
+        for (itr <- 1 to iterations) {
+
+          var t0 = System.nanoTime() / 1000000
+          resultDiff = validateQuery(qNm)
+          totalExecutionTime = totalExecutionTime + (System.nanoTime() / 1000000 -t0)
+          validationReportValues(count) = validationReportValues(count) :+ (System.nanoTime() / 1000000 -t0).toString
+
+        }
+
+        validationReportAvg(count) = validationReportAvg(count) :+ (totalExecutionTime/3).toString
+        count += 1
+        resultDiff
+      }
+
+      writeArrayOfListsToCSV(validationReportValuesFile, validationReportValues)
+      writeArrayOfListsToCSV(validationReportAvgFile, validationReportAvg)
+
+    } else {
+      results = for (qNm <- args.queries if !excludeSet.contains(qNm)) yield {
+        validateQuery(qNm)
+      }
     }
 
     outputReport(results, excludeSet)
