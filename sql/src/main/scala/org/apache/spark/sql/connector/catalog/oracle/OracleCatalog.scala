@@ -33,6 +33,7 @@ import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.catalyst.FunctionIdentifier
 import org.apache.spark.sql.catalyst.analysis.{NoSuchFunctionException, NoSuchNamespaceException, NoSuchTableException}
 import org.apache.spark.sql.catalyst.util.CaseInsensitiveMap
+import org.apache.spark.sql.catalyst.util.QuotingUtils.quoteIdentifier
 import org.apache.spark.sql.connector.catalog._
 import org.apache.spark.sql.connector.catalog.functions.UnboundFunction
 import org.apache.spark.sql.connector.catalog.oracle.OracleMetadata.OraTable
@@ -236,7 +237,7 @@ class OracleCatalog
       properties: util.Map[String, String]): StagedTable = ???
 
   private[sql] def getMetadataManager: OracleMetadataManager = metadataManager
-  
+
   override def listFunctions(namespace: Array[String]): Array[Identifier] = {
     checkNamespace(namespace)
     val fnRegistry = OraSparkUtils.currentSparkSession.sessionState.functionRegistry
@@ -244,23 +245,29 @@ class OracleCatalog
 
   }
 
-  // Though our plugin does not support V2 based functions,
-  // spark code uses below method to find out function existence check.
   override def loadFunction(ident: Identifier): UnboundFunction = {
+
+    if (!isOraPushdownEnabled()) {
+      throw new UnsupportedOperationException("Cannot use catalog function "
+        + quoteIdentifier(name()) + "." + quoteIdentifier(ident.name())
+        + " with push down disabled!")
+    }
 
     val funcId = FunctionIdentifier(ident.name(), Some(name()))
     val fnRegistry = OraSparkUtils.currentSparkSession.sessionState.functionRegistry
 
-    if(fnRegistry.lookupFunction(funcId).isEmpty) {
+    val fnBldr = fnRegistry.lookupFunctionBuilder(funcId)
+    if(fnBldr.isEmpty) {
       throw new NoSuchFunctionException(db = name(), func = ident.name())
     }
 
-    // For now this load function is used only to check function exist or not,
-    // so returned object not used.
-    // Below is just a dummy implementation of unbound function,
-    // ideally this will not get used anywhere.
-    OraNativeRowUnboundFunction(funcId)
-  }  
+    OraNativeRowUnboundFunction(fnBldr.get)
+  }
+
+  private def isOraPushdownEnabled() : Boolean = {
+    import org.apache.spark.sql.oracle.OraSparkConfig._
+    getConf(ENABLE_ORA_PUSHDOWN)(OraSparkUtils.currentSparkSession)
+  }
 }
 
 object OracleCatalog {

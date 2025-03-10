@@ -24,7 +24,6 @@
 
 package org.apache.spark.sql.oracle
 
-import org.apache.spark.SparkException
 import org.apache.spark.sql.hive.test.oracle.TestOracleHive
 
 class FunctionRegistrationTest extends AbstractTest
@@ -90,7 +89,7 @@ class FunctionRegistrationTest extends AbstractTest
 
     try {
       OraSparkConfig.setConf(OraSparkConfig.ENABLE_ORA_PUSHDOWN, false)
-      val ex: Exception = intercept[SparkException] {
+      val ex: Exception = intercept[UnsupportedOperationException] {
         TestOracleHive.sql(q1).show()
       }
       println(ex.getMessage)

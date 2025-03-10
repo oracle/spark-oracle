@@ -24,9 +24,9 @@
 
 package org.apache.spark.sql.oracle.expressions
 
-import org.apache.spark.sql.catalyst.expressions.aggregate.AggregateExpression
-import org.apache.spark.sql.catalyst.expressions.Expression
-import org.apache.spark.sql.connector.catalog.oracle.{OracleMetadata, OraNativeAggFuncInvoke, OraNativeRowFuncInvoke}
+import org.apache.spark.sql.catalyst.expressions.aggregate.{AggregateExpression, V2Aggregator}
+import org.apache.spark.sql.catalyst.expressions.{ApplyFunctionExpression, Expression}
+import org.apache.spark.sql.connector.catalog.oracle.{OraNativeAggV1FuncInvoke, OraNativeAggV2FuncInvoke, OraNativeRowV1FuncInvoke, OraNativeRowV2FuncInvoke, OracleMetadata}
 
 object OraNativeFunctions {
 
@@ -39,9 +39,9 @@ object OraNativeFunctions {
    * @param childOEs
    * @return
    */
-  private def oraFnInvokeExpr(fnDef : OracleMetadata.OraFuncDef,
-                              cE : Expression,
-                             childOEs: Seq[OraExpression]) : OraExpression = {
+  private def oraV1FnInvokeExpr(fnDef : OracleMetadata.OraFuncDef,
+                        cE : Expression,
+                        childOEs: Seq[OraExpression]) : OraExpression = {
     if (fnDef.owner == "SYS" && fnDef.name == "USER") {
       new OraLiteralSql("USER")
     } else {
@@ -49,13 +49,32 @@ object OraNativeFunctions {
     }
   }
 
+  private def oraV2FnInvokeExpr(fnName : String, fnOwner : String, orasql_fnname : String,
+                      cE : Expression,
+                      childOEs: Seq[OraExpression]) : OraExpression = {
+    if (fnOwner == "SYS" && fnName== "USER") {
+      new OraLiteralSql("USER")
+    } else {
+      OraFnExpression(orasql_fnname, cE, childOEs)
+    }
+  }
+
+
   def unapply(e: Expression): Option[OraExpression] =
     Option(e match {
-      case cE@OraNativeRowFuncInvoke(fnDef, _, OraExpressions(oEs @ _*)) =>
-        oraFnInvokeExpr(fnDef, cE, oEs)
-      case AggregateExpression(
-      cE@OraNativeAggFuncInvoke(fnDef, _, OraExpressions(oEs @ _*)), _, _, _, _) =>
-        oraFnInvokeExpr(fnDef, cE, oEs)
+
+      case cE@ApplyFunctionExpression(OraNativeRowV2FuncInvoke(fnName, fnOwner, orasql_fnname, _, _),
+      OraExpressions(oEs @ _*)) => oraV2FnInvokeExpr(fnName, fnOwner, orasql_fnname, cE, oEs)
+
+      case cE@V2Aggregator(OraNativeAggV2FuncInvoke(fnName, fnOwner, orasql_fnname, _, _, _),
+      OraExpressions(oEs @ _*), _, _) => oraV2FnInvokeExpr(fnName, fnOwner, orasql_fnname, cE, oEs)
+
+      case cE@OraNativeRowV1FuncInvoke(fnDef, _, OraExpressions(oEs @ _*)) =>
+        oraV1FnInvokeExpr(fnDef, cE, oEs)
+
+      case cE@AggregateExpression(OraNativeAggV1FuncInvoke(fnDef, _, OraExpressions(oEs @ _*))
+      , _, _, _, _) => oraV1FnInvokeExpr(fnDef, cE, oEs)
+
       case _ => null
     })
 
