@@ -211,7 +211,9 @@ object SQLSnippet {
   val ONE = osql"1"
   val ELSE_ZERO = osql"ELSE 0"
   val EQUAL_TO_ONE = osql"= 1"
-
+  val NULL_STRING = osql"'NULL'"
+  val TO_CHAR_PREFIX = osql"to_char("
+  
   def literalSnippet(s: String): SQLSnippet =
     SQLSnippet(s, Seq.empty)
 

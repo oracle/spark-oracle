@@ -167,6 +167,7 @@ object OraExpression {
       case Strings(oE) => oE
       case DateTime(oE) => oE
       case Conditional(oE) => oE
+      case PrettyString(oE) => oE
       case Named(oE) => oE
       case Predicates(oE) => oE
       case Nulls(oE) => oE
