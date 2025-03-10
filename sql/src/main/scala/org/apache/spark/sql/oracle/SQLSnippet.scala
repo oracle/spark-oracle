@@ -208,6 +208,9 @@ object SQLSnippet {
   val NOT_EXISTS: SQLSnippet = osql"not exists"
   val PARTITION_BY = osql"PARTITION BY"
   val ORDER_BY = osql"ORDER BY"
+  val ONE = osql"1"
+  val ELSE_ZERO = osql"ELSE 0"
+  val EQUAL_TO_ONE = osql"= 1"
 
   def literalSnippet(s: String): SQLSnippet =
     SQLSnippet(s, Seq.empty)
@@ -248,14 +251,23 @@ object SQLSnippet {
 
   def searchedCase(
       cases: Seq[(SQLSnippet, SQLSnippet)],
-      elseCase: Option[SQLSnippet], isBoolean: Boolean): SQLSnippet = {
+      elseCase: Option[SQLSnippet], isBooleanCaseValueType: Boolean): SQLSnippet = {
     val caseSnips = for ((caseCond, caseValue) <- cases) yield {
-      WHEN + caseCond + THEN + caseValue
+      if (isBooleanCaseValueType) {
+        WHEN + caseCond + AND + caseValue + THEN + ONE
+      } else {
+        WHEN + caseCond + THEN + caseValue
+      }
     }
-    val elseSnip = elseCase.map(ELSE + _).getOrElse(empty)
-    if (isBoolean & elseCase.isEmpty) {
-      CASE ++ caseSnips + elseSnip + END + osql" = 1"
+
+    if (isBooleanCaseValueType) {
+      if (elseCase.isEmpty) {
+        CASE ++ caseSnips + ELSE_ZERO + END + EQUAL_TO_ONE
+      } else {
+        CASE ++ caseSnips + WHEN + elseCase.get + THEN + ONE + ELSE_ZERO + END + EQUAL_TO_ONE
+      }
     } else {
+      val elseSnip = elseCase.map(ELSE + _).getOrElse(empty)
       CASE ++ caseSnips + elseSnip + END
     }
   }
