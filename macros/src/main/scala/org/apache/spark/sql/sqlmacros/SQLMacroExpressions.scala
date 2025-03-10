@@ -25,6 +25,7 @@
 package org.apache.spark.sql.sqlmacros
 
 import java.nio.ByteBuffer
+import java.util.Base64
 
 import org.apache.spark.SparkConf
 import org.apache.spark.serializer.{JavaSerializer, Serializer, SerializerInstance}
@@ -39,7 +40,7 @@ import org.apache.spark.sql.types.DataType
  *
  * @param macroExpr
  */
-case class SQLMacroExpressionBuilder(macroExprSer : Array[Byte])
+case class SQLMacroExpressionBuilder(macroExprSer : String)
   extends Function1[Seq[Expression], Expression] {
 
   @transient lazy val macroExpr = deserialize(macroExprSer)
@@ -77,6 +78,11 @@ case class MacroArg(argPos : Int,
 
 object SQLMacroExpressionBuilder {
 
+  @transient lazy val encoder: Base64.Encoder = Base64.getEncoder
+  @transient lazy val decoder: Base64.Decoder = Base64.getDecoder
+
+  private val MAX_LITERAL_LENGTH = 32768
+  private val STRING_SEPERATOR = ", "
 
   /**
    * This is not ideal. On each macro invocation we are setting up a [[JavaSerializer]].
@@ -96,18 +102,25 @@ object SQLMacroExpressionBuilder {
     factory.newInstance()
   }
 
-  def serialize(e : Expression) : Array[Byte] = {
+  def serialize(e : Expression) : String = {
     val bb = serializerInstance.serialize[Expression](e)
-    if (bb.hasArray) {
-      bb.array()
-    } else {
-      val arr = new Array[Byte](bb.remaining())
-      bb.get(arr)
-      arr
+    val ba = {
+      if (bb.hasArray) {
+        bb.array()
+      } else {
+        val arr = new Array[Byte](bb.remaining())
+        bb.get(arr)
+        arr
+      }
     }
+
+    val serialized = encoder.encodeToString(ba)
+    serialized.sliding(MAX_LITERAL_LENGTH, MAX_LITERAL_LENGTH).mkString(STRING_SEPERATOR)
   }
 
-  def deserialize(arr : Array[Byte]) : Expression = {
+  def deserialize(str : String) : Expression = {
+    val seqStr = Seq(str).flatMap(_.split(STRING_SEPERATOR))
+    val arr = seqStr.map(decoder.decode).reduce(_ ++ _)
     val bb = ByteBuffer.wrap(arr)
     serializerInstance.deserialize[Expression](bb)
   }

@@ -174,7 +174,7 @@ private[sqlmacros] object MacrosScalaReflection extends ScalaReflection {
     // Assumes we are deserializing the first column of a row.
     deserializerForWithNullSafetyAndUpcast(GetColumnByOrdinal(0, dataType), dataType,
       nullable = nullable, walkedTypePath,
-      deserializerFor(tpe, _, walkedTypePath))
+      path => deserializerFor(tpe, path, walkedTypePath))
   }
 
   /**
@@ -267,7 +267,7 @@ private[sqlmacros] object MacrosScalaReflection extends ScalaReflection {
             dataType,
             nullable = elementNullable,
             newTypePath,
-            deserializerFor(elementType, _, newTypePath))
+            path => deserializerFor(tpe = elementType, path, walkedTypePath = newTypePath))
         }
 
         val arrayData = UnresolvedMapObjects(mapFunction, path)
@@ -301,7 +301,7 @@ private[sqlmacros] object MacrosScalaReflection extends ScalaReflection {
             dataType,
             nullable = elementNullable,
             newTypePath,
-            deserializerFor(elementType, _, newTypePath ))
+            path => deserializerFor(tpe = elementType, path, walkedTypePath = newTypePath ))
         }
 
         val companion = t.dealias.typeSymbol.companion.typeSignature
