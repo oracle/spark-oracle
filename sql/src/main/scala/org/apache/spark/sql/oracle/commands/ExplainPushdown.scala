@@ -24,8 +24,9 @@
 
 package org.apache.spark.sql.oracle.commands
 
+import java.util
+import java.util.IdentityHashMap
 import scala.collection.mutable.ArrayBuffer
-
 import org.apache.spark.sql.{AnalysisException, Row, SparkSession}
 import org.apache.spark.sql.catalyst.expressions.{Attribute, AttributeReference, Expression, PlanExpression}
 import org.apache.spark.sql.catalyst.plans.QueryPlan
@@ -33,7 +34,6 @@ import org.apache.spark.sql.catalyst.plans.logical.LogicalPlan
 import org.apache.spark.sql.catalyst.util.StringUtils.PlanStringConcat
 import org.apache.spark.sql.connector.read.oracle.OraScan
 import org.apache.spark.sql.execution.{BaseSubqueryExec, SparkPlan}
-import org.apache.spark.sql.execution.ExplainUtils.{getOpId, removeTags}
 import org.apache.spark.sql.execution.command.LeafRunnableCommand
 import org.apache.spark.sql.execution.datasources.v2.BatchScanExec
 import org.apache.spark.sql.oracle.querysplit.{OraSplitStrategy, PlanInfo}
@@ -44,12 +44,15 @@ import org.apache.spark.util.Utils
 
 case class ExplainPushdown(sparkPlan: SparkPlan) extends LeafRunnableCommand {
 
+  def localIdMap: ThreadLocal[java.util.Map[QueryPlan[_], Int]] = QueryPlan.localIdMap
+
   override val output: Seq[Attribute] =
     Seq(AttributeReference("plan", StringType, nullable = true)())
 
   private def explainOraScan(dsv2 : BatchScanExec,
                              oraScan: OraScan,
-                             append: String => Unit
+                             append: String => Unit,
+                             idMap : util.Map[QueryPlan[_], Int]
                             )(
       implicit sparkSession: SparkSession
   ) : Unit = {
@@ -57,7 +60,7 @@ case class ExplainPushdown(sparkPlan: SparkPlan) extends LeafRunnableCommand {
     val osql = oPlan.orasql
 
     val opName : String = {
-      val opId = dsv2.getTagValue(QueryPlan.OP_ID_TAG).map(id => s"$id").getOrElse("unknown")
+      val opId = idMap.getOrDefault(dsv2, -1)
       s"($opId) ${dsv2.nodeName}"
     }
 
@@ -89,7 +92,8 @@ case class ExplainPushdown(sparkPlan: SparkPlan) extends LeafRunnableCommand {
 
   private def processPlanSkippingSubqueries(plan : SparkPlan,
                                             append: String => Unit,
-                                            startOpId : Int)(
+                                            startOpId : Int,
+                                            idMap : java.util.Map[QueryPlan[_], Int])(
     implicit sparkSession: SparkSession
   ) : Int = {
     var opId = startOpId
@@ -97,9 +101,9 @@ case class ExplainPushdown(sparkPlan: SparkPlan) extends LeafRunnableCommand {
     def tagPlan(tp : QueryPlan[_]) : Unit = {
       tp foreach {
         case p : QueryPlan[_] =>
-          if (p.getTagValue(QueryPlan.OP_ID_TAG).isEmpty) {
+          if (!idMap.containsKey(p)) {
             opId += 1
-            p.setTagValue(QueryPlan.OP_ID_TAG, opId)
+            idMap.put(p, opId)
           }
           p.innerChildren.foreach(p => tagPlan(p))
       }
@@ -120,7 +124,7 @@ case class ExplainPushdown(sparkPlan: SparkPlan) extends LeafRunnableCommand {
 
       plan foreach {
         case dsv2@BatchScanExec(_, oraScan: OraScan, _, _, _, _) =>
-          explainOraScan(dsv2, oraScan, append)
+          explainOraScan(dsv2, oraScan, append, idMap)
         case _ => ()
       }
 
@@ -151,10 +155,12 @@ case class ExplainPushdown(sparkPlan: SparkPlan) extends LeafRunnableCommand {
                           append: String => Unit)(
     implicit sparkSession: SparkSession
   ) : Unit = {
+    val prevIdMap = localIdMap.get()
     try {
       var currentOperatorID = 0
-      currentOperatorID = processPlanSkippingSubqueries(plan, append, currentOperatorID)
-
+      val idMap = new util.IdentityHashMap[QueryPlan[_], Int]()
+      localIdMap.set(idMap)
+      currentOperatorID = processPlanSkippingSubqueries(plan, append, currentOperatorID, idMap)
       val subqueries = ArrayBuffer.empty[(SparkPlan, Expression, BaseSubqueryExec)]
       getSubqueries(plan, subqueries)
 
@@ -166,18 +172,19 @@ case class ExplainPushdown(sparkPlan: SparkPlan) extends LeafRunnableCommand {
         }
         i = i + 1
         append(s"Subquery:$i Hosting operator id = " +
-          s"${getOpId(sub._1)} Hosting Expression = ${sub._2}\n")
+          s"${idMap.get(sub._1)} Hosting Expression = ${sub._2}\n")
 
         currentOperatorID = processPlanSkippingSubqueries(
           sub._3,
           append,
-          currentOperatorID)
+          currentOperatorID,
+          idMap)
 
         append("\n")
       }
 
     } finally {
-      removeTags(plan)
+        localIdMap.set(prevIdMap)
     }
   }
 

@@ -81,7 +81,7 @@ abstract class OraPlan extends TreeNode[OraPlan] with SQLSnippetProvider {
 
   override def simpleStringWithNodeId(): String = {
     val operatorId = catalystOp
-      .flatMap(_.getTagValue(QueryPlan.OP_ID_TAG))
+      .flatMap(plan => Option(QueryPlan.localIdMap.get().get(plan)))
       .map(id => s"$id")
       .getOrElse("unknown")
     s"$nodeName ($operatorId)".trim

@@ -25,7 +25,7 @@ object Versions {
   val javaVersion = "1.8"
   val scalaVersion = "2.12.10"
   val oraVersion = "19.6.0.0"
-  val sparkVersion = "3.5.1"
+  val sparkVersion = "3.5.4"
   val log4jVersion = "1.2.17"
   val slf4jVersion = "1.7.30"
   val json4sVersion = "3.6.6"
