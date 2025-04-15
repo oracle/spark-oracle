@@ -39,5 +39,5 @@ object Versions {
 
   val scoptVersion = "4.0.0"
 
-  val sparkOracleVersion = "0.1.0-SNAPSHOT"
+  val sparkOracleVersion = "1.0.0"
 }
